@@ -1,0 +1,1671 @@
+Index: .idea/compiler.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/compiler.xml	(date 1537195596000)
++++ .idea/compiler.xml	(date 1537195596000)
+@@ -0,0 +1,13 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="CompilerConfiguration">
++    <annotationProcessing>
++      <profile name="Maven default annotation processors profile" enabled="true">
++        <sourceOutputDir name="target/generated-sources/annotations" />
++        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
++        <outputRelativeToContentRoot value="true" />
++        <module name="course_2_project" />
++      </profile>
++    </annotationProcessing>
++  </component>
++</project>
+\ No newline at end of file
+Index: src/main/java/ru/itis/repositories/ArtistRepository.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/java/ru/itis/repositories/ArtistRepository.java	(date 1537084795000)
++++ src/main/java/ru/itis/repositories/ArtistRepository.java	(date 1537084795000)
+@@ -0,0 +1,6 @@
++package ru.itis.repositories;
++
++import ru.itis.models.Artist;
++
++public interface ArtistRepository extends CrudRepository<Artist> {
++}
+Index: src/main/java/ru/itis/repositories/ArtistRepositoryConnectionImpl.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/java/ru/itis/repositories/ArtistRepositoryConnectionImpl.java	(date 1537182285000)
++++ src/main/java/ru/itis/repositories/ArtistRepositoryConnectionImpl.java	(date 1537182285000)
+@@ -0,0 +1,79 @@
++package ru.itis.repositories;
++
++import lombok.SneakyThrows;
++import ru.itis.mappers.RowMapper;
++import ru.itis.models.Artist;
++
++import java.sql.*;
++import java.util.ArrayList;
++import java.util.List;
++import java.util.Optional;
++
++public class ArtistRepositoryConnectionImpl implements ArtistRepository {
++    private Connection connection;
++
++    //language=SQL
++    private final static String SQL_DELETE_QUERY = "delete from artists where artist_id = ?";
++    //language=SQL
++    private final static String SQL_INSERT_QUERY = "insert into artists(last_name, first_name, birthday, genre_id) " +
++            "values (?, ?, ?, ?)";
++
++    public ArtistRepositoryConnectionImpl(Connection connection) {
++        this.connection = connection;
++    }
++
++    private RowMapper<Artist> artistRowMapper = new RowMapper<Artist>() {
++        @SneakyThrows
++        public Artist rowMap(ResultSet resultSet) {
++            return Artist.builder()
++                    .artistId(resultSet.getInt("artist_id"))
++                    .lastName(resultSet.getString("last_name"))
++                    .firstName(resultSet.getString("first_name"))
++                    .birthday(resultSet.getDate("birthday"))
++                    .genreId(resultSet.getInt("genre_id"))
++                    .build();
++        }
++    };
++
++    @SneakyThrows
++    public Optional<Artist> findOne(int artistId) {
++        Statement statement = connection.createStatement();
++        ResultSet resultSet =
++                statement.executeQuery("select * from artists where artist_id = " + artistId);
++        resultSet.next();
++        return Optional.of(artistRowMapper.rowMap(resultSet));
++    }
++
++    @SneakyThrows
++    public void save(Artist model) {
++        PreparedStatement statement = connection.prepareStatement(SQL_INSERT_QUERY, PreparedStatement.RETURN_GENERATED_KEYS);
++        statement.setString(1, model.getLastName());
++        statement.setString(2, model.getFirstName());
++        statement.setDate(3, (Date) model.getBirthday());
++        statement.setInt(4, model.getGenreId());
++        ResultSet resultSet = statement.getGeneratedKeys();
++        while (resultSet.next()) {
++            model.setArtistId(resultSet.getInt("artist_id"));
++        }
++        statement.executeUpdate();
++    }
++
++    @SneakyThrows
++    public void delete(int artistId) {
++        PreparedStatement statement = connection.prepareStatement(SQL_DELETE_QUERY);
++        statement.setInt(1, artistId);
++        statement.executeUpdate();
++    }
++
++    @SneakyThrows
++    public Optional<List<Artist>> findAll() {
++        Statement statement = connection.createStatement();
++        ResultSet resultSet = statement.executeQuery("select * from artists");
++        List<Artist> people = new ArrayList<>();
++        while (resultSet.next()) {
++            Artist artist = artistRowMapper.rowMap(resultSet);
++            people.add(artist);
++        }
++        return Optional.of(people);
++    }
++}
+Index: src/main/java/ru/itis/repositories/AlbumRepository.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/java/ru/itis/repositories/AlbumRepository.java	(date 1536950833000)
++++ src/main/java/ru/itis/repositories/AlbumRepository.java	(date 1536950833000)
+@@ -0,0 +1,6 @@
++package ru.itis.repositories;
++
++import ru.itis.models.Album;
++
++public interface AlbumRepository extends CrudRepository<Album> {
++}
+Index: .idea/dataSources/89fb197c-bee4-4871-a073-b903c3227d19/storage_v2/_src_/database/postgres.edMnLQ.meta
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/dataSources/89fb197c-bee4-4871-a073-b903c3227d19/storage_v2/_src_/database/postgres.edMnLQ.meta	(date 1535997481000)
++++ .idea/dataSources/89fb197c-bee4-4871-a073-b903c3227d19/storage_v2/_src_/database/postgres.edMnLQ.meta	(date 1535997481000)
+@@ -0,0 +1,1 @@
++#n:postgres
+\ No newline at end of file
+Index: src/main/java/ru/itis/repositories/AlbumRepositoryConnectionImpl.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/java/ru/itis/repositories/AlbumRepositoryConnectionImpl.java	(date 1537002135000)
++++ src/main/java/ru/itis/repositories/AlbumRepositoryConnectionImpl.java	(date 1537002135000)
+@@ -0,0 +1,35 @@
++package ru.itis.repositories;
++
++import ru.itis.models.Album;
++
++import java.sql.Connection;
++import java.util.List;
++import java.util.Optional;
++
++public class AlbumRepositoryConnectionImpl implements AlbumRepository {
++    private Connection connection;
++
++    public AlbumRepositoryConnectionImpl(Connection connection) {
++        this.connection = connection;
++    }
++
++    @Override
++    public Optional<Album> findOne(int id) {
++        return Optional.empty();
++    }
++
++    @Override
++    public void save(Album model) {
++
++    }
++
++    @Override
++    public void delete(int id) {
++
++    }
++
++    @Override
++    public Optional<List<Album>> findAll() {
++        return null;
++    }
++}
+Index: .idea/dataSources/89fb197c-bee4-4871-a073-b903c3227d19/storage_v2/_src_/database/postgres.edMnLQ/schema/public.abK9xQ.meta
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/dataSources/89fb197c-bee4-4871-a073-b903c3227d19/storage_v2/_src_/database/postgres.edMnLQ/schema/public.abK9xQ.meta	(date 1536340363000)
++++ .idea/dataSources/89fb197c-bee4-4871-a073-b903c3227d19/storage_v2/_src_/database/postgres.edMnLQ/schema/public.abK9xQ.meta	(date 1536340363000)
+@@ -0,0 +1,2 @@
++#n:public
++!<md> [598, 0, null, null, -2147483648, -2147483648]
+Index: pom.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- pom.xml	(date 1536849426000)
++++ pom.xml	(date 1536849426000)
+@@ -0,0 +1,39 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project xmlns="http://maven.apache.org/POM/4.0.0"
++         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
++         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
++    <modelVersion>4.0.0</modelVersion>
++
++    <groupId>ru.itis</groupId>
++    <artifactId>course_2_project</artifactId>
++    <version>1.0-SNAPSHOT</version>
++    <build>
++        <plugins>
++            <plugin>
++                <groupId>org.apache.maven.plugins</groupId>
++                <artifactId>maven-compiler-plugin</artifactId>
++                <configuration>
++                    <source>8</source>
++                    <target>8</target>
++                </configuration>
++            </plugin>
++        </plugins>
++    </build>
++
++    <dependencies>
++        <!-- https://mvnrepository.com/artifact/org.postgresql/postgresql -->
++        <dependency>
++            <groupId>org.postgresql</groupId>
++            <artifactId>postgresql</artifactId>
++            <version>42.2.4</version>
++        </dependency>
++
++        <!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
++        <dependency>
++            <groupId>org.projectlombok</groupId>
++            <artifactId>lombok</artifactId>
++            <version>1.18.2</version>
++            <scope>provided</scope>
++        </dependency>
++    </dependencies>
++</project>
+\ No newline at end of file
+Index: course_2_project.iml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- course_2_project.iml	(date 1535997044000)
++++ course_2_project.iml	(date 1535997044000)
+@@ -0,0 +1,2 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<module type="JAVA_MODULE" version="4" />
+\ No newline at end of file
+Index: .idea/dataSources/69b50a13-1e6b-45ce-a1e2-675eaee0539f.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/dataSources/69b50a13-1e6b-45ce-a1e2-675eaee0539f.xml	(date 1537084150000)
++++ .idea/dataSources/69b50a13-1e6b-45ce-a1e2-675eaee0539f.xml	(date 1537084150000)
+@@ -0,0 +1,560 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<dataSource name="@localhost">
++  <database-model serializer="dbm" rdbms="POSTGRES" format-version="4.9">
++    <root id="1">
++      <ServerVersion>10.4</ServerVersion>
++    </root>
++    <database id="2" parent="1" name="itis_practice_1">
++      <ObjectId>16393</ObjectId>
++    </database>
++    <database id="3" parent="1" name="postgres">
++      <ObjectId>13255</ObjectId>
++      <Comment>default administrative connection database</Comment>
++      <IntrospectionStateNumber>116</IntrospectionStateNumber>
++      <Current>1</Current>
++      <Visible>1</Visible>
++    </database>
++    <role id="4" parent="1" name="pg_monitor">
++      <ObjectId>3373</ObjectId>
++      <Inherit>1</Inherit>
++      <ConnectionLimit>-1</ConnectionLimit>
++    </role>
++    <role id="5" parent="1" name="pg_read_all_settings">
++      <ObjectId>3374</ObjectId>
++      <Inherit>1</Inherit>
++      <ConnectionLimit>-1</ConnectionLimit>
++    </role>
++    <role id="6" parent="1" name="pg_read_all_stats">
++      <ObjectId>3375</ObjectId>
++      <Inherit>1</Inherit>
++      <ConnectionLimit>-1</ConnectionLimit>
++    </role>
++    <role id="7" parent="1" name="pg_signal_backend">
++      <ObjectId>4200</ObjectId>
++      <Inherit>1</Inherit>
++      <ConnectionLimit>-1</ConnectionLimit>
++    </role>
++    <role id="8" parent="1" name="pg_stat_scan_tables">
++      <ObjectId>3377</ObjectId>
++      <Inherit>1</Inherit>
++      <ConnectionLimit>-1</ConnectionLimit>
++    </role>
++    <role id="9" parent="1" name="postgres">
++      <ObjectId>10</ObjectId>
++      <SuperRole>1</SuperRole>
++      <Inherit>1</Inherit>
++      <CreateRole>1</CreateRole>
++      <CreateDb>1</CreateDb>
++      <CanLogin>1</CanLogin>
++      <Replication>1</Replication>
++      <ConnectionLimit>-1</ConnectionLimit>
++      <BypassRls>1</BypassRls>
++    </role>
++    <schema id="10" parent="3" name="information_schema">
++      <ObjectId>12965</ObjectId>
++    </schema>
++    <schema id="11" parent="3" name="pg_catalog">
++      <ObjectId>11</ObjectId>
++      <Comment>system catalog schema</Comment>
++    </schema>
++    <schema id="12" parent="3" name="pg_temp_1">
++      <ObjectId>11736</ObjectId>
++    </schema>
++    <schema id="13" parent="3" name="pg_toast">
++      <ObjectId>99</ObjectId>
++      <Comment>reserved schema for TOAST tables</Comment>
++    </schema>
++    <schema id="14" parent="3" name="pg_toast_temp_1">
++      <ObjectId>11737</ObjectId>
++    </schema>
++    <schema id="15" parent="3" name="public">
++      <ObjectId>2200</ObjectId>
++      <Comment>standard public schema</Comment>
++      <IntrospectionTimestamp>2018-09-16.10:49:10.650</IntrospectionTimestamp>
++      <IntrospectionStateNumber>767</IntrospectionStateNumber>
++      <Current>1</Current>
++      <Visible>1</Visible>
++    </schema>
++    <access-method id="16" parent="3" name="btree">
++      <ObjectId>403</ObjectId>
++      <Comment>b-tree index access method</Comment>
++      <Handler>pg_catalog.bthandler</Handler>
++      <HandlerId>330</HandlerId>
++      <Type>index</Type>
++    </access-method>
++    <access-method id="17" parent="3" name="hash">
++      <ObjectId>405</ObjectId>
++      <Comment>hash index access method</Comment>
++      <Handler>pg_catalog.hashhandler</Handler>
++      <HandlerId>331</HandlerId>
++      <Type>index</Type>
++    </access-method>
++    <access-method id="18" parent="3" name="gist">
++      <ObjectId>783</ObjectId>
++      <Comment>GiST index access method</Comment>
++      <Handler>pg_catalog.gisthandler</Handler>
++      <HandlerId>332</HandlerId>
++      <Type>index</Type>
++    </access-method>
++    <access-method id="19" parent="3" name="gin">
++      <ObjectId>2742</ObjectId>
++      <Comment>GIN index access method</Comment>
++      <Handler>pg_catalog.ginhandler</Handler>
++      <HandlerId>333</HandlerId>
++      <Type>index</Type>
++    </access-method>
++    <access-method id="20" parent="3" name="spgist">
++      <ObjectId>4000</ObjectId>
++      <Comment>SP-GiST index access method</Comment>
++      <Handler>pg_catalog.spghandler</Handler>
++      <HandlerId>334</HandlerId>
++      <Type>index</Type>
++    </access-method>
++    <access-method id="21" parent="3" name="brin">
++      <ObjectId>3580</ObjectId>
++      <Comment>block range index (BRIN) access method</Comment>
++      <Handler>pg_catalog.brinhandler</Handler>
++      <HandlerId>335</HandlerId>
++      <Type>index</Type>
++    </access-method>
++    <sequence id="22" parent="15" name="songs_song_id_seq">
++      <ObjectId>16602</ObjectId>
++      <StateNumber>726</StateNumber>
++      <SequenceIdentity>1</SequenceIdentity>
++      <BelongsToColumn>1</BelongsToColumn>
++      <CacheSize>1</CacheSize>
++      <DataType>bigint</DataType>
++    </sequence>
++    <sequence id="23" parent="15" name="client_client_id_seq">
++      <ObjectId>16394</ObjectId>
++      <StateNumber>558</StateNumber>
++      <SequenceIdentity>1..2147483647</SequenceIdentity>
++      <BelongsToColumn>1</BelongsToColumn>
++      <CacheSize>1</CacheSize>
++      <DataType>integer</DataType>
++    </sequence>
++    <sequence id="24" parent="15" name="genres_genre_id_seq">
++      <ObjectId>16516</ObjectId>
++      <StateNumber>618</StateNumber>
++      <SequenceIdentity>1</SequenceIdentity>
++      <BelongsToColumn>1</BelongsToColumn>
++      <CacheSize>1</CacheSize>
++      <DataType>bigint</DataType>
++    </sequence>
++    <sequence id="25" parent="15" name="persons_artist_id_seq">
++      <ObjectId>16522</ObjectId>
++      <StateNumber>629</StateNumber>
++      <SequenceIdentity>1</SequenceIdentity>
++      <BelongsToColumn>1</BelongsToColumn>
++      <CacheSize>1</CacheSize>
++      <DataType>bigint</DataType>
++    </sequence>
++    <sequence id="26" parent="15" name="songs_id_seq">
++      <ObjectId>16402</ObjectId>
++      <StateNumber>559</StateNumber>
++      <SequenceIdentity>1..2147483647</SequenceIdentity>
++      <BelongsToColumn>1</BelongsToColumn>
++      <CacheSize>1</CacheSize>
++      <DataType>integer</DataType>
++    </sequence>
++    <table id="27" parent="15" name="albums">
++      <ObjectId>16430</ObjectId>
++      <StateNumber>756</StateNumber>
++    </table>
++    <table id="28" parent="15" name="albums_songs">
++      <ObjectId>16418</ObjectId>
++      <StateNumber>586</StateNumber>
++    </table>
++    <table id="29" parent="15" name="artists">
++      <ObjectId>16440</ObjectId>
++      <StateNumber>767</StateNumber>
++    </table>
++    <table id="30" parent="15" name="clients">
++      <ObjectId>16396</ObjectId>
++      <StateNumber>712</StateNumber>
++    </table>
++    <table id="31" parent="15" name="genres">
++      <ObjectId>16445</ObjectId>
++      <StateNumber>759</StateNumber>
++    </table>
++    <table id="32" parent="15" name="groups">
++      <ObjectId>16435</ObjectId>
++      <StateNumber>765</StateNumber>
++    </table>
++    <table id="33" parent="15" name="library">
++      <ObjectId>16587</ObjectId>
++      <StateNumber>712</StateNumber>
++    </table>
++    <table id="34" parent="15" name="songs">
++      <ObjectId>16404</ObjectId>
++      <StateNumber>763</StateNumber>
++    </table>
++    <column id="35" parent="27" name="album_id">
++      <Position>1</Position>
++      <DataType>integer|0s</DataType>
++      <NotNull>1</NotNull>
++      <StateNumber>577</StateNumber>
++      <TypeId>23</TypeId>
++    </column>
++    <column id="36" parent="27" name="artist_id">
++      <Position>2</Position>
++      <DataType>integer|0s</DataType>
++      <NotNull>1</NotNull>
++      <StateNumber>577</StateNumber>
++      <TypeId>23</TypeId>
++    </column>
++    <column id="37" parent="27" name="album_title">
++      <Position>3</Position>
++      <DataType>varchar(100)|0s</DataType>
++      <NotNull>1</NotNull>
++      <StateNumber>577</StateNumber>
++      <TypeId>1043</TypeId>
++    </column>
++    <column id="38" parent="27" name="album_year">
++      <Position>4</Position>
++      <DataType>integer|0s</DataType>
++      <NotNull>1</NotNull>
++      <StateNumber>577</StateNumber>
++      <TypeId>23</TypeId>
++    </column>
++    <column id="39" parent="27" name="album_tracks">
++      <Position>5</Position>
++      <DataType>integer|0s</DataType>
++      <NotNull>1</NotNull>
++      <StateNumber>577</StateNumber>
++      <TypeId>23</TypeId>
++    </column>
++    <index id="40" parent="27" name="pk_albums">
++      <ObjectId>16433</ObjectId>
++      <ColNames>album_id</ColNames>
++      <Unique>1</Unique>
++    </index>
++    <index id="41" parent="27" name="idx_albums">
++      <ObjectId>16486</ObjectId>
++      <ColNames>artist_id</ColNames>
++    </index>
++    <key id="42" parent="27" name="pk_albums">
++      <ObjectId>16434</ObjectId>
++      <ColNames>album_id</ColNames>
++      <UnderlyingIndexName>pk_albums</UnderlyingIndexName>
++      <Primary>1</Primary>
++    </key>
++    <foreign-key id="43" parent="27" name="fk_albums_artists">
++      <ObjectId>16610</ObjectId>
++      <ColNames>artist_id</ColNames>
++      <RefTableId>16440</RefTableId>
++      <RefColPositions>1</RefColPositions>
++      <RefTableName>artists</RefTableName>
++      <RefKeyName>pk_persons</RefKeyName>
++      <RefColNames>artist_id</RefColNames>
++    </foreign-key>
++    <column id="44" parent="28" name="album_id">
++      <Position>1</Position>
++      <DataType>integer|0s</DataType>
++      <NotNull>1</NotNull>
++      <StateNumber>566</StateNumber>
++      <TypeId>23</TypeId>
++    </column>
++    <column id="45" parent="28" name="song_id">
++      <Position>2</Position>
++      <DataType>integer|0s</DataType>
++      <NotNull>1</NotNull>
++      <StateNumber>566</StateNumber>
++      <TypeId>23</TypeId>
++    </column>
++    <column id="46" parent="28" name="track_number">
++      <Position>3</Position>
++      <DataType>integer|0s</DataType>
++      <NotNull>1</NotNull>
++      <StateNumber>566</StateNumber>
++      <TypeId>23</TypeId>
++    </column>
++    <index id="47" parent="28" name="pk_albums_songs">
++      <ObjectId>16511</ObjectId>
++      <ColNames>song_id</ColNames>
++      <Unique>1</Unique>
++    </index>
++    <key id="48" parent="28" name="pk_albums_songs">
++      <ObjectId>16512</ObjectId>
++      <ColNames>song_id</ColNames>
++      <UnderlyingIndexName>pk_albums_songs</UnderlyingIndexName>
++      <Primary>1</Primary>
++    </key>
++    <foreign-key id="49" parent="28" name="fk_albums_songs_albums">
++      <ObjectId>16461</ObjectId>
++      <ColNames>album_id</ColNames>
++      <RefTableId>16430</RefTableId>
++      <RefColPositions>1</RefColPositions>
++      <RefTableName>albums</RefTableName>
++      <RefKeyName>pk_albums</RefKeyName>
++      <RefColNames>album_id</RefColNames>
++    </foreign-key>
++    <foreign-key id="50" parent="28" name="fk_albums_songs_songs">
++      <ObjectId>16466</ObjectId>
++      <ColNames>song_id</ColNames>
++      <RefTableId>16404</RefTableId>
++      <RefColPositions>1</RefColPositions>
++      <RefTableName>songs</RefTableName>
++      <RefKeyName>pk_songs</RefKeyName>
++      <RefColNames>song_id</RefColNames>
++    </foreign-key>
++    <column id="51" parent="29" name="artist_id">
++      <Position>1</Position>
++      <DataType>integer|0s</DataType>
++      <NotNull>1</NotNull>
++      <StateNumber>628</StateNumber>
++      <DefaultExpression>nextval(&apos;persons_artist_id_seq&apos;::regclass)</DefaultExpression>
++      <TypeId>23</TypeId>
++      <SequenceName>persons_artist_id_seq</SequenceName>
++    </column>
++    <column id="52" parent="29" name="last_name">
++      <Position>2</Position>
++      <DataType>varchar(100)|0s</DataType>
++      <NotNull>1</NotNull>
++      <StateNumber>580</StateNumber>
++      <TypeId>1043</TypeId>
++    </column>
++    <column id="53" parent="29" name="first_name">
++      <Position>3</Position>
++      <DataType>varchar(100)|0s</DataType>
++      <NotNull>1</NotNull>
++      <StateNumber>580</StateNumber>
++      <TypeId>1043</TypeId>
++    </column>
++    <column id="54" parent="29" name="birthday">
++      <Position>4</Position>
++      <DataType>date|0s</DataType>
++      <NotNull>1</NotNull>
++      <StateNumber>580</StateNumber>
++      <TypeId>1082</TypeId>
++    </column>
++    <column id="55" parent="29" name="genre_id">
++      <Position>6</Position>
++      <DataType>integer|0s</DataType>
++      <NotNull>1</NotNull>
++      <StateNumber>761</StateNumber>
++      <TypeId>23</TypeId>
++    </column>
++    <index id="56" parent="29" name="pk_persons">
++      <ObjectId>16443</ObjectId>
++      <ColNames>artist_id</ColNames>
++      <Unique>1</Unique>
++    </index>
++    <key id="57" parent="29" name="pk_persons">
++      <ObjectId>16444</ObjectId>
++      <ColNames>artist_id</ColNames>
++      <UnderlyingIndexName>pk_persons</UnderlyingIndexName>
++      <Primary>1</Primary>
++    </key>
++    <foreign-key id="58" parent="29" name="persons_genres_genre_id_fk">
++      <ObjectId>16615</ObjectId>
++      <ColNames>genre_id</ColNames>
++      <RefTableId>16445</RefTableId>
++      <RefColPositions>1</RefColPositions>
++      <RefTableName>genres</RefTableName>
++      <RefKeyName>pk_genres</RefKeyName>
++      <RefColNames>genre_id</RefColNames>
++    </foreign-key>
++    <column id="59" parent="30" name="client_id">
++      <Position>1</Position>
++      <DataType>integer|0s</DataType>
++      <NotNull>1</NotNull>
++      <StateNumber>558</StateNumber>
++      <DefaultExpression>nextval(&apos;client_client_id_seq&apos;::regclass)</DefaultExpression>
++      <TypeId>23</TypeId>
++      <SequenceName>client_client_id_seq</SequenceName>
++    </column>
++    <column id="60" parent="30" name="first_name">
++      <Position>2</Position>
++      <DataType>varchar(50)|0s</DataType>
++      <NotNull>1</NotNull>
++      <StateNumber>695</StateNumber>
++      <TypeId>1043</TypeId>
++    </column>
++    <column id="61" parent="30" name="last_name">
++      <Position>3</Position>
++      <DataType>varchar(50)|0s</DataType>
++      <NotNull>1</NotNull>
++      <StateNumber>696</StateNumber>
++      <TypeId>1043</TypeId>
++    </column>
++    <column id="62" parent="30" name="email">
++      <Position>4</Position>
++      <DataType>varchar(50)|0s</DataType>
++      <NotNull>1</NotNull>
++      <StateNumber>697</StateNumber>
++      <TypeId>1043</TypeId>
++    </column>
++    <column id="63" parent="30" name="hash_password">
++      <Position>5</Position>
++      <DataType>varchar(200)|0s</DataType>
++      <NotNull>1</NotNull>
++      <StateNumber>698</StateNumber>
++      <TypeId>1043</TypeId>
++    </column>
++    <index id="64" parent="30" name="client_pkey">
++      <ObjectId>16400</ObjectId>
++      <ColNames>client_id</ColNames>
++      <Unique>1</Unique>
++    </index>
++    <key id="65" parent="30" name="client_pkey">
++      <ObjectId>16401</ObjectId>
++      <ColNames>client_id</ColNames>
++      <UnderlyingIndexName>client_pkey</UnderlyingIndexName>
++      <Primary>1</Primary>
++    </key>
++    <column id="66" parent="31" name="genre_id">
++      <Position>1</Position>
++      <DataType>integer|0s</DataType>
++      <NotNull>1</NotNull>
++      <StateNumber>617</StateNumber>
++      <DefaultExpression>nextval(&apos;genres_genre_id_seq&apos;::regclass)</DefaultExpression>
++      <TypeId>23</TypeId>
++      <SequenceName>genres_genre_id_seq</SequenceName>
++    </column>
++    <column id="67" parent="31" name="genre_name">
++      <Position>2</Position>
++      <DataType>varchar(100)|0s</DataType>
++      <NotNull>1</NotNull>
++      <StateNumber>581</StateNumber>
++      <TypeId>1043</TypeId>
++    </column>
++    <index id="68" parent="31" name="pk_genres">
++      <ObjectId>16448</ObjectId>
++      <ColNames>genre_id</ColNames>
++      <Unique>1</Unique>
++    </index>
++    <key id="69" parent="31" name="pk_genres">
++      <ObjectId>16449</ObjectId>
++      <ColNames>genre_id</ColNames>
++      <UnderlyingIndexName>pk_genres</UnderlyingIndexName>
++      <Primary>1</Primary>
++    </key>
++    <column id="70" parent="32" name="artist_id">
++      <Position>1</Position>
++      <DataType>integer|0s</DataType>
++      <NotNull>1</NotNull>
++      <StateNumber>579</StateNumber>
++      <TypeId>23</TypeId>
++    </column>
++    <column id="71" parent="32" name="group_name">
++      <Position>2</Position>
++      <DataType>varchar(100)|0s</DataType>
++      <NotNull>1</NotNull>
++      <StateNumber>579</StateNumber>
++      <TypeId>1043</TypeId>
++    </column>
++    <index id="72" parent="32" name="pk_groups">
++      <ObjectId>16438</ObjectId>
++      <ColNames>artist_id</ColNames>
++      <Unique>1</Unique>
++    </index>
++    <key id="73" parent="32" name="pk_groups">
++      <ObjectId>16439</ObjectId>
++      <ColNames>artist_id</ColNames>
++      <UnderlyingIndexName>pk_groups</UnderlyingIndexName>
++      <Primary>1</Primary>
++    </key>
++    <foreign-key id="74" parent="32" name="fk_groups_artists">
++      <ObjectId>16625</ObjectId>
++      <ColNames>artist_id</ColNames>
++      <RefTableId>16440</RefTableId>
++      <RefColPositions>1</RefColPositions>
++      <RefTableName>artists</RefTableName>
++      <RefKeyName>pk_persons</RefKeyName>
++      <RefColNames>artist_id</RefColNames>
++    </foreign-key>
++    <column id="75" parent="33" name="client_id">
++      <Position>1</Position>
++      <DataType>integer|0s</DataType>
++      <StateNumber>712</StateNumber>
++      <TypeId>23</TypeId>
++    </column>
++    <column id="76" parent="33" name="song_id">
++      <Position>2</Position>
++      <DataType>integer|0s</DataType>
++      <StateNumber>712</StateNumber>
++      <TypeId>23</TypeId>
++    </column>
++    <index id="77" parent="33" name="library_client_id_song_id_key">
++      <ObjectId>16590</ObjectId>
++      <ColNames>client_id
++song_id</ColNames>
++      <Unique>1</Unique>
++    </index>
++    <key id="78" parent="33" name="library_client_id_song_id_key">
++      <ObjectId>16591</ObjectId>
++      <ColNames>client_id
++song_id</ColNames>
++      <UnderlyingIndexName>library_client_id_song_id_key</UnderlyingIndexName>
++    </key>
++    <foreign-key id="79" parent="33" name="library_client_id_fkey">
++      <ObjectId>16592</ObjectId>
++      <ColNames>client_id</ColNames>
++      <RefTableId>16396</RefTableId>
++      <RefColPositions>1</RefColPositions>
++      <RefTableName>clients</RefTableName>
++      <RefKeyName>client_pkey</RefKeyName>
++      <RefColNames>client_id</RefColNames>
++    </foreign-key>
++    <foreign-key id="80" parent="33" name="library_song_id_fkey">
++      <ObjectId>16597</ObjectId>
++      <ColNames>song_id</ColNames>
++      <RefTableId>16404</RefTableId>
++      <RefColPositions>1</RefColPositions>
++      <RefTableName>songs</RefTableName>
++      <RefKeyName>pk_songs</RefKeyName>
++      <RefColNames>song_id</RefColNames>
++    </foreign-key>
++    <column id="81" parent="34" name="song_id">
++      <Position>1</Position>
++      <DataType>integer|0s</DataType>
++      <NotNull>1</NotNull>
++      <StateNumber>725</StateNumber>
++      <DefaultExpression>nextval(&apos;songs_song_id_seq&apos;::regclass)</DefaultExpression>
++      <TypeId>23</TypeId>
++      <SequenceName>songs_song_id_seq</SequenceName>
++    </column>
++    <column id="82" parent="34" name="song_title">
++      <Position>2</Position>
++      <DataType>varchar(50)|0s</DataType>
++      <NotNull>1</NotNull>
++      <StateNumber>568</StateNumber>
++      <TypeId>1043</TypeId>
++    </column>
++    <column id="83" parent="34" name="song_duration">
++      <Position>3</Position>
++      <DataType>integer|0s</DataType>
++      <NotNull>1</NotNull>
++      <StateNumber>570</StateNumber>
++      <TypeId>23</TypeId>
++    </column>
++    <column id="84" parent="34" name="artist_id">
++      <Position>4</Position>
++      <DataType>integer|0s</DataType>
++      <NotNull>1</NotNull>
++      <StateNumber>750</StateNumber>
++      <TypeId>23</TypeId>
++    </column>
++    <index id="85" parent="34" name="pk_songs">
++      <ObjectId>16423</ObjectId>
++      <ColNames>song_id</ColNames>
++      <Unique>1</Unique>
++    </index>
++    <key id="86" parent="34" name="pk_songs">
++      <ObjectId>16424</ObjectId>
++      <ColNames>song_id</ColNames>
++      <UnderlyingIndexName>pk_songs</UnderlyingIndexName>
++      <Primary>1</Primary>
++    </key>
++    <foreign-key id="87" parent="34" name="songs_persons_artist_id_fk">
++      <ObjectId>16620</ObjectId>
++      <ColNames>artist_id</ColNames>
++      <RefTableId>16440</RefTableId>
++      <RefColPositions>1</RefColPositions>
++      <RefTableName>artists</RefTableName>
++      <RefKeyName>pk_persons</RefKeyName>
++      <RefColNames>artist_id</RefColNames>
++    </foreign-key>
++  </database-model>
++</dataSource>
+\ No newline at end of file
+Index: .idea/misc.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/misc.xml	(date 1535997045000)
++++ .idea/misc.xml	(date 1535997045000)
+@@ -0,0 +1,14 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="ExternalStorageConfigurationManager" enabled="true" />
++  <component name="MavenProjectsManager">
++    <option name="originalFiles">
++      <list>
++        <option value="$PROJECT_DIR$/pom.xml" />
++      </list>
++    </option>
++  </component>
++  <component name="ProjectRootManager" version="2" languageLevel="JDK_10" project-jdk-name="10" project-jdk-type="JavaSDK">
++    <output url="file://$PROJECT_DIR$/out" />
++  </component>
++</project>
+\ No newline at end of file
+Index: .idea/vcs.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/vcs.xml	(date 1537196182000)
++++ .idea/vcs.xml	(date 1537196182000)
+@@ -0,0 +1,6 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="VcsDirectoryMappings">
++    <mapping directory="$PROJECT_DIR$" vcs="Git" />
++  </component>
++</project>
+\ No newline at end of file
+Index: src/main/java/ru/itis/models/User.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/java/ru/itis/models/User.java	(date 1536918854000)
++++ src/main/java/ru/itis/models/User.java	(date 1536918854000)
+@@ -0,0 +1,19 @@
++package ru.itis.models;
++
++import lombok.*;
++
++import java.util.List;
++
++@Getter
++@Setter
++@ToString
++@EqualsAndHashCode
++@Builder
++public class User {
++    private int clientId;
++    private String firstName;
++    private String lastName;
++    private String email;
++    private String hashPassword;
++    private Library library;
++}
+Index: .idea/dataSources.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/dataSources.xml	(date 1536566064000)
++++ .idea/dataSources.xml	(date 1536566064000)
+@@ -0,0 +1,11 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
++    <data-source source="LOCAL" name="@localhost" uuid="69b50a13-1e6b-45ce-a1e2-675eaee0539f">
++      <driver-ref>postgresql</driver-ref>
++      <synchronize>true</synchronize>
++      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
++      <jdbc-url>jdbc:postgresql://localhost:5432/</jdbc-url>
++    </data-source>
++  </component>
++</project>
+\ No newline at end of file
+Index: src/main/java/ru/itis/models/Library.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/java/ru/itis/models/Library.java	(date 1536937267000)
++++ src/main/java/ru/itis/models/Library.java	(date 1536937267000)
+@@ -0,0 +1,15 @@
++package ru.itis.models;
++
++import lombok.*;
++
++import java.util.List;
++
++@Getter
++@Setter
++@ToString
++@EqualsAndHashCode
++@Builder
++public class Library {
++    private int clientId;
++    private List<Song> songs;
++}
+Index: src/main/java/ru/itis/models/Song.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/java/ru/itis/models/Song.java	(date 1536996592000)
++++ src/main/java/ru/itis/models/Song.java	(date 1536996592000)
+@@ -0,0 +1,15 @@
++package ru.itis.models;
++
++import lombok.*;
++
++@Getter
++@Setter
++@Builder
++@EqualsAndHashCode
++@ToString
++public class Song {
++    private int songId;
++    private String title;
++    private int duration;
++    private int artistId;
++}
+Index: src/main/java/ru/itis/mappers/RowMapper.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/java/ru/itis/mappers/RowMapper.java	(date 1536488252000)
++++ src/main/java/ru/itis/mappers/RowMapper.java	(date 1536488252000)
+@@ -0,0 +1,7 @@
++package ru.itis.mappers;
++
++import java.sql.ResultSet;
++
++public interface RowMapper<T> {
++    T rowMap(ResultSet resultSet);
++}
+Index: src/main/java/ru/itis/repositories/LibraryRepositoryConnectionImpl.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/java/ru/itis/repositories/LibraryRepositoryConnectionImpl.java	(date 1537008753000)
++++ src/main/java/ru/itis/repositories/LibraryRepositoryConnectionImpl.java	(date 1537008753000)
+@@ -0,0 +1,112 @@
++package ru.itis.repositories;
++
++import lombok.SneakyThrows;
++import ru.itis.mappers.RowMapper;
++import ru.itis.models.Library;
++import ru.itis.models.Song;
++import ru.itis.models.User;
++
++import java.sql.Connection;
++import java.sql.PreparedStatement;
++import java.sql.ResultSet;
++import java.sql.Statement;
++import java.util.*;
++
++public class LibraryRepositoryConnectionImpl implements LibraryRepository {
++    private Connection connection;
++
++    //language=SQL
++    private static final String SQL_DELETE_LIBRARY_WITH_SONGS = "DELETE FROM library" +
++            " WHERE client_id = ?";
++
++    //language=SQL
++    private static final String SQL_SELECT_LIBRARY_WITH_SONGS = "select * " +
++            "from library " +
++            "join songs s on library.song_id = s.song_id " +
++            "join clients c2 on library.client_id = c2.client_id " +
++            "where library.client_id = ?";
++
++    public LibraryRepositoryConnectionImpl(Connection connection) {
++        this.connection = connection;
++    }
++
++    private RowMapper<Library> libraryRowMapper = new RowMapper<Library>() {
++        @SneakyThrows
++        public Library rowMap(ResultSet resultSet) {
++            return Library.builder()
++                    .clientId(resultSet.getInt("client_id"))
++                    .build();
++        }
++    };
++
++    @SneakyThrows
++    public Optional<Library> findOne(int client_id) {
++        PreparedStatement preparedStatement = connection.prepareStatement(SQL_SELECT_LIBRARY_WITH_SONGS);
++        preparedStatement.setInt(1, client_id);
++        if (preparedStatement.execute()) {
++            ResultSet resultSet = preparedStatement.getResultSet();
++            List<Song> songs = new ArrayList<>();
++            Library library = null;
++            User client = null;
++            while (resultSet.next()) {
++                if (library == null) {
++                    library = Library.builder()
++                            .clientId(resultSet.getInt("client_id"))
++                            .build();
++                    /*client = User.builder()
++                            .clientId(resultSet.getInt("client_id"))
++                            .firstName(resultSet.getString("first_name"))
++                            .lastName(resultSet.getString("last_name"))
++                            .email(resultSet.getString("email"))
++                            .hashPassword(resultSet.getString("hash_password"))
++                            .build();*/
++                }
++                Song song = Song.builder()
++                        .songId(resultSet.getInt("song_id"))
++                        .title(resultSet.getString("song_title"))
++                        .duration(resultSet.getInt("song_duration"))
++                        .artistId(resultSet.getInt("artist_id"))
++                        .build();
++                songs.add(song);
++            }
++            if (library != null) {
++                library.setSongs(songs);
++                //client.setLibrary(library);
++                return Optional.of(library);
++            }
++        }
++        return Optional.empty();
++    }
++
++    @SneakyThrows
++    public void save(Library model) {
++
++    }
++
++    @SneakyThrows
++    public void delete(int id) {
++        PreparedStatement statement = connection.prepareStatement(SQL_DELETE_LIBRARY_WITH_SONGS);
++        statement.setInt(1, id);
++        statement.executeUpdate();
++    }
++
++    @SneakyThrows
++    public Optional<List<Library>> findAll() {
++        Statement statement = connection.createStatement();
++        ResultSet resultSet = statement.executeQuery("SELECT * FROM library " +
++                "join songs s on library.song_id = s.song_id");
++        List<Library> libraries = new ArrayList<>();
++        Set<Integer> ides = new HashSet<>();
++        List<Song> songs;
++        int a;
++        while (resultSet.next()) {
++            a = resultSet.getInt("client_id");
++            if (!ides.contains(a)) {
++                ides.add(a);
++                Library library = findOne(a).get();
++                libraries.add(library);
++            }
++        }
++        return Optional.of(libraries);
++    }
++}
+Index: src/main/java/ru/itis/models/Groupe.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/java/ru/itis/models/Groupe.java	(date 1536938321000)
++++ src/main/java/ru/itis/models/Groupe.java	(date 1536938321000)
+@@ -0,0 +1,13 @@
++package ru.itis.models;
++
++import lombok.*;
++
++@Getter
++@Setter
++@ToString
++@Builder
++@EqualsAndHashCode
++public class Groupe {
++    private int artistId;
++    private String groupName;
++}
+Index: src/main/java/ru/itis/repositories/CrudRepository.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/java/ru/itis/repositories/CrudRepository.java	(date 1537002135000)
++++ src/main/java/ru/itis/repositories/CrudRepository.java	(date 1537002135000)
+@@ -0,0 +1,11 @@
++package ru.itis.repositories;
++
++import java.util.List;
++import java.util.Optional;
++
++public interface CrudRepository<T> {
++    Optional<T> findOne(int id);
++    void save(T model);
++    void delete(int id);
++    Optional<List<T>> findAll();
++}
+Index: src/main/java/ru/itis/repositories/LibraryRepository.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/java/ru/itis/repositories/LibraryRepository.java	(date 1536824041000)
++++ src/main/java/ru/itis/repositories/LibraryRepository.java	(date 1536824041000)
+@@ -0,0 +1,6 @@
++package ru.itis.repositories;
++
++import ru.itis.models.Library;
++
++public interface LibraryRepository extends CrudRepository<Library> {
++}
+Index: .idea/dataSources/69b50a13-1e6b-45ce-a1e2-675eaee0539f/storage_v2/_src_/database/postgres.edMnLQ.meta
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/dataSources/69b50a13-1e6b-45ce-a1e2-675eaee0539f/storage_v2/_src_/database/postgres.edMnLQ.meta	(date 1536341195000)
++++ .idea/dataSources/69b50a13-1e6b-45ce-a1e2-675eaee0539f/storage_v2/_src_/database/postgres.edMnLQ.meta	(date 1536341195000)
+@@ -0,0 +1,1 @@
++#n:postgres
+\ No newline at end of file
+Index: src/main/java/ru/itis/repositories/UsersRepository.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/java/ru/itis/repositories/UsersRepository.java	(date 1537025725000)
++++ src/main/java/ru/itis/repositories/UsersRepository.java	(date 1537025725000)
+@@ -0,0 +1,10 @@
++package ru.itis.repositories;
++
++import ru.itis.models.User;
++
++import java.util.List;
++import java.util.Optional;
++
++public interface UsersRepository extends CrudRepository<User> {
++    Optional<List<User>> findAllByFirstName(String firstName);
++}
+Index: src/main/java/ru/itis/repositories/SongRepository.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/java/ru/itis/repositories/SongRepository.java	(date 1536823922000)
++++ src/main/java/ru/itis/repositories/SongRepository.java	(date 1536823922000)
+@@ -0,0 +1,6 @@
++package ru.itis.repositories;
++
++import ru.itis.models.Song;
++
++public interface SongRepository extends CrudRepository<Song> {
++}
+Index: .idea/dataSources/69b50a13-1e6b-45ce-a1e2-675eaee0539f/storage_v2/_src_/database/postgres.edMnLQ/schema/public.abK9xQ.meta
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/dataSources/69b50a13-1e6b-45ce-a1e2-675eaee0539f/storage_v2/_src_/database/postgres.edMnLQ/schema/public.abK9xQ.meta	(date 1537084150000)
++++ .idea/dataSources/69b50a13-1e6b-45ce-a1e2-675eaee0539f/storage_v2/_src_/database/postgres.edMnLQ/schema/public.abK9xQ.meta	(date 1537084150000)
+@@ -0,0 +1,2 @@
++#n:public
++!<md> [767, 0, null, null, -2147483648, -2147483648]
+Index: .idea/uiDesigner.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/uiDesigner.xml	(date 1536818423000)
++++ .idea/uiDesigner.xml	(date 1536818423000)
+@@ -0,0 +1,124 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="Palette2">
++    <group name="Swing">
++      <item class="com.intellij.uiDesigner.HSpacer" tooltip-text="Horizontal Spacer" icon="/com/intellij/uiDesigner/icons/hspacer.png" removable="false" auto-create-binding="false" can-attach-label="false">
++        <default-constraints vsize-policy="1" hsize-policy="6" anchor="0" fill="1" />
++      </item>
++      <item class="com.intellij.uiDesigner.VSpacer" tooltip-text="Vertical Spacer" icon="/com/intellij/uiDesigner/icons/vspacer.png" removable="false" auto-create-binding="false" can-attach-label="false">
++        <default-constraints vsize-policy="6" hsize-policy="1" anchor="0" fill="2" />
++      </item>
++      <item class="javax.swing.JPanel" icon="/com/intellij/uiDesigner/icons/panel.png" removable="false" auto-create-binding="false" can-attach-label="false">
++        <default-constraints vsize-policy="3" hsize-policy="3" anchor="0" fill="3" />
++      </item>
++      <item class="javax.swing.JScrollPane" icon="/com/intellij/uiDesigner/icons/scrollPane.png" removable="false" auto-create-binding="false" can-attach-label="true">
++        <default-constraints vsize-policy="7" hsize-policy="7" anchor="0" fill="3" />
++      </item>
++      <item class="javax.swing.JButton" icon="/com/intellij/uiDesigner/icons/button.png" removable="false" auto-create-binding="true" can-attach-label="false">
++        <default-constraints vsize-policy="0" hsize-policy="3" anchor="0" fill="1" />
++        <initial-values>
++          <property name="text" value="Button" />
++        </initial-values>
++      </item>
++      <item class="javax.swing.JRadioButton" icon="/com/intellij/uiDesigner/icons/radioButton.png" removable="false" auto-create-binding="true" can-attach-label="false">
++        <default-constraints vsize-policy="0" hsize-policy="3" anchor="8" fill="0" />
++        <initial-values>
++          <property name="text" value="RadioButton" />
++        </initial-values>
++      </item>
++      <item class="javax.swing.JCheckBox" icon="/com/intellij/uiDesigner/icons/checkBox.png" removable="false" auto-create-binding="true" can-attach-label="false">
++        <default-constraints vsize-policy="0" hsize-policy="3" anchor="8" fill="0" />
++        <initial-values>
++          <property name="text" value="CheckBox" />
++        </initial-values>
++      </item>
++      <item class="javax.swing.JLabel" icon="/com/intellij/uiDesigner/icons/label.png" removable="false" auto-create-binding="false" can-attach-label="false">
++        <default-constraints vsize-policy="0" hsize-policy="0" anchor="8" fill="0" />
++        <initial-values>
++          <property name="text" value="Label" />
++        </initial-values>
++      </item>
++      <item class="javax.swing.JTextField" icon="/com/intellij/uiDesigner/icons/textField.png" removable="false" auto-create-binding="true" can-attach-label="true">
++        <default-constraints vsize-policy="0" hsize-policy="6" anchor="8" fill="1">
++          <preferred-size width="150" height="-1" />
++        </default-constraints>
++      </item>
++      <item class="javax.swing.JPasswordField" icon="/com/intellij/uiDesigner/icons/passwordField.png" removable="false" auto-create-binding="true" can-attach-label="true">
++        <default-constraints vsize-policy="0" hsize-policy="6" anchor="8" fill="1">
++          <preferred-size width="150" height="-1" />
++        </default-constraints>
++      </item>
++      <item class="javax.swing.JFormattedTextField" icon="/com/intellij/uiDesigner/icons/formattedTextField.png" removable="false" auto-create-binding="true" can-attach-label="true">
++        <default-constraints vsize-policy="0" hsize-policy="6" anchor="8" fill="1">
++          <preferred-size width="150" height="-1" />
++        </default-constraints>
++      </item>
++      <item class="javax.swing.JTextArea" icon="/com/intellij/uiDesigner/icons/textArea.png" removable="false" auto-create-binding="true" can-attach-label="true">
++        <default-constraints vsize-policy="6" hsize-policy="6" anchor="0" fill="3">
++          <preferred-size width="150" height="50" />
++        </default-constraints>
++      </item>
++      <item class="javax.swing.JTextPane" icon="/com/intellij/uiDesigner/icons/textPane.png" removable="false" auto-create-binding="true" can-attach-label="true">
++        <default-constraints vsize-policy="6" hsize-policy="6" anchor="0" fill="3">
++          <preferred-size width="150" height="50" />
++        </default-constraints>
++      </item>
++      <item class="javax.swing.JEditorPane" icon="/com/intellij/uiDesigner/icons/editorPane.png" removable="false" auto-create-binding="true" can-attach-label="true">
++        <default-constraints vsize-policy="6" hsize-policy="6" anchor="0" fill="3">
++          <preferred-size width="150" height="50" />
++        </default-constraints>
++      </item>
++      <item class="javax.swing.JComboBox" icon="/com/intellij/uiDesigner/icons/comboBox.png" removable="false" auto-create-binding="true" can-attach-label="true">
++        <default-constraints vsize-policy="0" hsize-policy="2" anchor="8" fill="1" />
++      </item>
++      <item class="javax.swing.JTable" icon="/com/intellij/uiDesigner/icons/table.png" removable="false" auto-create-binding="true" can-attach-label="false">
++        <default-constraints vsize-policy="6" hsize-policy="6" anchor="0" fill="3">
++          <preferred-size width="150" height="50" />
++        </default-constraints>
++      </item>
++      <item class="javax.swing.JList" icon="/com/intellij/uiDesigner/icons/list.png" removable="false" auto-create-binding="true" can-attach-label="false">
++        <default-constraints vsize-policy="6" hsize-policy="2" anchor="0" fill="3">
++          <preferred-size width="150" height="50" />
++        </default-constraints>
++      </item>
++      <item class="javax.swing.JTree" icon="/com/intellij/uiDesigner/icons/tree.png" removable="false" auto-create-binding="true" can-attach-label="false">
++        <default-constraints vsize-policy="6" hsize-policy="6" anchor="0" fill="3">
++          <preferred-size width="150" height="50" />
++        </default-constraints>
++      </item>
++      <item class="javax.swing.JTabbedPane" icon="/com/intellij/uiDesigner/icons/tabbedPane.png" removable="false" auto-create-binding="true" can-attach-label="false">
++        <default-constraints vsize-policy="3" hsize-policy="3" anchor="0" fill="3">
++          <preferred-size width="200" height="200" />
++        </default-constraints>
++      </item>
++      <item class="javax.swing.JSplitPane" icon="/com/intellij/uiDesigner/icons/splitPane.png" removable="false" auto-create-binding="false" can-attach-label="false">
++        <default-constraints vsize-policy="3" hsize-policy="3" anchor="0" fill="3">
++          <preferred-size width="200" height="200" />
++        </default-constraints>
++      </item>
++      <item class="javax.swing.JSpinner" icon="/com/intellij/uiDesigner/icons/spinner.png" removable="false" auto-create-binding="true" can-attach-label="true">
++        <default-constraints vsize-policy="0" hsize-policy="6" anchor="8" fill="1" />
++      </item>
++      <item class="javax.swing.JSlider" icon="/com/intellij/uiDesigner/icons/slider.png" removable="false" auto-create-binding="true" can-attach-label="false">
++        <default-constraints vsize-policy="0" hsize-policy="6" anchor="8" fill="1" />
++      </item>
++      <item class="javax.swing.JSeparator" icon="/com/intellij/uiDesigner/icons/separator.png" removable="false" auto-create-binding="false" can-attach-label="false">
++        <default-constraints vsize-policy="6" hsize-policy="6" anchor="0" fill="3" />
++      </item>
++      <item class="javax.swing.JProgressBar" icon="/com/intellij/uiDesigner/icons/progressbar.png" removable="false" auto-create-binding="true" can-attach-label="false">
++        <default-constraints vsize-policy="0" hsize-policy="6" anchor="0" fill="1" />
++      </item>
++      <item class="javax.swing.JToolBar" icon="/com/intellij/uiDesigner/icons/toolbar.png" removable="false" auto-create-binding="false" can-attach-label="false">
++        <default-constraints vsize-policy="0" hsize-policy="6" anchor="0" fill="1">
++          <preferred-size width="-1" height="20" />
++        </default-constraints>
++      </item>
++      <item class="javax.swing.JToolBar$Separator" icon="/com/intellij/uiDesigner/icons/toolbarSeparator.png" removable="false" auto-create-binding="false" can-attach-label="false">
++        <default-constraints vsize-policy="0" hsize-policy="0" anchor="0" fill="1" />
++      </item>
++      <item class="javax.swing.JScrollBar" icon="/com/intellij/uiDesigner/icons/scrollbar.png" removable="false" auto-create-binding="true" can-attach-label="false">
++        <default-constraints vsize-policy="6" hsize-policy="0" anchor="0" fill="2" />
++      </item>
++    </group>
++  </component>
++</project>
+\ No newline at end of file
+Index: src/main/java/ru/itis/app/Application.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/java/ru/itis/app/Application.java	(date 1536408553000)
++++ src/main/java/ru/itis/app/Application.java	(date 1536408553000)
+@@ -0,0 +1,24 @@
++package ru.itis.app;
++
++import java.sql.*;
++
++public class Application {
++    private static final String USERNAME = "postgres";
++    private static final String PASSWORD = "12ER56ui78";
++    private static final String URL = "jdbc:postgresql://localhost:5432/";
++
++    public static void main(String[] args) {
++        try {
++            Connection connection =
++                    DriverManager.getConnection(URL, USERNAME, PASSWORD);
++            Statement statement = connection.createStatement();
++            ResultSet resultSet =
++                    statement.executeQuery("SELECT client_id, first_name FROM clients");
++            while (resultSet.next()) {
++                System.out.println(resultSet.getInt("client_id") + " " + resultSet.getString("first_name"));
++            }
++        } catch (SQLException e) {
++            e.printStackTrace();
++        }
++    }
++}
+Index: src/main/java/ru/itis/repositories/UsersRepositoryConnectionImpl.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/java/ru/itis/repositories/UsersRepositoryConnectionImpl.java	(date 1537025725000)
++++ src/main/java/ru/itis/repositories/UsersRepositoryConnectionImpl.java	(date 1537025725000)
+@@ -0,0 +1,91 @@
++package ru.itis.repositories;
++
++import lombok.SneakyThrows;
++import ru.itis.mappers.RowMapper;
++import ru.itis.models.Library;
++import ru.itis.models.User;
++
++import java.sql.*;
++import java.util.ArrayList;
++import java.util.List;
++import java.util.Optional;
++
++public class UsersRepositoryConnectionImpl implements UsersRepository {
++    private Connection connection;
++
++    //language=SQL
++    private static final String SQL_INSERT_QUERY = "insert into clients(first_name, last_name, email, hash_password)" +
++            "values (?, ?, ?, ?);";
++
++    //language=SQL
++    private static final String SQL_DELETE_QUERY = "delete from clients where client_id = ?";
++
++    public UsersRepositoryConnectionImpl(Connection connection) {
++        this.connection = connection;
++    }
++
++    private RowMapper<User> userRowMapper = new RowMapper<User>() {
++        @SneakyThrows
++        public User rowMap(ResultSet resultSet) {
++            return User.builder()
++                    .clientId(resultSet.getInt("client_id"))
++                    .email(resultSet.getString("email"))
++                    .hashPassword(resultSet.getString("hash_password"))
++                    .firstName(resultSet.getString("first_name"))
++                    .lastName(resultSet.getString("last_name"))
++                    .build();
++        }
++    };
++
++    public Optional<List<User>> findAllByFirstName(String firstName) {
++
++        return null;
++    }
++
++    public Optional<User> findOne(int id) {
++        try {
++            Statement statement = connection.createStatement();
++            ResultSet resultSet =
++                    statement.executeQuery("SELECT * FROM clients WHERE client_id = " + id);
++            resultSet.next();
++            return Optional.of(userRowMapper.rowMap(resultSet));
++        } catch (SQLException e) {
++            throw new IllegalStateException(e);
++        }
++    }
++
++    @SneakyThrows
++    public void save(User model) {
++        PreparedStatement statement = connection.prepareStatement(SQL_INSERT_QUERY, PreparedStatement.RETURN_GENERATED_KEYS);
++        statement.setString(1, model.getFirstName());
++        statement.setString(2, model.getLastName());
++        statement.setString(3, model.getEmail());
++        statement.setString(4, model.getHashPassword());
++        ResultSet resultSet = statement.getGeneratedKeys();
++        while (resultSet.next()) {
++            model.setClientId(resultSet.getInt("client_id"));
++        }
++        statement.executeUpdate();
++    }
++
++    @SneakyThrows
++    public void delete(int id) {
++        PreparedStatement statement = connection.prepareStatement(SQL_DELETE_QUERY);
++        statement.setInt(1, id);
++        statement.executeUpdate();
++    }
++
++    @SneakyThrows
++    public Optional<List<User>> findAll() {
++        Statement statement = connection.createStatement();
++        ResultSet resultSet =
++                statement.executeQuery("SELECT * FROM clients");
++        List<User> users = new ArrayList<>();
++        while (resultSet.next()) {
++            User newUser = userRowMapper.rowMap(resultSet);
++            users.add(newUser);
++        }
++        return Optional.of(users);
++
++    }
++}
+Index: src/main/java/ru/itis/app/UsersRepositoryDemo.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/java/ru/itis/app/UsersRepositoryDemo.java	(date 1536825848000)
++++ src/main/java/ru/itis/app/UsersRepositoryDemo.java	(date 1536825848000)
+@@ -0,0 +1,29 @@
++package ru.itis.app;
++
++import lombok.SneakyThrows;
++import ru.itis.models.User;
++import ru.itis.repositories.UsersRepository;
++import ru.itis.repositories.UsersRepositoryConnectionImpl;
++
++import java.sql.Connection;
++import java.sql.DriverManager;
++
++public class UsersRepositoryDemo {
++    private static final String USERNAME = "postgres";
++    private static final String PASSWORD = "12ER56ui78";
++    private static final String URL = "jdbc:postgresql://localhost:5432/";
++
++    @SneakyThrows
++    public static void main(String[] args) {
++        Connection connection =
++                DriverManager.getConnection(URL, USERNAME, PASSWORD);
++        UsersRepository usersRepository = new UsersRepositoryConnectionImpl(connection);
++        User user1 = User.builder()
++                .firstName("Anya")
++                .lastName("Kuzmenko")
++                .email("Kuzya228@mail.ru")
++                .hashPassword("nadiufnisfaefqwbefisdbfdsfiwuebfuibsdf")
++                .build();
++        usersRepository.save(user1);
++    }
++}
+Index: src/main/java/ru/itis/app/BuilderDemo.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/java/ru/itis/app/BuilderDemo.java	(date 1537182880000)
++++ src/main/java/ru/itis/app/BuilderDemo.java	(date 1537182880000)
+@@ -0,0 +1,30 @@
++package ru.itis.app;
++
++import lombok.SneakyThrows;
++import ru.itis.models.Library;
++import ru.itis.repositories.LibraryRepositoryConnectionImpl;
++import ru.itis.repositories.SongRepositoryConnectionImpl;
++import ru.itis.repositories.UsersRepositoryConnectionImpl;
++
++import java.sql.Connection;
++import java.sql.DriverManager;
++import java.sql.Statement;
++
++public class BuilderDemo {
++    private static final String USERNAME = "postgres";
++    private static final String PASSWORD = "12ER56ui78";
++    private static final String URL = "jdbc:postgresql://localhost:5432/";
++
++    @SneakyThrows
++    public static void main(String[] args) {
++        Connection connection =
++                DriverManager.getConnection(URL, USERNAME, PASSWORD);
++        Statement statement = connection.createStatement();
++        //LibraryRepositoryConnectionImpl libraryRepository = new LibraryRepositoryConnectionImpl(connection);
++        //System.out.println(libraryRepository.findAll());
++        //UsersRepositoryConnectionImpl usersRepository = new UsersRepositoryConnectionImpl(connection);
++        //System.out.println(usersRepository.findOne(1));
++        //SongRepositoryConnectionImpl songRepository = new SongRepositoryConnectionImpl(connection);
++        //System.out.println(songRepository.findOne(16));
++    }
++}
+Index: src/main/java/ru/itis/models/Album.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/java/ru/itis/models/Album.java	(date 1537085074000)
++++ src/main/java/ru/itis/models/Album.java	(date 1537085074000)
+@@ -0,0 +1,16 @@
++package ru.itis.models;
++
++import lombok.*;
++
++@Getter
++@Setter
++@ToString
++@EqualsAndHashCode
++@Builder
++public class Album {
++    private int albumId;
++    private int artistId;
++    private String albumTitle;
++    private int albumYear;
++    private int album_tracks;
++}
+Index: src/main/java/ru/itis/repositories/SongRepositoryConnectionImpl.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/java/ru/itis/repositories/SongRepositoryConnectionImpl.java	(date 1537002135000)
++++ src/main/java/ru/itis/repositories/SongRepositoryConnectionImpl.java	(date 1537002135000)
+@@ -0,0 +1,54 @@
++package ru.itis.repositories;
++
++import lombok.SneakyThrows;
++import ru.itis.mappers.RowMapper;
++import ru.itis.models.Song;
++
++import java.sql.Connection;
++import java.sql.ResultSet;
++import java.sql.Statement;
++import java.util.List;
++import java.util.Optional;
++
++public class SongRepositoryConnectionImpl implements SongRepository {
++    private Connection connection;
++
++    //language=SQL
++    private static final String SQL_ = "";
++
++    private RowMapper<Song> songRowMapper = new RowMapper<Song>() {
++        @SneakyThrows
++        public Song rowMap(ResultSet resultSet) {
++            return Song.builder()
++                    .songId(resultSet.getInt("song_id"))
++                    .title(resultSet.getString("song_title"))
++                    .duration(resultSet.getInt("song_duration"))
++                    .artistId(resultSet.getInt("artist_id"))
++                    .build();
++        }
++    };
++
++    public SongRepositoryConnectionImpl(Connection connection) {
++        this.connection = connection;
++    }
++
++    @SneakyThrows
++    public Optional<Song> findOne(int id) {
++        Statement statement = connection.createStatement();
++        ResultSet resultSet = statement.executeQuery("SELECT * from songs WHERE song_id = " + id);
++        resultSet.next();
++        return Optional.of(songRowMapper.rowMap(resultSet));
++    }
++
++    public void save(Song model) {
++
++    }
++
++    public void delete(int id) {
++
++    }
++
++    public Optional<List<Song>> findAll() {
++        return null;
++    }
++}
+Index: src/main/java/ru/itis/models/Genre.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/java/ru/itis/models/Genre.java	(date 1536823859000)
++++ src/main/java/ru/itis/models/Genre.java	(date 1536823859000)
+@@ -0,0 +1,13 @@
++package ru.itis.models;
++
++import lombok.*;
++
++@Getter
++@Setter
++@Builder
++@EqualsAndHashCode
++@ToString
++public class Genre {
++    private int genreId;
++    private String genreName;
++}
+Index: src/main/java/ru/itis/models/Artist.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/java/ru/itis/models/Artist.java	(date 1537084795000)
++++ src/main/java/ru/itis/models/Artist.java	(date 1537084795000)
+@@ -0,0 +1,17 @@
++package ru.itis.models;
++
++import lombok.*;
++import java.util.Date;
++
++@Getter
++@Setter
++@ToString
++@EqualsAndHashCode
++@Builder
++public class Artist {
++    private int artistId;
++    private String lastName;
++    private String firstName;
++    private Date birthday;
++    private int genreId;
++}
