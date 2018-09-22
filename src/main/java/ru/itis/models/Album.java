@@ -2,6 +2,8 @@ package ru.itis.models;
 
 import lombok.*;
 
+import java.util.List;
+
 @Getter
 @Setter
 @ToString
@@ -12,5 +14,6 @@ public class Album {
     private int artistId;
     private String albumTitle;
     private int albumYear;
-    private int album_tracks;
+    private int albumTracks;
+    private List<Song> albumSongs;
 }

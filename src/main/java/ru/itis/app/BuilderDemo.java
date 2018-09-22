@@ -22,8 +22,8 @@ public class BuilderDemo {
         Statement statement = connection.createStatement();
         //LibraryRepositoryConnectionImpl libraryRepository = new LibraryRepositoryConnectionImpl(connection);
         //System.out.println(libraryRepository.findAll());
-        //UsersRepositoryConnectionImpl usersRepository = new UsersRepositoryConnectionImpl(connection);
-        //System.out.println(usersRepository.findOne(1));
+        UsersRepositoryConnectionImpl usersRepository = new UsersRepositoryConnectionImpl(connection);
+        System.out.println(usersRepository.findAllByFirstName("Anastasia"));
         //SongRepositoryConnectionImpl songRepository = new SongRepositoryConnectionImpl(connection);
         //System.out.println(songRepository.findOne(16));
     }

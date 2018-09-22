@@ -2,8 +2,6 @@ package ru.itis.models;
 
 import lombok.*;
 
-import java.util.List;
-
 @Getter
 @Setter
 @ToString

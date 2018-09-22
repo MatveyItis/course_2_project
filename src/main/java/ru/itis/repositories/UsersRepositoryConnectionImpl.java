@@ -20,6 +20,9 @@ public class UsersRepositoryConnectionImpl implements UsersRepository {
     //language=SQL
     private static final String SQL_DELETE_QUERY = "delete from clients where client_id = ?";
 
+    //language=SQL
+    private static final String SQL_FIND_BY_NAME = "select * from clients where first_name = ?";
+
     public UsersRepositoryConnectionImpl(Connection connection) {
         this.connection = connection;
     }
@@ -37,9 +40,17 @@ public class UsersRepositoryConnectionImpl implements UsersRepository {
         }
     };
 
+    @SneakyThrows
     public Optional<List<User>> findAllByFirstName(String firstName) {
-
-        return null;
+        PreparedStatement statement = connection.prepareStatement(SQL_FIND_BY_NAME);
+        statement.setString(1, firstName);
+        ResultSet resultSet = statement.executeQuery();
+        List<User> users = new ArrayList<>();
+        while (resultSet.next()) {
+            User newUser = userRowMapper.rowMap(resultSet);
+            users.add(newUser);
+        }
+        return Optional.of(users);
     }
 
     public Optional<User> findOne(int id) {
