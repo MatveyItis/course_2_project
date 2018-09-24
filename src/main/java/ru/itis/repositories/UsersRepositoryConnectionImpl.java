@@ -14,14 +14,14 @@ public class UsersRepositoryConnectionImpl implements UsersRepository {
     private Connection connection;
 
     //language=SQL
-    private static final String SQL_INSERT_QUERY = "insert into clients(first_name, last_name, email, hash_password)" +
+    private static final String SQL_INSERT_QUERY = "insert into client(first_name, last_name, email, hash_password)" +
             "values (?, ?, ?, ?);";
 
     //language=SQL
-    private static final String SQL_DELETE_QUERY = "delete from clients where client_id = ?";
+    private static final String SQL_DELETE_QUERY = "delete from client where client_id = ?";
 
     //language=SQL
-    private static final String SQL_FIND_BY_NAME = "select * from clients where first_name = ?";
+    private static final String SQL_FIND_BY_NAME = "select * from client where first_name = ?";
 
     public UsersRepositoryConnectionImpl(Connection connection) {
         this.connection = connection;
@@ -31,7 +31,7 @@ public class UsersRepositoryConnectionImpl implements UsersRepository {
         @SneakyThrows
         public User rowMap(ResultSet resultSet) {
             return User.builder()
-                    .clientId(resultSet.getInt("client_id"))
+                    .clientId(resultSet.getLong("client_id"))
                     .email(resultSet.getString("email"))
                     .hashPassword(resultSet.getString("hash_password"))
                     .firstName(resultSet.getString("first_name"))
@@ -57,7 +57,7 @@ public class UsersRepositoryConnectionImpl implements UsersRepository {
         try {
             Statement statement = connection.createStatement();
             ResultSet resultSet =
-                    statement.executeQuery("SELECT * FROM clients WHERE client_id = " + id);
+                    statement.executeQuery("SELECT * FROM client WHERE client_id = " + id);
             resultSet.next();
             return Optional.of(userRowMapper.rowMap(resultSet));
         } catch (SQLException e) {
@@ -74,7 +74,7 @@ public class UsersRepositoryConnectionImpl implements UsersRepository {
         statement.setString(4, model.getHashPassword());
         ResultSet resultSet = statement.getGeneratedKeys();
         while (resultSet.next()) {
-            model.setClientId(resultSet.getInt("client_id"));
+            model.setClientId(resultSet.getLong("client_id"));
         }
         statement.executeUpdate();
     }
@@ -90,7 +90,7 @@ public class UsersRepositoryConnectionImpl implements UsersRepository {
     public Optional<List<User>> findAll() {
         Statement statement = connection.createStatement();
         ResultSet resultSet =
-                statement.executeQuery("SELECT * FROM clients");
+                statement.executeQuery("SELECT * FROM client");
         List<User> users = new ArrayList<>();
         while (resultSet.next()) {
             User newUser = userRowMapper.rowMap(resultSet);

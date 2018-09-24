@@ -8,6 +8,6 @@ import lombok.*;
 @Builder
 @EqualsAndHashCode
 public class Groupe {
-    private int artistId;
+    private Long artistId;
     private String groupName;
 }

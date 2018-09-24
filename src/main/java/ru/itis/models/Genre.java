@@ -8,6 +8,6 @@ import lombok.*;
 @EqualsAndHashCode
 @ToString
 public class Genre {
-    private int genreId;
+    private Long genreId;
     private String genreName;
 }

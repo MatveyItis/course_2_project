@@ -2,6 +2,8 @@ package ru.itis.app;
 
 import lombok.SneakyThrows;
 import ru.itis.models.Library;
+import ru.itis.models.Song;
+import ru.itis.repositories.AlbumRepositoryConnectionImpl;
 import ru.itis.repositories.LibraryRepositoryConnectionImpl;
 import ru.itis.repositories.SongRepositoryConnectionImpl;
 import ru.itis.repositories.UsersRepositoryConnectionImpl;
@@ -9,6 +11,8 @@ import ru.itis.repositories.UsersRepositoryConnectionImpl;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.Statement;
+import java.util.Arrays;
+import java.util.List;
 
 public class BuilderDemo {
     private static final String USERNAME = "postgres";
@@ -22,9 +26,14 @@ public class BuilderDemo {
         Statement statement = connection.createStatement();
         //LibraryRepositoryConnectionImpl libraryRepository = new LibraryRepositoryConnectionImpl(connection);
         //System.out.println(libraryRepository.findAll());
-        UsersRepositoryConnectionImpl usersRepository = new UsersRepositoryConnectionImpl(connection);
-        System.out.println(usersRepository.findAllByFirstName("Anastasia"));
-        //SongRepositoryConnectionImpl songRepository = new SongRepositoryConnectionImpl(connection);
-        //System.out.println(songRepository.findOne(16));
+        //UsersRepositoryConnectionImpl usersRepository = new UsersRepositoryConnectionImpl(connection);
+        //System.out.println(usersRepository.findAllByFirstName("Anastasia"));
+        /*SongRepositoryConnectionImpl songRepository = new SongRepositoryConnectionImpl(connection);
+        List<Song> list = songRepository.findAll().get();
+        for (Song song: list) {
+            System.out.println(song);
+        }*/
+        AlbumRepositoryConnectionImpl albumRepository = new AlbumRepositoryConnectionImpl(connection);
+        System.out.println(albumRepository.findOne(1));
     }
 }

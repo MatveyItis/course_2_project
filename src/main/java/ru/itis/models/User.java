@@ -8,7 +8,7 @@ import lombok.*;
 @EqualsAndHashCode
 @Builder
 public class User {
-    private int clientId;
+    private Long clientId;
     private String firstName;
     private String lastName;
     private String email;

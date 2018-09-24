@@ -22,8 +22,8 @@ public class LibraryRepositoryConnectionImpl implements LibraryRepository {
     //language=SQL
     private static final String SQL_SELECT_LIBRARY_WITH_SONGS = "select * " +
             "from library " +
-            "join songs s on library.song_id = s.song_id " +
-            "join clients c2 on library.client_id = c2.client_id " +
+            "join song s on library.song_id = s.song_id " +
+            "join client c2 on library.client_id = c2.client_id " +
             "where library.client_id = ?";
 
     public LibraryRepositoryConnectionImpl(Connection connection) {
@@ -34,7 +34,7 @@ public class LibraryRepositoryConnectionImpl implements LibraryRepository {
         @SneakyThrows
         public Library rowMap(ResultSet resultSet) {
             return Library.builder()
-                    .clientId(resultSet.getInt("client_id"))
+                    .clientId(resultSet.getLong("client_id"))
                     .build();
         }
     };
@@ -51,7 +51,7 @@ public class LibraryRepositoryConnectionImpl implements LibraryRepository {
             while (resultSet.next()) {
                 if (library == null) {
                     library = Library.builder()
-                            .clientId(resultSet.getInt("client_id"))
+                            .clientId(resultSet.getLong("client_id"))
                             .build();
                     /*client = User.builder()
                             .clientId(resultSet.getInt("client_id"))
@@ -62,10 +62,10 @@ public class LibraryRepositoryConnectionImpl implements LibraryRepository {
                             .build();*/
                 }
                 Song song = Song.builder()
-                        .songId(resultSet.getInt("song_id"))
+                        .songId(resultSet.getLong("song_id"))
                         .title(resultSet.getString("song_title"))
-                        .duration(resultSet.getInt("song_duration"))
-                        .artistId(resultSet.getInt("artist_id"))
+                        .duration(resultSet.getLong("song_duration"))
+                        .artistId(resultSet.getLong("artist_id"))
                         .build();
                 songs.add(song);
             }
@@ -94,7 +94,7 @@ public class LibraryRepositoryConnectionImpl implements LibraryRepository {
     public Optional<List<Library>> findAll() {
         Statement statement = connection.createStatement();
         ResultSet resultSet = statement.executeQuery("SELECT * FROM library " +
-                "join songs s on library.song_id = s.song_id");
+                "join song s on library.song_id = s.song_id");
         List<Library> libraries = new ArrayList<>();
         Set<Integer> ides = new HashSet<>();
         List<Song> songs;

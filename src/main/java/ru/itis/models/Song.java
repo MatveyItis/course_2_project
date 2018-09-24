@@ -8,8 +8,8 @@ import lombok.*;
 @EqualsAndHashCode
 @ToString
 public class Song {
-    private int songId;
+    private Long songId;
     private String title;
-    private int duration;
-    private int artistId;
+    private Long duration;
+    private Long artistId;
 }

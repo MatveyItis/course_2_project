@@ -5,6 +5,7 @@ import ru.itis.mappers.RowMapper;
 import ru.itis.models.Artist;
 
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -13,10 +14,10 @@ public class ArtistRepositoryConnectionImpl implements ArtistRepository {
     private Connection connection;
 
     //language=SQL
-    private final static String SQL_DELETE_QUERY = "delete from artists where artist_id = ?";
+    private final static String SQL_DELETE_QUERY = "delete from artist where artist_id = ?";
     //language=SQL
-    private final static String SQL_INSERT_QUERY = "insert into artists(last_name, first_name, birthday, genre_id) " +
-            "values (?, ?, ?, ?)";
+    private final static String SQL_INSERT_QUERY = "insert into artist(last_name, first_name, genre_id) " +
+            "values (?, ?, ?)";
 
     public ArtistRepositoryConnectionImpl(Connection connection) {
         this.connection = connection;
@@ -26,11 +27,11 @@ public class ArtistRepositoryConnectionImpl implements ArtistRepository {
         @SneakyThrows
         public Artist rowMap(ResultSet resultSet) {
             return Artist.builder()
-                    .artistId(resultSet.getInt("artist_id"))
+                    .artistId(resultSet.getLong("artist_id"))
                     .lastName(resultSet.getString("last_name"))
                     .firstName(resultSet.getString("first_name"))
-                    .birthday(resultSet.getDate("birthday"))
-                    .genreId(resultSet.getInt("genre_id"))
+                    .birthday((LocalDate) resultSet.getObject("birthday"))
+                    .genreId(resultSet.getLong("genre_id"))
                     .build();
         }
     };
@@ -39,7 +40,7 @@ public class ArtistRepositoryConnectionImpl implements ArtistRepository {
     public Optional<Artist> findOne(int artistId) {
         Statement statement = connection.createStatement();
         ResultSet resultSet =
-                statement.executeQuery("select * from artists where artist_id = " + artistId);
+                statement.executeQuery("select * from artist where artist_id = " + artistId);
         resultSet.next();
         return Optional.of(artistRowMapper.rowMap(resultSet));
     }
@@ -49,11 +50,10 @@ public class ArtistRepositoryConnectionImpl implements ArtistRepository {
         PreparedStatement statement = connection.prepareStatement(SQL_INSERT_QUERY, PreparedStatement.RETURN_GENERATED_KEYS);
         statement.setString(1, model.getLastName());
         statement.setString(2, model.getFirstName());
-        statement.setDate(3, (Date) model.getBirthday());
-        statement.setInt(4, model.getGenreId());
+        statement.setLong(3, model.getGenreId());
         ResultSet resultSet = statement.getGeneratedKeys();
         while (resultSet.next()) {
-            model.setArtistId(resultSet.getInt("artist_id"));
+            model.setArtistId(resultSet.getLong("artist_id"));
         }
         statement.executeUpdate();
     }
@@ -68,7 +68,7 @@ public class ArtistRepositoryConnectionImpl implements ArtistRepository {
     @SneakyThrows
     public Optional<List<Artist>> findAll() {
         Statement statement = connection.createStatement();
-        ResultSet resultSet = statement.executeQuery("select * from artists");
+        ResultSet resultSet = statement.executeQuery("select * from artist");
         List<Artist> people = new ArrayList<>();
         while (resultSet.next()) {
             Artist artist = artistRowMapper.rowMap(resultSet);

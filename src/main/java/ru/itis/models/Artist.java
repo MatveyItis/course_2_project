@@ -1,17 +1,18 @@
 package ru.itis.models;
 
 import lombok.*;
-import java.util.Date;
+
+import java.time.LocalDate;
 
 @Getter
-@Setter
 @ToString
 @EqualsAndHashCode
 @Builder
+@Setter
 public class Artist {
-    private int artistId;
+    private Long artistId;
     private String lastName;
     private String firstName;
-    private Date birthday;
-    private int genreId;
+    private LocalDate birthday;
+    private Long genreId;
 }

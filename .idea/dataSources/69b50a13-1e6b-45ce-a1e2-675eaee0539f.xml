@@ -70,8 +70,8 @@
     <schema id="15" parent="3" name="public">
       <ObjectId>2200</ObjectId>
       <Comment>standard public schema</Comment>
-      <IntrospectionTimestamp>2018-09-22.12:56:27.213</IntrospectionTimestamp>
-      <IntrospectionStateNumber>790</IntrospectionStateNumber>
+      <IntrospectionTimestamp>2018-09-24.20:36:24.274</IntrospectionTimestamp>
+      <IntrospectionStateNumber>833</IntrospectionStateNumber>
       <Current>1</Current>
       <Visible>1</Visible>
     </schema>
@@ -157,51 +157,51 @@
       <CacheSize>1</CacheSize>
       <DataType>integer</DataType>
     </sequence>
-    <table id="27" parent="15" name="albums">
+    <table id="27" parent="15" name="album">
       <ObjectId>16430</ObjectId>
-      <StateNumber>785</StateNumber>
+      <StateNumber>825</StateNumber>
     </table>
     <table id="28" parent="15" name="albums_songs">
       <ObjectId>16418</ObjectId>
-      <StateNumber>788</StateNumber>
+      <StateNumber>821</StateNumber>
     </table>
-    <table id="29" parent="15" name="artists">
+    <table id="29" parent="15" name="artist">
       <ObjectId>16440</ObjectId>
-      <StateNumber>790</StateNumber>
+      <StateNumber>828</StateNumber>
     </table>
-    <table id="30" parent="15" name="clients">
+    <table id="30" parent="15" name="client">
       <ObjectId>16396</ObjectId>
-      <StateNumber>775</StateNumber>
+      <StateNumber>829</StateNumber>
     </table>
-    <table id="31" parent="15" name="genres">
+    <table id="31" parent="15" name="genre">
       <ObjectId>16445</ObjectId>
-      <StateNumber>790</StateNumber>
+      <StateNumber>830</StateNumber>
     </table>
-    <table id="32" parent="15" name="groups">
+    <table id="32" parent="15" name="group">
       <ObjectId>16435</ObjectId>
-      <StateNumber>765</StateNumber>
+      <StateNumber>831</StateNumber>
     </table>
     <table id="33" parent="15" name="library">
       <ObjectId>16587</ObjectId>
-      <StateNumber>775</StateNumber>
+      <StateNumber>808</StateNumber>
     </table>
-    <table id="34" parent="15" name="songs">
+    <table id="34" parent="15" name="song">
       <ObjectId>16404</ObjectId>
-      <StateNumber>788</StateNumber>
+      <StateNumber>832</StateNumber>
     </table>
     <column id="35" parent="27" name="album_id">
       <Position>1</Position>
-      <DataType>integer|0s</DataType>
+      <DataType>bigint|0s</DataType>
       <NotNull>1</NotNull>
-      <StateNumber>577</StateNumber>
-      <TypeId>23</TypeId>
+      <StateNumber>821</StateNumber>
+      <TypeId>20</TypeId>
     </column>
     <column id="36" parent="27" name="artist_id">
       <Position>2</Position>
-      <DataType>integer|0s</DataType>
+      <DataType>bigint|0s</DataType>
       <NotNull>1</NotNull>
-      <StateNumber>577</StateNumber>
-      <TypeId>23</TypeId>
+      <StateNumber>822</StateNumber>
+      <TypeId>20</TypeId>
     </column>
     <column id="37" parent="27" name="album_title">
       <Position>3</Position>
@@ -212,39 +212,39 @@
     </column>
     <column id="38" parent="27" name="album_year">
       <Position>4</Position>
-      <DataType>integer|0s</DataType>
+      <DataType>bigint|0s</DataType>
       <NotNull>1</NotNull>
-      <StateNumber>577</StateNumber>
-      <TypeId>23</TypeId>
+      <StateNumber>823</StateNumber>
+      <TypeId>20</TypeId>
     </column>
     <column id="39" parent="27" name="album_tracks">
       <Position>5</Position>
-      <DataType>integer|0s</DataType>
+      <DataType>bigint|0s</DataType>
       <NotNull>1</NotNull>
-      <StateNumber>577</StateNumber>
-      <TypeId>23</TypeId>
+      <StateNumber>824</StateNumber>
+      <TypeId>20</TypeId>
     </column>
     <index id="40" parent="27" name="pk_albums">
-      <ObjectId>16433</ObjectId>
+      <ObjectId>16803</ObjectId>
       <ColNames>album_id</ColNames>
       <Unique>1</Unique>
     </index>
     <index id="41" parent="27" name="idx_albums">
-      <ObjectId>16486</ObjectId>
+      <ObjectId>16815</ObjectId>
       <ColNames>artist_id</ColNames>
     </index>
     <key id="42" parent="27" name="pk_albums">
-      <ObjectId>16434</ObjectId>
+      <ObjectId>16804</ObjectId>
       <ColNames>album_id</ColNames>
       <UnderlyingIndexName>pk_albums</UnderlyingIndexName>
       <Primary>1</Primary>
     </key>
     <foreign-key id="43" parent="27" name="fk_albums_artists">
-      <ObjectId>16640</ObjectId>
+      <ObjectId>16816</ObjectId>
       <ColNames>artist_id</ColNames>
       <RefTableId>16440</RefTableId>
       <RefColPositions>1</RefColPositions>
-      <RefTableName>artists</RefTableName>
+      <RefTableName>artist</RefTableName>
       <RefKeyName>pk_persons</RefKeyName>
       <RefColNames>artist_id</RefColNames>
       <OnDelete>cascade</OnDelete>
@@ -252,63 +252,63 @@
     </foreign-key>
     <column id="44" parent="28" name="album_id">
       <Position>1</Position>
-      <DataType>integer|0s</DataType>
+      <DataType>bigint|0s</DataType>
       <NotNull>1</NotNull>
-      <StateNumber>566</StateNumber>
-      <TypeId>23</TypeId>
+      <StateNumber>818</StateNumber>
+      <TypeId>20</TypeId>
     </column>
     <column id="45" parent="28" name="song_id">
       <Position>2</Position>
-      <DataType>integer|0s</DataType>
+      <DataType>bigint|0s</DataType>
       <NotNull>1</NotNull>
-      <StateNumber>566</StateNumber>
-      <TypeId>23</TypeId>
+      <StateNumber>819</StateNumber>
+      <TypeId>20</TypeId>
     </column>
     <column id="46" parent="28" name="track_number">
       <Position>3</Position>
-      <DataType>integer|0s</DataType>
+      <DataType>bigint|0s</DataType>
       <NotNull>1</NotNull>
-      <StateNumber>566</StateNumber>
-      <TypeId>23</TypeId>
+      <StateNumber>820</StateNumber>
+      <TypeId>20</TypeId>
     </column>
     <index id="47" parent="28" name="pk_albums_songs">
-      <ObjectId>16511</ObjectId>
+      <ObjectId>16788</ObjectId>
       <ColNames>song_id</ColNames>
       <Unique>1</Unique>
     </index>
     <key id="48" parent="28" name="pk_albums_songs">
-      <ObjectId>16512</ObjectId>
+      <ObjectId>16789</ObjectId>
       <ColNames>song_id</ColNames>
       <UnderlyingIndexName>pk_albums_songs</UnderlyingIndexName>
       <Primary>1</Primary>
     </key>
     <foreign-key id="49" parent="28" name="fk_albums_songs_albums">
-      <ObjectId>16645</ObjectId>
+      <ObjectId>16805</ObjectId>
       <ColNames>album_id</ColNames>
       <RefTableId>16430</RefTableId>
       <RefColPositions>1</RefColPositions>
-      <RefTableName>albums</RefTableName>
+      <RefTableName>album</RefTableName>
       <RefKeyName>pk_albums</RefKeyName>
       <RefColNames>album_id</RefColNames>
       <OnDelete>cascade</OnDelete>
     </foreign-key>
     <foreign-key id="50" parent="28" name="fk_albums_songs_songs">
-      <ObjectId>16650</ObjectId>
+      <ObjectId>16790</ObjectId>
       <ColNames>song_id</ColNames>
       <RefTableId>16404</RefTableId>
       <RefColPositions>1</RefColPositions>
-      <RefTableName>songs</RefTableName>
+      <RefTableName>song</RefTableName>
       <RefKeyName>pk_songs</RefKeyName>
       <RefColNames>song_id</RefColNames>
       <OnDelete>cascade</OnDelete>
     </foreign-key>
     <column id="51" parent="29" name="artist_id">
       <Position>1</Position>
-      <DataType>integer|0s</DataType>
+      <DataType>bigint|0s</DataType>
       <NotNull>1</NotNull>
-      <StateNumber>628</StateNumber>
+      <StateNumber>812</StateNumber>
       <DefaultExpression>nextval(&apos;persons_artist_id_seq&apos;::regclass)</DefaultExpression>
-      <TypeId>23</TypeId>
+      <TypeId>20</TypeId>
       <SequenceName>persons_artist_id_seq</SequenceName>
     </column>
     <column id="52" parent="29" name="last_name">
@@ -328,45 +328,44 @@
     <column id="54" parent="29" name="birthday">
       <Position>4</Position>
       <DataType>date|0s</DataType>
-      <NotNull>1</NotNull>
-      <StateNumber>580</StateNumber>
+      <StateNumber>833</StateNumber>
       <TypeId>1082</TypeId>
     </column>
     <column id="55" parent="29" name="genre_id">
       <Position>6</Position>
-      <DataType>integer|0s</DataType>
+      <DataType>bigint|0s</DataType>
       <NotNull>1</NotNull>
-      <StateNumber>761</StateNumber>
-      <TypeId>23</TypeId>
+      <StateNumber>813</StateNumber>
+      <TypeId>20</TypeId>
     </column>
     <index id="56" parent="29" name="pk_persons">
-      <ObjectId>16443</ObjectId>
+      <ObjectId>16749</ObjectId>
       <ColNames>artist_id</ColNames>
       <Unique>1</Unique>
     </index>
     <key id="57" parent="29" name="pk_persons">
-      <ObjectId>16444</ObjectId>
+      <ObjectId>16750</ObjectId>
       <ColNames>artist_id</ColNames>
       <UnderlyingIndexName>pk_persons</UnderlyingIndexName>
       <Primary>1</Primary>
     </key>
     <foreign-key id="58" parent="29" name="persons_genres_genre_id_fk">
-      <ObjectId>16655</ObjectId>
+      <ObjectId>16770</ObjectId>
       <ColNames>genre_id</ColNames>
       <RefTableId>16445</RefTableId>
       <RefColPositions>1</RefColPositions>
-      <RefTableName>genres</RefTableName>
+      <RefTableName>genre</RefTableName>
       <RefKeyName>pk_genres</RefKeyName>
       <RefColNames>genre_id</RefColNames>
       <OnDelete>cascade</OnDelete>
     </foreign-key>
     <column id="59" parent="30" name="client_id">
       <Position>1</Position>
-      <DataType>integer|0s</DataType>
+      <DataType>bigint|0s</DataType>
       <NotNull>1</NotNull>
-      <StateNumber>558</StateNumber>
+      <StateNumber>800</StateNumber>
       <DefaultExpression>nextval(&apos;client_client_id_seq&apos;::regclass)</DefaultExpression>
-      <TypeId>23</TypeId>
+      <TypeId>20</TypeId>
       <SequenceName>client_client_id_seq</SequenceName>
     </column>
     <column id="60" parent="30" name="first_name">
@@ -398,23 +397,23 @@
       <TypeId>1043</TypeId>
     </column>
     <index id="64" parent="30" name="client_pkey">
-      <ObjectId>16400</ObjectId>
+      <ObjectId>16661</ObjectId>
       <ColNames>client_id</ColNames>
       <Unique>1</Unique>
     </index>
     <key id="65" parent="30" name="client_pkey">
-      <ObjectId>16401</ObjectId>
+      <ObjectId>16662</ObjectId>
       <ColNames>client_id</ColNames>
       <UnderlyingIndexName>client_pkey</UnderlyingIndexName>
       <Primary>1</Primary>
     </key>
     <column id="66" parent="31" name="genre_id">
       <Position>1</Position>
-      <DataType>integer|0s</DataType>
+      <DataType>bigint|0s</DataType>
       <NotNull>1</NotNull>
-      <StateNumber>617</StateNumber>
+      <StateNumber>811</StateNumber>
       <DefaultExpression>nextval(&apos;genres_genre_id_seq&apos;::regclass)</DefaultExpression>
-      <TypeId>23</TypeId>
+      <TypeId>20</TypeId>
       <SequenceName>genres_genre_id_seq</SequenceName>
     </column>
     <column id="67" parent="31" name="genre_name">
@@ -425,22 +424,22 @@
       <TypeId>1043</TypeId>
     </column>
     <index id="68" parent="31" name="pk_genres">
-      <ObjectId>16448</ObjectId>
+      <ObjectId>16737</ObjectId>
       <ColNames>genre_id</ColNames>
       <Unique>1</Unique>
     </index>
     <key id="69" parent="31" name="pk_genres">
-      <ObjectId>16449</ObjectId>
+      <ObjectId>16738</ObjectId>
       <ColNames>genre_id</ColNames>
       <UnderlyingIndexName>pk_genres</UnderlyingIndexName>
       <Primary>1</Primary>
     </key>
     <column id="70" parent="32" name="artist_id">
       <Position>1</Position>
-      <DataType>integer|0s</DataType>
+      <DataType>bigint|0s</DataType>
       <NotNull>1</NotNull>
-      <StateNumber>579</StateNumber>
-      <TypeId>23</TypeId>
+      <StateNumber>810</StateNumber>
+      <TypeId>20</TypeId>
     </column>
     <column id="71" parent="32" name="group_name">
       <Position>2</Position>
@@ -450,76 +449,78 @@
       <TypeId>1043</TypeId>
     </column>
     <index id="72" parent="32" name="pk_groups">
-      <ObjectId>16438</ObjectId>
+      <ObjectId>16725</ObjectId>
       <ColNames>artist_id</ColNames>
       <Unique>1</Unique>
     </index>
     <key id="73" parent="32" name="pk_groups">
-      <ObjectId>16439</ObjectId>
+      <ObjectId>16726</ObjectId>
       <ColNames>artist_id</ColNames>
       <UnderlyingIndexName>pk_groups</UnderlyingIndexName>
       <Primary>1</Primary>
     </key>
     <foreign-key id="74" parent="32" name="fk_groups_artists">
-      <ObjectId>16625</ObjectId>
+      <ObjectId>16761</ObjectId>
       <ColNames>artist_id</ColNames>
       <RefTableId>16440</RefTableId>
       <RefColPositions>1</RefColPositions>
-      <RefTableName>artists</RefTableName>
+      <RefTableName>artist</RefTableName>
       <RefKeyName>pk_persons</RefKeyName>
       <RefColNames>artist_id</RefColNames>
     </foreign-key>
     <column id="75" parent="33" name="client_id">
       <Position>1</Position>
-      <DataType>integer|0s</DataType>
-      <StateNumber>712</StateNumber>
-      <TypeId>23</TypeId>
+      <DataType>bigint|0s</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>807</StateNumber>
+      <TypeId>20</TypeId>
     </column>
     <column id="76" parent="33" name="song_id">
       <Position>2</Position>
-      <DataType>integer|0s</DataType>
-      <StateNumber>712</StateNumber>
-      <TypeId>23</TypeId>
+      <DataType>bigint|0s</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>809</StateNumber>
+      <TypeId>20</TypeId>
     </column>
     <index id="77" parent="33" name="library_client_id_song_id_key">
-      <ObjectId>16590</ObjectId>
+      <ObjectId>16714</ObjectId>
       <ColNames>client_id
 song_id</ColNames>
       <Unique>1</Unique>
     </index>
     <key id="78" parent="33" name="library_client_id_song_id_key">
-      <ObjectId>16591</ObjectId>
+      <ObjectId>16715</ObjectId>
       <ColNames>client_id
 song_id</ColNames>
       <UnderlyingIndexName>library_client_id_song_id_key</UnderlyingIndexName>
     </key>
     <foreign-key id="79" parent="33" name="library_client_id_fkey">
-      <ObjectId>16630</ObjectId>
+      <ObjectId>16705</ObjectId>
       <ColNames>client_id</ColNames>
       <RefTableId>16396</RefTableId>
       <RefColPositions>1</RefColPositions>
-      <RefTableName>clients</RefTableName>
+      <RefTableName>client</RefTableName>
       <RefKeyName>client_pkey</RefKeyName>
       <RefColNames>client_id</RefColNames>
       <OnDelete>cascade</OnDelete>
       <OnUpdate>cascade</OnUpdate>
     </foreign-key>
     <foreign-key id="80" parent="33" name="library_song_id_fkey">
-      <ObjectId>16597</ObjectId>
+      <ObjectId>16716</ObjectId>
       <ColNames>song_id</ColNames>
       <RefTableId>16404</RefTableId>
       <RefColPositions>1</RefColPositions>
-      <RefTableName>songs</RefTableName>
+      <RefTableName>song</RefTableName>
       <RefKeyName>pk_songs</RefKeyName>
       <RefColNames>song_id</RefColNames>
     </foreign-key>
     <column id="81" parent="34" name="song_id">
       <Position>1</Position>
-      <DataType>integer|0s</DataType>
+      <DataType>bigint|0s</DataType>
       <NotNull>1</NotNull>
-      <StateNumber>725</StateNumber>
+      <StateNumber>802</StateNumber>
       <DefaultExpression>nextval(&apos;songs_song_id_seq&apos;::regclass)</DefaultExpression>
-      <TypeId>23</TypeId>
+      <TypeId>20</TypeId>
       <SequenceName>songs_song_id_seq</SequenceName>
     </column>
     <column id="82" parent="34" name="song_title">
@@ -531,35 +532,35 @@ song_id</ColNames>
     </column>
     <column id="83" parent="34" name="song_duration">
       <Position>3</Position>
-      <DataType>integer|0s</DataType>
+      <DataType>bigint|0s</DataType>
       <NotNull>1</NotNull>
-      <StateNumber>570</StateNumber>
-      <TypeId>23</TypeId>
+      <StateNumber>803</StateNumber>
+      <TypeId>20</TypeId>
     </column>
     <column id="84" parent="34" name="artist_id">
       <Position>4</Position>
-      <DataType>integer|0s</DataType>
+      <DataType>bigint|0s</DataType>
       <NotNull>1</NotNull>
-      <StateNumber>750</StateNumber>
-      <TypeId>23</TypeId>
+      <StateNumber>804</StateNumber>
+      <TypeId>20</TypeId>
     </column>
     <index id="85" parent="34" name="pk_songs">
-      <ObjectId>16423</ObjectId>
+      <ObjectId>16674</ObjectId>
       <ColNames>song_id</ColNames>
       <Unique>1</Unique>
     </index>
     <key id="86" parent="34" name="pk_songs">
-      <ObjectId>16424</ObjectId>
+      <ObjectId>16675</ObjectId>
       <ColNames>song_id</ColNames>
       <UnderlyingIndexName>pk_songs</UnderlyingIndexName>
       <Primary>1</Primary>
     </key>
     <foreign-key id="87" parent="34" name="songs_persons_artist_id_fk">
-      <ObjectId>16635</ObjectId>
+      <ObjectId>16756</ObjectId>
       <ColNames>artist_id</ColNames>
       <RefTableId>16440</RefTableId>
       <RefColPositions>1</RefColPositions>
-      <RefTableName>artists</RefTableName>
+      <RefTableName>artist</RefTableName>
       <RefKeyName>pk_persons</RefKeyName>
       <RefColNames>artist_id</RefColNames>
       <OnDelete>cascade</OnDelete>

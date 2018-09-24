@@ -10,6 +10,6 @@ import java.util.List;
 @EqualsAndHashCode
 @Builder
 public class Library {
-    private int clientId;
+    private Long clientId;
     private List<Song> songs;
 }

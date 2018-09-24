@@ -13,7 +13,7 @@ public class Application {
                     DriverManager.getConnection(URL, USERNAME, PASSWORD);
             Statement statement = connection.createStatement();
             ResultSet resultSet =
-                    statement.executeQuery("SELECT client_id, first_name FROM clients");
+                    statement.executeQuery("SELECT client_id, first_name FROM client");
             while (resultSet.next()) {
                 System.out.println(resultSet.getInt("client_id") + " " + resultSet.getString("first_name"));
             }
