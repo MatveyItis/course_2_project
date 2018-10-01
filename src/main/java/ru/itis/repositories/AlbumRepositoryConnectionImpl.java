@@ -3,7 +3,6 @@ package ru.itis.repositories;
 import lombok.SneakyThrows;
 import ru.itis.mappers.RowMapper;
 import ru.itis.models.Album;
-import ru.itis.models.Artist;
 import ru.itis.models.Song;
 
 import java.sql.Connection;
@@ -19,8 +18,6 @@ public class AlbumRepositoryConnectionImpl implements AlbumRepository {
 
     //language=SQL
     private static final String SQL_FIND_ONE_QUERY = "select * from album where album_id = ?";
-    //language=SQL
-    private static final String SQL_FIND_ALL_SONGS_FROM_ALBUM = "";
 
     public AlbumRepositoryConnectionImpl(Connection connection) {
         this.connection = connection;
