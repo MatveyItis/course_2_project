@@ -1,8 +1,7 @@
 package ru.itis.servlets;
 
-
 import lombok.SneakyThrows;
-import ru.itis.forms.UserForm;
+import ru.itis.forms.LoginForm;
 import ru.itis.repositories.UsersRepository;
 import ru.itis.repositories.UsersRepositoryConnectionImpl;
 import ru.itis.services.UsersService;
@@ -17,7 +16,7 @@ import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.DriverManager;
 
-public class SignUpServlet extends HttpServlet {
+public class SignInServlet extends HttpServlet {
     private static final String USERNAME = "postgres";
     private static final String PASSWORD = "12ER56ui78";
     private static final String URL = "jdbc:postgresql://localhost:5432/";
@@ -28,7 +27,8 @@ public class SignUpServlet extends HttpServlet {
     @SneakyThrows
     public void init() throws ServletException {
         Class.forName("org.postgresql.Driver");
-        Connection connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+        Connection connection =
+                DriverManager.getConnection(URL, USERNAME, PASSWORD);
         UsersRepository usersRepository = new UsersRepositoryConnectionImpl(connection);
         usersService = new UsersServiceImpl(usersRepository);
     }
@@ -38,15 +38,11 @@ public class SignUpServlet extends HttpServlet {
         response.setHeader("Content-Type", "text/html");
         PrintWriter writer = response.getWriter();
         writer.print("<form method='post'>\n" +
-                "    \t\t<label for='firstName'>First Name</label><br>\n" +
-                "    \t\t<input type='text' name='firstName' placeholder='First Name' id='firstName'><br>\n" +
-                "    \t\t<label for='lastName'>LastName</label><br>\n" +
-                "    \t\t<input type='text' name='lastName' placeholder='LastName' id='lastName'><br>\n" +
-                "    \t\t<label for='email'>Email</label><br>\n" +
-                "    \t\t<input type='text' name='email' placeholder='Email' id='email'><br>\n" +
-                "    \t\t<label for='password'>Password</label><br>\n" +
-                "    \t\t<input type='password' name='password' placeholder='Password' id='password'><br>\n" +
-                "    \t\t<input type='submit' value='Sign Up'>\n" +
+                "\t\t<label for='email'>E-mail</label><br>\n" +
+                "\t\t<input type='text' id='email' name='email' placeholder='E-mail'><br>\n" +
+                "\t\t<label for='password'>Password</label><br>\n" +
+                "\t\t<input type='password' id='password' name='password' placeholder='Password'><br> \n" +
+                "\t\t<input type='submit' value='Sign In'>\n" +
                 "</form>");
     }
 
@@ -54,17 +50,15 @@ public class SignUpServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String email = request.getParameter("email");
         String password = request.getParameter("password");
-        String firstName = request.getParameter("firstName");
-        String lastName = request.getParameter("lastName");
 
-        UserForm userForm = UserForm.builder()
+        LoginForm loginForm = LoginForm.builder()
                 .email(email)
                 .password(password)
-                .firstName(firstName)
-                .lastName(lastName)
                 .build();
 
-        usersService.signUp(userForm);
-        response.sendRedirect("/signIn");
+        usersService.signIn(loginForm);
+        response.setHeader("Content-Type", "text/html");
+        PrintWriter writer = response.getWriter();
+        writer.println("<h1>You are in the System!!</h1>");
     }
 }

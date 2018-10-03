@@ -2,6 +2,8 @@ package ru.itis.models;
 
 import lombok.*;
 
+import java.util.List;
+
 @Getter
 @Setter
 @ToString
@@ -13,5 +15,5 @@ public class User {
     private String lastName;
     private String email;
     private String hashPassword;
-    private Library library;
+    private List<Song> songs;
 }

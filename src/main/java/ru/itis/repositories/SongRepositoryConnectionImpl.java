@@ -56,7 +56,7 @@ public class SongRepositoryConnectionImpl implements SongRepository {
         statement.executeUpdate();
     }
 
-    public void delete(int id) {
+    public void delete(Long id) {
 
     }
 

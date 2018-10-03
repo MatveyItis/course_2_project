@@ -6,6 +6,6 @@ import java.util.Optional;
 public interface CrudRepository<T> {
     Optional<T> findOne(int id);
     void save(T model);
-    void delete(int id);
+    void delete(Long id);
     Optional<List<T>> findAll();
 }

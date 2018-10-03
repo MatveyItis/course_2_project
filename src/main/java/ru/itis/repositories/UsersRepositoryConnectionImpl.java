@@ -2,13 +2,11 @@ package ru.itis.repositories;
 
 import lombok.SneakyThrows;
 import ru.itis.mappers.RowMapper;
-import ru.itis.models.Library;
+import ru.itis.models.Song;
 import ru.itis.models.User;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 public class UsersRepositoryConnectionImpl implements UsersRepository {
     private Connection connection;
@@ -23,11 +21,29 @@ public class UsersRepositoryConnectionImpl implements UsersRepository {
     //language=SQL
     private static final String SQL_FIND_BY_NAME = "select * from client where first_name = ?";
 
+    //language=SQL
+    public static final String SQL_SELECT_USER_WITH_SONGS_BY_ID = "select * from client " +
+            "join library on client.client_id = library.client_id " +
+            "join song s on library.song_id = s.song_id " +
+            "where client.client_id = ?";
+
+    //language=SQL
+    public static final String SQL_SELECT_USERS_WITH_SONGS = "select * from client " +
+            "join library on client.client_id = library.client_id " +
+            "join song s on library.song_id = s.song_id ";
+
+    //language=SQL
+    public static final String SQL_SELECT_USER_BY_EMAIL = "select * from client where email = ?";
+
+    private Map<User, List<Song>> userWithSongsMap;
+    private Map<Long, User> userIdWithSongsMap;
+    private User theOnlyUser;
+
     public UsersRepositoryConnectionImpl(Connection connection) {
         this.connection = connection;
     }
 
-    private RowMapper<User> userRowMapper = new RowMapper<User>() {
+    private RowMapper<User> userWithoutSongsRowMapper = new RowMapper<User>() {
         @SneakyThrows
         public User rowMap(ResultSet resultSet) {
             return User.builder()
@@ -40,6 +56,49 @@ public class UsersRepositoryConnectionImpl implements UsersRepository {
         }
     };
 
+    private RowMapper<User> userWithSongsForOneUserRowMapper = new RowMapper<User>() {
+        @Override
+        @SneakyThrows
+        public User rowMap(ResultSet resultSet) {
+            if (userWithSongsMap.size() == 0) {
+                User newUser = userWithoutSongsRowMapper.rowMap(resultSet);
+                userWithSongsMap.put(newUser, new ArrayList<>());
+                theOnlyUser =  newUser;
+            }
+            Song song = Song.builder()
+                    .songId(resultSet.getLong("song_id"))
+                    .title(resultSet.getString("song_title"))
+                    .duration(resultSet.getLong("song_duration"))
+                    .artistId(resultSet.getLong("artist_id"))
+                    .build();
+            userWithSongsMap.get(theOnlyUser).add(song);
+            return theOnlyUser;
+        }
+    };
+
+    private RowMapper<User> userWithSongsRowMapper = new RowMapper<User>() {
+        @SneakyThrows
+        @Override
+        public User rowMap(ResultSet resultSet) {
+            Long currentUserId = resultSet.getLong("client_id");
+            if (!userIdWithSongsMap.containsKey(currentUserId)) {
+                User newUser = userWithoutSongsRowMapper.rowMap(resultSet);
+                newUser.setSongs(new ArrayList<>());
+                userIdWithSongsMap.put(currentUserId, newUser);
+            }
+            Song song = Song.builder()
+                    .songId(resultSet.getLong("song_id"))
+                    .title(resultSet.getString("song_title"))
+                    .artistId(resultSet.getLong("artist_id"))
+                    .duration(resultSet.getLong("song_duration"))
+                    .build();
+            User currentUser = userIdWithSongsMap.get(currentUserId);
+            List<Song> songsOfUser = currentUser.getSongs();
+            songsOfUser.add(song);
+            return currentUser;
+        }
+    };
+
     @SneakyThrows
     public Optional<List<User>> findAllByFirstName(String firstName) {
         PreparedStatement statement = connection.prepareStatement(SQL_FIND_BY_NAME);
@@ -47,22 +106,38 @@ public class UsersRepositoryConnectionImpl implements UsersRepository {
         ResultSet resultSet = statement.executeQuery();
         List<User> users = new ArrayList<>();
         while (resultSet.next()) {
-            User newUser = userRowMapper.rowMap(resultSet);
+            User newUser = userWithoutSongsRowMapper.rowMap(resultSet);
             users.add(newUser);
         }
         return Optional.of(users);
     }
 
-    public Optional<User> findOne(int id) {
-        try {
-            Statement statement = connection.createStatement();
-            ResultSet resultSet =
-                    statement.executeQuery("SELECT * FROM client WHERE client_id = " + id);
-            resultSet.next();
-            return Optional.of(userRowMapper.rowMap(resultSet));
-        } catch (SQLException e) {
-            throw new IllegalStateException(e);
+    @Override
+    @SneakyThrows
+    public Optional<User> findOneByEmail(String email) {
+        PreparedStatement statement = connection.prepareStatement(SQL_SELECT_USER_BY_EMAIL);
+        statement.setString(1, email);
+        ResultSet resultSet = statement.executeQuery();
+        if (!resultSet.next()) {
+            return Optional.empty();
         }
+        return Optional.of(userWithoutSongsRowMapper.rowMap(resultSet));
+    }
+
+    @SneakyThrows
+    public Optional<User> findOne(int id) {
+        userWithSongsMap = new HashMap<>();
+        PreparedStatement statement = connection.prepareStatement(SQL_SELECT_USER_WITH_SONGS_BY_ID);
+        statement.setLong(1, id);
+        ResultSet resultSet = statement.executeQuery();
+        while (resultSet.next()) {
+            userWithSongsForOneUserRowMapper.rowMap(resultSet);
+        }
+        theOnlyUser.setSongs(userWithSongsMap.get(theOnlyUser));
+        User result = theOnlyUser;
+        theOnlyUser = null;
+        userWithSongsMap.clear();
+        return Optional.of(result);
     }
 
     @SneakyThrows
@@ -80,23 +155,20 @@ public class UsersRepositoryConnectionImpl implements UsersRepository {
     }
 
     @SneakyThrows
-    public void delete(int id) {
+    public void delete(Long id) {
         PreparedStatement statement = connection.prepareStatement(SQL_DELETE_QUERY);
-        statement.setInt(1, id);
+        statement.setLong(1, id);
         statement.executeUpdate();
     }
 
     @SneakyThrows
     public Optional<List<User>> findAll() {
-        Statement statement = connection.createStatement();
-        ResultSet resultSet =
-                statement.executeQuery("SELECT * FROM client");
-        List<User> users = new ArrayList<>();
+        userIdWithSongsMap = new HashMap<>();
+        PreparedStatement statement = connection.prepareStatement(SQL_SELECT_USERS_WITH_SONGS);
+        ResultSet resultSet = statement.executeQuery();
         while (resultSet.next()) {
-            User newUser = userRowMapper.rowMap(resultSet);
-            users.add(newUser);
+            userWithSongsRowMapper.rowMap(resultSet);
         }
-        return Optional.of(users);
-
+        return Optional.of(new ArrayList<>(userIdWithSongsMap.values()));
     }
 }

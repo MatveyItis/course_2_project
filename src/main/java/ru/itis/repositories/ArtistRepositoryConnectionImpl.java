@@ -59,9 +59,9 @@ public class ArtistRepositoryConnectionImpl implements ArtistRepository {
     }
 
     @SneakyThrows
-    public void delete(int artistId) {
+    public void delete(Long artistId) {
         PreparedStatement statement = connection.prepareStatement(SQL_DELETE_QUERY);
-        statement.setInt(1, artistId);
+        statement.setLong(1, artistId);
         statement.executeUpdate();
     }
 

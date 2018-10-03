@@ -70,7 +70,7 @@ public class AlbumRepositoryConnectionImpl implements AlbumRepository {
     }
 
     @Override
-    public void delete(int id) {
+    public void delete(Long id) {
 
     }
 

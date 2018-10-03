@@ -1,18 +1,11 @@
 package ru.itis.app;
 
 import lombok.SneakyThrows;
-import ru.itis.models.Library;
-import ru.itis.models.Song;
 import ru.itis.repositories.AlbumRepositoryConnectionImpl;
-import ru.itis.repositories.LibraryRepositoryConnectionImpl;
-import ru.itis.repositories.SongRepositoryConnectionImpl;
-import ru.itis.repositories.UsersRepositoryConnectionImpl;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.Statement;
-import java.util.Arrays;
-import java.util.List;
 
 public class BuilderDemo {
     private static final String USERNAME = "postgres";
