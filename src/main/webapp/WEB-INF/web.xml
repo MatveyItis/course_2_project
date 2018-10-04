@@ -6,11 +6,11 @@
 
     <servlet>
         <servlet-name>signUp</servlet-name>
-        <servlet-class>ru.itis.servlets.SignUpServlet</servlet-class>
+        <servlet-class>ru.kpfu.itis.maletskov.servlets.SignUpServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>signIn</servlet-name>
-        <servlet-class>ru.itis.servlets.SignInServlet</servlet-class>
+        <servlet-class>ru.kpfu.itis.maletskov.servlets.SignInServlet</servlet-class>
     </servlet>
 
     <servlet-mapping>
