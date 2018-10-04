@@ -22,18 +22,18 @@ public class UsersRepositoryConnectionImpl implements UsersRepository {
     private static final String SQL_FIND_BY_NAME = "select * from client where first_name = ?";
 
     //language=SQL
-    public static final String SQL_SELECT_USER_WITH_SONGS_BY_ID = "select * from client " +
+    private static final String SQL_SELECT_USER_WITH_SONGS_BY_ID = "select * from client " +
             "join library on client.client_id = library.client_id " +
             "join song s on library.song_id = s.song_id " +
             "where client.client_id = ?";
 
     //language=SQL
-    public static final String SQL_SELECT_USERS_WITH_SONGS = "select * from client " +
+    private static final String SQL_SELECT_USERS_WITH_SONGS = "select * from client " +
             "join library on client.client_id = library.client_id " +
             "join song s on library.song_id = s.song_id ";
 
     //language=SQL
-    public static final String SQL_SELECT_USER_BY_EMAIL = "select * from client where email = ?";
+    private static final String SQL_SELECT_USER_BY_EMAIL = "select * from client where email = ?";
 
     private Map<User, List<Song>> userWithSongsMap;
     private Map<Long, User> userIdWithSongsMap;
@@ -43,7 +43,7 @@ public class UsersRepositoryConnectionImpl implements UsersRepository {
         this.connection = connection;
     }
 
-    private RowMapper<User> userWithoutSongsRowMapper = new RowMapper<User>() {
+    private RowMapper<User> userWithoutSongsRowMapper = new RowMapper<>() {
         @SneakyThrows
         public User rowMap(ResultSet resultSet) {
             return User.builder()
@@ -56,7 +56,7 @@ public class UsersRepositoryConnectionImpl implements UsersRepository {
         }
     };
 
-    private RowMapper<User> userWithSongsForOneUserRowMapper = new RowMapper<User>() {
+    private RowMapper<User> userWithSongsForOneUserRowMapper = new RowMapper<>() {
         @Override
         @SneakyThrows
         public User rowMap(ResultSet resultSet) {
@@ -76,7 +76,7 @@ public class UsersRepositoryConnectionImpl implements UsersRepository {
         }
     };
 
-    private RowMapper<User> userWithSongsRowMapper = new RowMapper<User>() {
+    private RowMapper<User> userWithSongsRowMapper = new RowMapper<>() {
         @SneakyThrows
         @Override
         public User rowMap(ResultSet resultSet) {

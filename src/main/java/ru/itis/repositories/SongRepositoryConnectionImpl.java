@@ -3,7 +3,6 @@ package ru.itis.repositories;
 import lombok.SneakyThrows;
 import ru.itis.mappers.RowMapper;
 import ru.itis.models.Song;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -45,7 +44,8 @@ public class SongRepositoryConnectionImpl implements SongRepository {
 
     @SneakyThrows
     public void save(Song model) {
-        PreparedStatement statement = connection.prepareStatement(SQL_INSERT_QUERY, PreparedStatement.RETURN_GENERATED_KEYS);
+        PreparedStatement statement = connection.prepareStatement(SQL_INSERT_QUERY,
+                PreparedStatement.RETURN_GENERATED_KEYS);
         statement.setString(1, model.getTitle());
         statement.setLong(2, model.getDuration());
         statement.setLong(3, model.getArtistId());

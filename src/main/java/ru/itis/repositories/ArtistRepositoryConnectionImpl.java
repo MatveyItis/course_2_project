@@ -3,7 +3,6 @@ package ru.itis.repositories;
 import lombok.SneakyThrows;
 import ru.itis.mappers.RowMapper;
 import ru.itis.models.Artist;
-
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -23,7 +22,7 @@ public class ArtistRepositoryConnectionImpl implements ArtistRepository {
         this.connection = connection;
     }
 
-    private RowMapper<Artist> artistRowMapper = new RowMapper<Artist>() {
+    private RowMapper<Artist> artistRowMapper = new RowMapper<>() {
         @SneakyThrows
         public Artist rowMap(ResultSet resultSet) {
             return Artist.builder()

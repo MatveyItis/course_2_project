@@ -1,8 +1,8 @@
 package ru.itis.models;
 
 import lombok.*;
-
 import java.time.LocalDate;
+import java.util.List;
 
 @Getter
 @ToString
@@ -15,4 +15,5 @@ public class Artist {
     private String firstName;
     private LocalDate birthday;
     private Long genreId;
+    private List<Album> albums;
 }

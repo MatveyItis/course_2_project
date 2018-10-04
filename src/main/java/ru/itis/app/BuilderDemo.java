@@ -1,8 +1,6 @@
 package ru.itis.app;
 
 import lombok.SneakyThrows;
-import ru.itis.repositories.AlbumRepositoryConnectionImpl;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.Statement;
@@ -26,7 +24,5 @@ public class BuilderDemo {
         for (Song song: list) {
             System.out.println(song);
         }*/
-        AlbumRepositoryConnectionImpl albumRepository = new AlbumRepositoryConnectionImpl(connection);
-        System.out.println(albumRepository.findOne(1));
     }
 }
