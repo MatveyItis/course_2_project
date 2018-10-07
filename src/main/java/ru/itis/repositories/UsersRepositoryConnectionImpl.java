@@ -12,6 +12,9 @@ import java.util.*;
 
 public class UsersRepositoryConnectionImpl implements UsersRepository {
     private Connection connection;
+    private Map<User, List<Song>> userWithSongsMap;
+    private Map<Long, User> userIdWithSongsMap;
+    private User theOnlyUser;
 
     //language=SQL
     private static final String SQL_INSERT_QUERY = "insert into client(first_name, last_name, email, hash_password)" +
@@ -37,10 +40,6 @@ public class UsersRepositoryConnectionImpl implements UsersRepository {
     //language=SQL
     private static final String SQL_SELECT_USER_BY_EMAIL = "select * from client where email = ?";
 
-    private Map<User, List<Song>> userWithSongsMap;
-    private Map<Long, User> userIdWithSongsMap;
-    private User theOnlyUser;
-
     public UsersRepositoryConnectionImpl(Connection connection) {
         this.connection = connection;
     }
@@ -65,7 +64,7 @@ public class UsersRepositoryConnectionImpl implements UsersRepository {
             if (userWithSongsMap.size() == 0) {
                 User newUser = userWithoutSongsRowMapper.rowMap(resultSet);
                 userWithSongsMap.put(newUser, new ArrayList<>());
-                theOnlyUser =  newUser;
+                theOnlyUser = newUser;
             }
             Song song = Song.builder()
                     .songId(resultSet.getLong("song_id"))
@@ -127,7 +126,7 @@ public class UsersRepositoryConnectionImpl implements UsersRepository {
     }
 
     @SneakyThrows
-    public Optional<User> findOne(int id) {
+    public Optional<User> findOne(Long id) {
         userWithSongsMap = new HashMap<>();
         PreparedStatement statement = connection.prepareStatement(SQL_SELECT_USER_WITH_SONGS_BY_ID);
         statement.setLong(1, id);

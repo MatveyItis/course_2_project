@@ -31,5 +31,11 @@ public class UsersServiceImpl implements UsersService {
     @Override
     public void signIn(LoginForm loginForm) {
         Optional<User> userOptional = usersRepository.findOneByEmail(loginForm.getEmail());
+        if (userOptional.isPresent()) {
+            User user = userOptional.get();
+            if (!encoder.matches(loginForm.getPassword(), user.getHashPassword())) {
+                throw new IllegalArgumentException("Wrong password or email");
+            }
+        } else throw new IllegalArgumentException("Wrong password or email");
     }
 }

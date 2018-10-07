@@ -35,7 +35,7 @@ public class SongRepositoryConnectionImpl implements SongRepository {
     }
 
     @SneakyThrows
-    public Optional<Song> findOne(int id) {
+    public Optional<Song> findOne(Long id) {
         Statement statement = connection.createStatement();
         ResultSet resultSet = statement.executeQuery("SELECT * from song WHERE song_id = " + id);
         resultSet.next();

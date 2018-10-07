@@ -1,6 +1,8 @@
 package ru.itis.app;
 
 import lombok.SneakyThrows;
+import ru.itis.repositories.AlbumRepositoryConnectionImpl;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.Statement;
@@ -15,6 +17,8 @@ public class BuilderDemo {
         Connection connection =
                 DriverManager.getConnection(URL, USERNAME, PASSWORD);
         Statement statement = connection.createStatement();
+        AlbumRepositoryConnectionImpl albumRepository = new AlbumRepositoryConnectionImpl(connection);
+        System.out.println(albumRepository.findOne(1L));
         //LibraryRepositoryConnectionImpl libraryRepository = new LibraryRepositoryConnectionImpl(connection);
         //System.out.println(libraryRepository.findAll());
         //UsersRepositoryConnectionImpl usersRepository = new UsersRepositoryConnectionImpl(connection);

@@ -11,8 +11,9 @@ import java.util.List;
 @Setter
 public class Artist {
     private Long artistId;
-    private String lastName;
+    private String nickname;
     private String firstName;
+    private String lastName;
     private LocalDate birthday;
     private Long genreId;
     private List<Album> albums;

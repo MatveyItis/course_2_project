@@ -6,10 +6,10 @@ import ru.itis.repositories.UsersRepository;
 import ru.itis.repositories.UsersRepositoryConnectionImpl;
 import ru.itis.services.UsersService;
 import ru.itis.services.UsersServiceImpl;
+
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.DriverManager;
 
@@ -32,15 +32,7 @@ public class SignInServlet extends HttpServlet {
     @SneakyThrows
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) {
-        response.setHeader("Content-Type", "text/html");
-        PrintWriter writer = response.getWriter();
-        writer.print("<form method='post'>\n" +
-                "\t\t<label for='email'>E-mail</label><br>\n" +
-                "\t\t<input type='text' id='email' name='email' placeholder='E-mail'><br>\n" +
-                "\t\t<label for='password'>Password</label><br>\n" +
-                "\t\t<input type='password' id='password' name='password' placeholder='Password'><br> \n" +
-                "\t\t<input type='submit' value='Sign In'>\n" +
-                "</form>");
+        getServletContext().getRequestDispatcher("/signIn.jsp").forward(request, response);
     }
 
     @SneakyThrows
@@ -53,8 +45,5 @@ public class SignInServlet extends HttpServlet {
                 .password(password)
                 .build();
         usersService.signIn(loginForm);
-        response.setHeader("Content-Type", "text/html");
-        PrintWriter writer = response.getWriter();
-        writer.println("<h1>You are in the System!!</h1>");
     }
 }
