@@ -8,8 +8,13 @@
     <welcome-file-list>
         <welcome-file>signUp.jsp</welcome-file>
         <welcome-file>signIn.jsp</welcome-file>
+        <welcome-file>addArtist.jsp</welcome-file>
     </welcome-file-list>
 
+    <servlet>
+        <servlet-name>addArtist</servlet-name>
+        <servlet-class>ru.itis.servlets.AddArtistServlet</servlet-class>
+    </servlet>
     <servlet>
         <servlet-name>signUp</servlet-name>
         <servlet-class>ru.itis.servlets.SignUpServlet</servlet-class>
@@ -19,6 +24,10 @@
         <servlet-class>ru.itis.servlets.SignInServlet</servlet-class>
     </servlet>
 
+    <servlet-mapping>
+        <servlet-name>addArtist</servlet-name>
+        <url-pattern>/addArtist</url-pattern>
+    </servlet-mapping>
     <servlet-mapping>
         <servlet-name>signUp</servlet-name>
         <url-pattern>/signUp</url-pattern>

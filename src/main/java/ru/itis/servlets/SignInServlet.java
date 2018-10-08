@@ -23,8 +23,7 @@ public class SignInServlet extends HttpServlet {
     @SneakyThrows
     public void init() {
         Class.forName("org.postgresql.Driver");
-        Connection connection =
-                DriverManager.getConnection(URL, USERNAME, PASSWORD);
+        Connection connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
         UsersRepository usersRepository = new UsersRepositoryConnectionImpl(connection);
         usersService = new UsersServiceImpl(usersRepository);
     }

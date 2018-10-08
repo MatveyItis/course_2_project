@@ -21,8 +21,8 @@ public class ArtistRepositoryConnectionImpl implements ArtistRepository {
     private final static String SQL_DELETE_QUERY = "delete from artist where artist_id = ?";
 
     //language=SQL
-    private final static String SQL_INSERT_QUERY = "insert into artist(last_name, first_name, genre_id) " +
-            "values (?, ?, ?)";
+    private final static String SQL_INSERT_QUERY = "insert into artist(nickname, first_name, last_name, birthday, genre) " +
+            "values (?, ?, ?, ?, ?)";
 
     //language=SQL
     private static final String SQL_SELECT_ARTIST_WITH_ALBUMS_BY_ID = "select * from artist " +
@@ -47,12 +47,12 @@ public class ArtistRepositoryConnectionImpl implements ArtistRepository {
                     .firstName(resultSet.getString("first_name"))
                     .lastName(resultSet.getString("last_name"))
                     .birthday((LocalDate) resultSet.getObject("birthday"))
-                    .genreId(resultSet.getLong("genre_id"))
+                    .genreName(resultSet.getString("genre"))
                     .build();
         }
     };
 
-    private RowMapper<Artist> artistWithAlbumsForOneArtistRowMapper = new RowMapper<Artist>() {
+    private RowMapper<Artist> artistWithAlbumsForOneArtistRowMapper = new RowMapper<>() {
         @SneakyThrows
         @Override
         public Artist rowMap(ResultSet resultSet) {
@@ -72,7 +72,7 @@ public class ArtistRepositoryConnectionImpl implements ArtistRepository {
         }
     };
 
-    private RowMapper<Artist> artistWithAlbumsRowMapper = new RowMapper<Artist>() {
+    private RowMapper<Artist> artistWithAlbumsRowMapper = new RowMapper<>() {
         @SneakyThrows
         @Override
         public Artist rowMap(ResultSet resultSet) {
@@ -120,9 +120,11 @@ public class ArtistRepositoryConnectionImpl implements ArtistRepository {
     @SneakyThrows
     public void save(Artist model) {
         PreparedStatement statement = connection.prepareStatement(SQL_INSERT_QUERY, PreparedStatement.RETURN_GENERATED_KEYS);
-        statement.setString(1, model.getLastName());
+        statement.setString(1, model.getNickname());
         statement.setString(2, model.getFirstName());
-        statement.setLong(3, model.getGenreId());
+        statement.setString(3, model.getLastName());
+        statement.setDate(4, java.sql.Date.valueOf(model.getBirthday()));
+        statement.setString(5, model.getGenreName());
         ResultSet resultSet = statement.getGeneratedKeys();
         while (resultSet.next()) {
             model.setArtistId(resultSet.getLong("artist_id"));
@@ -141,7 +143,6 @@ public class ArtistRepositoryConnectionImpl implements ArtistRepository {
     public Optional<List<Artist>> findAll() {
        artistIdWithAlbumsMap = new HashMap<>();
        PreparedStatement statement = connection.prepareStatement(SQL_SELECT_ARTISTS_WITH_ALBUMS);
-
        ResultSet resultSet = statement.executeQuery();
        while (resultSet.next()) {
            artistWithAlbumsRowMapper.rowMap(resultSet);

@@ -70,8 +70,8 @@
     <schema id="15" parent="3" name="public">
       <ObjectId>2200</ObjectId>
       <Comment>standard public schema</Comment>
-      <IntrospectionTimestamp>2018-10-05.17:41:29.777</IntrospectionTimestamp>
-      <IntrospectionStateNumber>868</IntrospectionStateNumber>
+      <IntrospectionTimestamp>2018-10-08.21:36:31.079</IntrospectionTimestamp>
+      <IntrospectionStateNumber>880</IntrospectionStateNumber>
       <Current>1</Current>
       <Visible>1</Visible>
     </schema>
@@ -167,7 +167,7 @@
     </table>
     <table id="29" parent="15" name="artist">
       <ObjectId>16440</ObjectId>
-      <StateNumber>864</StateNumber>
+      <StateNumber>880</StateNumber>
     </table>
     <table id="30" parent="15" name="client">
       <ObjectId>16396</ObjectId>
@@ -175,7 +175,7 @@
     </table>
     <table id="31" parent="15" name="genre">
       <ObjectId>16445</ObjectId>
-      <StateNumber>864</StateNumber>
+      <StateNumber>880</StateNumber>
     </table>
     <table id="32" parent="15" name="group">
       <ObjectId>16435</ObjectId>
@@ -334,11 +334,11 @@
       <StateNumber>859</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="56" parent="29" name="genre_id">
+    <column id="56" parent="29" name="genre">
       <Position>11</Position>
-      <DataType>bigint|0s</DataType>
-      <StateNumber>863</StateNumber>
-      <TypeId>20</TypeId>
+      <DataType>varchar(25)|0s</DataType>
+      <StateNumber>876</StateNumber>
+      <TypeId>1043</TypeId>
     </column>
     <index id="57" parent="29" name="pk_persons">
       <ObjectId>16749</ObjectId>
@@ -351,14 +351,13 @@
       <UnderlyingIndexName>pk_persons</UnderlyingIndexName>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="59" parent="29" name="artist_genre_genre_id_fk">
-      <ObjectId>16845</ObjectId>
-      <ColNames>genre_id</ColNames>
+    <foreign-key id="59" parent="29" name="artist_genre_genre_name_fk">
+      <ObjectId>16855</ObjectId>
+      <ColNames>genre</ColNames>
       <RefTableId>16445</RefTableId>
-      <RefColPositions>1</RefColPositions>
+      <RefColPositions>2</RefColPositions>
       <RefTableName>genre</RefTableName>
-      <RefKeyName>pk_genres</RefKeyName>
-      <RefColNames>genre_id</RefColNames>
+      <RefColNames>genre_name</RefColNames>
     </foreign-key>
     <column id="60" parent="30" name="client_id">
       <Position>1</Position>
@@ -429,38 +428,43 @@
       <ColNames>genre_id</ColNames>
       <Unique>1</Unique>
     </index>
-    <key id="70" parent="31" name="pk_genres">
+    <index id="70" parent="31" name="genre_genre_name_uindex">
+      <ObjectId>16854</ObjectId>
+      <ColNames>genre_name</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <key id="71" parent="31" name="pk_genres">
       <ObjectId>16738</ObjectId>
       <ColNames>genre_id</ColNames>
       <UnderlyingIndexName>pk_genres</UnderlyingIndexName>
       <Primary>1</Primary>
     </key>
-    <column id="71" parent="32" name="artist_id">
+    <column id="72" parent="32" name="artist_id">
       <Position>1</Position>
       <DataType>bigint|0s</DataType>
       <NotNull>1</NotNull>
       <StateNumber>810</StateNumber>
       <TypeId>20</TypeId>
     </column>
-    <column id="72" parent="32" name="group_name">
+    <column id="73" parent="32" name="group_name">
       <Position>2</Position>
       <DataType>varchar(100)|0s</DataType>
       <NotNull>1</NotNull>
       <StateNumber>579</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <index id="73" parent="32" name="pk_groups">
+    <index id="74" parent="32" name="pk_groups">
       <ObjectId>16725</ObjectId>
       <ColNames>artist_id</ColNames>
       <Unique>1</Unique>
     </index>
-    <key id="74" parent="32" name="pk_groups">
+    <key id="75" parent="32" name="pk_groups">
       <ObjectId>16726</ObjectId>
       <ColNames>artist_id</ColNames>
       <UnderlyingIndexName>pk_groups</UnderlyingIndexName>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="75" parent="32" name="fk_groups_artists">
+    <foreign-key id="76" parent="32" name="fk_groups_artists">
       <ObjectId>16761</ObjectId>
       <ColNames>artist_id</ColNames>
       <RefTableId>16440</RefTableId>
@@ -469,33 +473,33 @@
       <RefKeyName>pk_persons</RefKeyName>
       <RefColNames>artist_id</RefColNames>
     </foreign-key>
-    <column id="76" parent="33" name="client_id">
+    <column id="77" parent="33" name="client_id">
       <Position>1</Position>
       <DataType>bigint|0s</DataType>
       <NotNull>1</NotNull>
       <StateNumber>807</StateNumber>
       <TypeId>20</TypeId>
     </column>
-    <column id="77" parent="33" name="song_id">
+    <column id="78" parent="33" name="song_id">
       <Position>2</Position>
       <DataType>bigint|0s</DataType>
       <NotNull>1</NotNull>
       <StateNumber>809</StateNumber>
       <TypeId>20</TypeId>
     </column>
-    <index id="78" parent="33" name="library_client_id_song_id_key">
+    <index id="79" parent="33" name="library_client_id_song_id_key">
       <ObjectId>16714</ObjectId>
       <ColNames>client_id
 song_id</ColNames>
       <Unique>1</Unique>
     </index>
-    <key id="79" parent="33" name="library_client_id_song_id_key">
+    <key id="80" parent="33" name="library_client_id_song_id_key">
       <ObjectId>16715</ObjectId>
       <ColNames>client_id
 song_id</ColNames>
       <UnderlyingIndexName>library_client_id_song_id_key</UnderlyingIndexName>
     </key>
-    <foreign-key id="80" parent="33" name="library_client_id_fkey">
+    <foreign-key id="81" parent="33" name="library_client_id_fkey">
       <ObjectId>16705</ObjectId>
       <ColNames>client_id</ColNames>
       <RefTableId>16396</RefTableId>
@@ -506,7 +510,7 @@ song_id</ColNames>
       <OnDelete>cascade</OnDelete>
       <OnUpdate>cascade</OnUpdate>
     </foreign-key>
-    <foreign-key id="81" parent="33" name="library_song_id_fkey">
+    <foreign-key id="82" parent="33" name="library_song_id_fkey">
       <ObjectId>16716</ObjectId>
       <ColNames>song_id</ColNames>
       <RefTableId>16404</RefTableId>
@@ -515,7 +519,7 @@ song_id</ColNames>
       <RefKeyName>pk_songs</RefKeyName>
       <RefColNames>song_id</RefColNames>
     </foreign-key>
-    <column id="82" parent="34" name="song_id">
+    <column id="83" parent="34" name="song_id">
       <Position>1</Position>
       <DataType>bigint|0s</DataType>
       <NotNull>1</NotNull>
@@ -524,39 +528,39 @@ song_id</ColNames>
       <TypeId>20</TypeId>
       <SequenceName>songs_song_id_seq</SequenceName>
     </column>
-    <column id="83" parent="34" name="song_title">
+    <column id="84" parent="34" name="song_title">
       <Position>2</Position>
       <DataType>varchar(50)|0s</DataType>
       <NotNull>1</NotNull>
       <StateNumber>568</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="84" parent="34" name="song_duration">
+    <column id="85" parent="34" name="song_duration">
       <Position>3</Position>
       <DataType>bigint|0s</DataType>
       <NotNull>1</NotNull>
       <StateNumber>803</StateNumber>
       <TypeId>20</TypeId>
     </column>
-    <column id="85" parent="34" name="artist_id">
+    <column id="86" parent="34" name="artist_id">
       <Position>4</Position>
       <DataType>bigint|0s</DataType>
       <NotNull>1</NotNull>
       <StateNumber>804</StateNumber>
       <TypeId>20</TypeId>
     </column>
-    <index id="86" parent="34" name="pk_songs">
+    <index id="87" parent="34" name="pk_songs">
       <ObjectId>16674</ObjectId>
       <ColNames>song_id</ColNames>
       <Unique>1</Unique>
     </index>
-    <key id="87" parent="34" name="pk_songs">
+    <key id="88" parent="34" name="pk_songs">
       <ObjectId>16675</ObjectId>
       <ColNames>song_id</ColNames>
       <UnderlyingIndexName>pk_songs</UnderlyingIndexName>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="88" parent="34" name="songs_persons_artist_id_fk">
+    <foreign-key id="89" parent="34" name="songs_persons_artist_id_fk">
       <ObjectId>16756</ObjectId>
       <ColNames>artist_id</ColNames>
       <RefTableId>16440</RefTableId>

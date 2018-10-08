@@ -2,12 +2,12 @@ package ru.itis.services;
 
 import ru.itis.forms.ArtistForm;
 import ru.itis.models.Artist;
-import ru.itis.repositories.ArtistRepositoryConnectionImpl;
+import ru.itis.repositories.ArtistRepository;
 
 public class ArtistServiceImpl implements ArtistService {
-    private ArtistRepositoryConnectionImpl artistRepository;
+    private ArtistRepository artistRepository;
 
-    public ArtistServiceImpl(ArtistRepositoryConnectionImpl artistRepository) {
+    public ArtistServiceImpl(ArtistRepository artistRepository) {
         this.artistRepository = artistRepository;
     }
 
@@ -18,7 +18,7 @@ public class ArtistServiceImpl implements ArtistService {
                 .firstName(artistForm.getFirstName())
                 .lastName(artistForm.getLastName())
                 .birthday(artistForm.getBirthday())
-                .genreId(artistForm.getGenre().getGenreId())
+                .genreName(artistForm.getGenreName())
                 .build();
         artistRepository.save(artist);
     }

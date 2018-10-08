@@ -15,6 +15,6 @@ public class Artist {
     private String firstName;
     private String lastName;
     private LocalDate birthday;
-    private Long genreId;
+    private String genreName;
     private List<Album> albums;
 }
