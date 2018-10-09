@@ -2,9 +2,8 @@ package ru.itis.app;
 
 import lombok.SneakyThrows;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.Statement;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class BuilderDemo {
     private static final String USERNAME = "postgres";
@@ -13,10 +12,10 @@ public class BuilderDemo {
 
     @SneakyThrows
     public static void main(String[] args) {
-        Connection connection =
-                DriverManager.getConnection(URL, USERNAME, PASSWORD);
-        Statement statement = connection.createStatement();
-
+        String birthday = "10-10-1998";
+        Date date = new SimpleDateFormat("dd-MM-yyyy").parse(birthday);
+        java.sql.Date datesql = new java.sql.Date(date.getTime());
+        System.out.println(datesql);
         //AlbumRepositoryConnectionImpl albumRepository = new AlbumRepositoryConnectionImpl(connection);
         //System.out.println(albumRepository.findOne(1L));
         //LibraryRepositoryConnectionImpl libraryRepository = new LibraryRepositoryConnectionImpl(connection);

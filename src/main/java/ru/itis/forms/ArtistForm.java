@@ -5,7 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDate;
+import java.sql.Date;
 
 @Data
 @AllArgsConstructor
@@ -15,6 +15,6 @@ public class ArtistForm {
     private String firstName;
     private String lastName;
     private String nickname;
-    private LocalDate birthday;
+    private Date birthday;
     private String genreName;
 }

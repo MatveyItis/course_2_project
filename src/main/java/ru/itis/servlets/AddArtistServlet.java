@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class AddArtistServlet extends HttpServlet {
     private static final String USERNAME = "postgres";
@@ -34,21 +36,23 @@ public class AddArtistServlet extends HttpServlet {
         getServletContext().getRequestDispatcher("/addArtist.jsp").forward(request, response);
     }
 
+    @SneakyThrows
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) {
         String nickname = request.getParameter("nickname");
         String firstName = request.getParameter("firstName");
         String lastName = request.getParameter("lastName");
-        System.out.println(lastName);
+        String birthday = request.getParameter("birthday");
+        Date date = new SimpleDateFormat("yyyy-MM-dd").parse(birthday);
+        java.sql.Date sqlDate = new java.sql.Date(date.getTime());
         String genreName = request.getParameter("genreName");
         ArtistForm artistForm = ArtistForm.builder()
                 .nickname(nickname)
                 .firstName(firstName)
                 .lastName(lastName)
-                //.birthday(birthday)
+                .birthday(sqlDate)
                 .genreName(genreName)
                 .build();
-        //artistService.addArtist(artistForm);
-
+        artistService.addArtist(artistForm);
     }
 }

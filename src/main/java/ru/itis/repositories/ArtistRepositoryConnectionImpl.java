@@ -8,7 +8,6 @@ import ru.itis.models.Artist;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.time.LocalDate;
 import java.util.*;
 
 public class ArtistRepositoryConnectionImpl implements ArtistRepository {
@@ -46,7 +45,7 @@ public class ArtistRepositoryConnectionImpl implements ArtistRepository {
                     .nickname(resultSet.getString("nickname"))
                     .firstName(resultSet.getString("first_name"))
                     .lastName(resultSet.getString("last_name"))
-                    .birthday((LocalDate) resultSet.getObject("birthday"))
+                    .birthday(resultSet.getDate("birthday"))
                     .genreName(resultSet.getString("genre"))
                     .build();
         }
@@ -123,7 +122,7 @@ public class ArtistRepositoryConnectionImpl implements ArtistRepository {
         statement.setString(1, model.getNickname());
         statement.setString(2, model.getFirstName());
         statement.setString(3, model.getLastName());
-        statement.setDate(4, java.sql.Date.valueOf(model.getBirthday()));
+        statement.setDate(4, model.getBirthday());
         statement.setString(5, model.getGenreName());
         ResultSet resultSet = statement.getGeneratedKeys();
         while (resultSet.next()) {

@@ -24,26 +24,26 @@
         <span><h3>Добавление артиста в базу данных</h3></span>
         <div class="form-group col-xl-5 col-md-9 col-sm-9" align="left">
             <label for="nickname">Enter artist's nickname</label>
-            <input type="text" class="form-control" id="nickname"
+            <input type="text" name="nickname" class="form-control" id="nickname"
                    placeholder="Nickname">
         </div>
         <div class="form-group col-xl-5 col-md-9 col-sm-9" align="left">
             <label for="firstName">Enter first name</label>
-            <input type="text" class="form-control" id="firstName"
+            <input type="text" name="firstName" class="form-control" id="firstName"
                    placeholder="First Name">
         </div>
         <div class="form-group col-xl-5 col-md-9 col-sm-9" align="left">
-            <label for="lastName">Enter first name</label>
-            <input type="text" class="form-control" id="lastName"
+            <label for="lastName">Enter last name</label>
+            <input type="text" name="lastName" class="form-control" id="lastName"
                    placeholder="Last Name">
         </div>
         <div class="form-group col-xl-5 col-md-9 col-sm-9" align="left">
             <label for="birthday">Birthday</label>
-            <input type="date" class="form-control" id="birthday" placeholder="Birthday">
+            <input type="date" name="birthday" class="form-control" id="birthday" placeholder="Birthday">
         </div>
         <div class="form-group col-xl-5 col-md-9 col-sm-9" align="left">
             <label for="genreName">Select the Genre</label>
-            <select class="form-control" id="genreName">
+            <select class="form-control" name="genreName" id="genreName">
                 <option>Rap</option>
                 <option>Pop</option>
                 <option>Rock</option>
