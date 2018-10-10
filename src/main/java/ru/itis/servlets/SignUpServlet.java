@@ -48,6 +48,5 @@ public class SignUpServlet extends HttpServlet {
                 .lastName(lastName)
                 .build();
         usersService.signUp(userForm);
-        response.sendRedirect("/signIn");
     }
 }

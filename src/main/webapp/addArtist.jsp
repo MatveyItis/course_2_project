@@ -8,40 +8,35 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap-theme.min.css">
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
-    <style>
-        body {
-            background-color: dodgerblue;
-        }
-    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+          crossorigin="anonymous">
     <title>Adding Artist</title>
 </head>
 <body>
 <div class="container col-lg-8" align="center" style="padding: 30px; border-radius: 10px;">
     <form method="post" action="addArtist" style="border-radius: 10px; background-color: lavender; padding: 10px">
         <span><h3>Добавление артиста в базу данных</h3></span>
-        <div class="form-group col-xl-5 col-md-9 col-sm-9" align="left">
+        <div class="form-group col-xl-6 col-md-9 col-sm-9" align="left">
             <label for="nickname">Enter artist's nickname</label>
             <input type="text" name="nickname" class="form-control" id="nickname"
                    placeholder="Nickname">
         </div>
-        <div class="form-group col-xl-5 col-md-9 col-sm-9" align="left">
+        <div class="form-group col-xl-6 col-md-9 col-sm-9" align="left">
             <label for="firstName">Enter first name</label>
             <input type="text" name="firstName" class="form-control" id="firstName"
                    placeholder="First Name">
         </div>
-        <div class="form-group col-xl-5 col-md-9 col-sm-9" align="left">
+        <div class="form-group col-xl-6 col-md-9 col-sm-9" align="left">
             <label for="lastName">Enter last name</label>
             <input type="text" name="lastName" class="form-control" id="lastName"
                    placeholder="Last Name">
         </div>
-        <div class="form-group col-xl-5 col-md-9 col-sm-9" align="left">
+        <div class="form-group col-xl-6 col-md-9 col-sm-9" align="left">
             <label for="birthday">Birthday</label>
             <input type="date" name="birthday" class="form-control" id="birthday" placeholder="Birthday">
         </div>
-        <div class="form-group col-xl-5 col-md-9 col-sm-9" align="left">
+        <div class="form-group col-xl-6 col-md-9 col-sm-9" align="left">
             <label for="genreName">Select the Genre</label>
             <select class="form-control" name="genreName" id="genreName">
                 <option>Rap</option>
@@ -71,8 +66,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
         integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
         crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"
-        integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T"
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+        integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
         crossorigin="anonymous"></script>
 </body>
 </html>
