@@ -4,6 +4,6 @@ import ru.itis.forms.UserForm;
 import ru.itis.forms.LoginForm;
 
 public interface UsersService {
-    void signUp(UserForm userForm);
-    void signIn(LoginForm loginForm);
+    boolean signUp(UserForm userForm);
+    boolean signIn(LoginForm loginForm);
 }

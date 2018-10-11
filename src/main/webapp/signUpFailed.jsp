@@ -1,35 +1,30 @@
 <%--
   Created by IntelliJ IDEA.
   User: matveymaletskov
-  Date: 05/10/2018
-  Time: 16:14
+  Date: 10/10/2018
+  Time: 21:36
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8"%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
           integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
           crossorigin="anonymous">
-    <title>Sign In</title>
+    <title>Failed</title>
 </head>
 <body>
-<header>
-
-</header>
-<div class="container lg-6" style="padding: 30px" align="center">
-    <form method='post' action="signIn">
-        <div class="form-group col-xl-4 col-md-6 col-sm-10">
-            <label for='email'>E-mail</label>
-            <input type='email' class="form-control" id="email" name='email' placeholder='E-mail'>
-        </div>
-        <div class="form-group col-xl-4 col-md-6 col-sm-10">
-            <label for='password'>Password</label>
-            <input type='password' class="form-control" id="password" name='password' placeholder='Password'>
-        </div>
-        <button type="submit" class="btn btn-primary">Sign In</button>
-    </form>
+<div class="container col-lg-7 col-xl-7 col-md-8 col-sm-10 " align="center">
+    <div class="jumbotron" style="margin: 20px">
+        <h1 class="display-4">Sign Up or Sign In is failed, bro!</h1>
+        <p class="lead">Попробуй еще раз ввести данные, они должны быть корректны, бро! Пароль должен превышать 6
+            символов, ну а как писать email я думаю сам знаешь!</p>
+        <hr class="my-4">
+        <p>Давай по новой, Миша, все х*ня!</p>
+        <a class="btn btn-primary btn-md" href="signUp" role="button">Sign Up</a>
+        <a class="btn btn-secondary btn-md" href="signIn" role="button">Sign In</a>
+    </div>
 </div>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"

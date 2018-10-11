@@ -10,13 +10,29 @@
     </servlet>
     <servlet>
         <servlet-name>signUp</servlet-name>
-        <jsp-file>/signUp.jsp</jsp-file>
+        <servlet-class>ru.itis.servlets.SignUpServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>signIn</servlet-name>
-        <jsp-file>/signIn.jsp</jsp-file>
+        <servlet-class>ru.itis.servlets.SignInServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>signUpFailed</servlet-name>
+        <jsp-file>/signUpFailed.jsp</jsp-file>
+    </servlet>
+    <servlet>
+        <servlet-name>successLogIn</servlet-name>
+        <jsp-file>/successLogIn.jsp</jsp-file>
     </servlet>
 
+    <servlet-mapping>
+        <servlet-name>successLogIn</servlet-name>
+        <url-pattern>/successLogIn</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>signUpFailed</servlet-name>
+        <url-pattern>/signUpFailed</url-pattern>
+    </servlet-mapping>
     <servlet-mapping>
         <servlet-name>addArtist</servlet-name>
         <url-pattern>/addArtist</url-pattern>

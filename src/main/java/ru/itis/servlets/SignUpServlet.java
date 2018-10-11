@@ -42,11 +42,15 @@ public class SignUpServlet extends HttpServlet {
         String firstName = request.getParameter("firstName");
         String lastName = request.getParameter("lastName");
         UserForm userForm = UserForm.builder()
-                .email(email)
-                .password(password)
                 .firstName(firstName)
                 .lastName(lastName)
+                .email(email)
+                .password(password)
                 .build();
-        usersService.signUp(userForm);
+        if (usersService.signUp(userForm)) {
+            response.sendRedirect("/signIn");
+        } else {
+            response.sendRedirect("/signUpFailed");
+        }
     }
 }

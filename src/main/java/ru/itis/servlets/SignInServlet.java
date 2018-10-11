@@ -43,6 +43,10 @@ public class SignInServlet extends HttpServlet {
                 .email(email)
                 .password(password)
                 .build();
-        usersService.signIn(loginForm);
+        if (usersService.signIn(loginForm)) {
+            response.sendRedirect("/successLogIn");
+        } else {
+            response.sendRedirect("/signUpFailed");
+        }
     }
 }

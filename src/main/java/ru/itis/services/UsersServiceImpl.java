@@ -6,6 +6,7 @@ import ru.itis.forms.UserForm;
 import ru.itis.forms.LoginForm;
 import ru.itis.models.User;
 import ru.itis.repositories.UsersRepository;
+
 import java.util.Optional;
 
 public class UsersServiceImpl implements UsersService {
@@ -18,24 +19,35 @@ public class UsersServiceImpl implements UsersService {
     }
 
     @Override
-    public void signUp(UserForm userForm) {
+    public boolean signUp(UserForm userForm) {
         User user = User.builder()
                 .email(userForm.getEmail())
                 .hashPassword(encoder.encode(userForm.getPassword()))
                 .firstName(userForm.getFirstName())
                 .lastName(userForm.getLastName())
                 .build();
-        usersRepository.save(user);
+        if ((user.getFirstName().length() >= 2) &&
+                (user.getLastName().length() >= 2) &&
+                (userForm.getPassword().length() >= 6)) {
+            usersRepository.save(user);
+            return true;
+        } else {
+            return false;
+        }
     }
 
     @Override
-    public void signIn(LoginForm loginForm) {
+    public boolean signIn(LoginForm loginForm) {
         Optional<User> userOptional = usersRepository.findOneByEmail(loginForm.getEmail());
         if (userOptional.isPresent()) {
             User user = userOptional.get();
             if (!encoder.matches(loginForm.getPassword(), user.getHashPassword())) {
-                throw new IllegalArgumentException("Wrong password or email");
+                return false;
+            } else {
+                return true;
             }
-        } else throw new IllegalArgumentException("Wrong password or email");
+        } else {
+            return false;
+        }
     }
 }
