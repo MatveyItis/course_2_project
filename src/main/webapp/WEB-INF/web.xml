@@ -9,17 +9,24 @@
         <welcome-file>/jspfiles/signIn.jsp</welcome-file>
     </welcome-file-list>
 
+    <listener>
+        <listener-class>ru.itis.context.UserServiceListener</listener-class>
+    </listener>
+    <listener>
+        <listener-class>ru.itis.context.LocaleListener</listener-class>
+    </listener>
+
     <servlet>
         <servlet-name>addArtist</servlet-name>
         <jsp-file>/jspfiles/addArtist.jsp</jsp-file>
     </servlet>
     <servlet>
         <servlet-name>signUp</servlet-name>
-        <servlet-class>ru.itis.servlets.SignUpServlet</servlet-class>
+        <jsp-file>/jspfiles/signUp.jsp</jsp-file>
     </servlet>
     <servlet>
         <servlet-name>signIn</servlet-name>
-        <servlet-class>ru.itis.servlets.SignInServlet</servlet-class>
+        <jsp-file>/jspfiles/signIn.jsp</jsp-file>
     </servlet>
     <servlet>
         <servlet-name>signUpFailed</servlet-name>
@@ -50,6 +57,4 @@
         <servlet-name>signIn</servlet-name>
         <url-pattern>/signIn</url-pattern>
     </servlet-mapping>
-
-
 </web-app>

@@ -36,6 +36,12 @@
             <li class="nav-item">
                 <a class="nav-link" href="signUp" aria-expanded="true">Sign Up</a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" style="background-color: cornflowerblue" href="/signUp?lang=En">EN</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" style="background-color: cornflowerblue" href="/signUp?lang=Ru">RU</a>
+            </li>
         </ul>
         <span class="navbar-text">
          (c)Supported by the Ministry of Culture
@@ -45,27 +51,27 @@
     </div>
 </nav>
 <div class='container col-lg-5 col-xl-5 col-md-6 col-sm-8 col-xs-8' align="center" style="padding: 90px 30px 30px 30px;">
-    <h2>Registration</h2>
-    <form method='post' action="signUp">
+    <h2>${locale.get('signup.registration')}</h2>
+    <form method='post'>
         <div class="form-group">
-            <label for='firstName'>First Name</label>
-            <input type='text' class="form-control" name='firstName' placeholder='First Name' id='firstName'>
+            <label for='firstName'>${locale.get('signup.firstname')}</label>
+            <input type='text' class="form-control" name='firstName' placeholder='${locale.get("signup.firstname")}' id='firstName'>
         </div>
         <div class="form-group">
-            <label for='lastName'>Last Name</label>
-            <input type='text' class="form-control" name='lastName' placeholder='Last Name' id='lastName'>
+            <label for='lastName'>${locale.get("signup.lastname")}</label>
+            <input type='text' class="form-control" name='lastName' placeholder='${locale.get("signup.lastname")}' id='lastName'>
         </div>
         <div class="form-group">
-            <label for='email'>Email</label>
-            <input type='email' class="form-control" name='email' placeholder='Email' id='email'>
+            <label for='email'>${locale.get("signup.email")}</label>
+            <input type='email' class="form-control" name='email' placeholder='${locale.get("signup.email")}' id='email'>
         </div>
         <div class="form-group">
-            <label for='password'>Password</label>
-            <input type='password' class="form-control" name='password' placeholder='Password' id='password'>
+            <label for='password'>${locale.get("signup.password")}</label>
+            <input type='password' class="form-control" name='password' placeholder='${locale.get("signup.password")}' id='password'>
         </div>
         <div style="margin: 25px">
-            <button type="submit" class="btn btn-primary">Sign Up</button>
-            <a href="signIn" role="button" class="btn btn-secondary">Sign In</a>
+            <button type="submit" class="btn btn-primary">${locale.get("signup.signup")}</button>
+            <a href="signIn" role="button" class="btn btn-secondary">${locale.get("signup.signin")}</a>
         </div>
     </form>
 </div>
