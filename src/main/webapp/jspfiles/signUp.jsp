@@ -15,30 +15,57 @@
     <title>Sign Up</title>
 </head>
 <body>
-<header>
-
-</header>
-<div class='container col-lg-6' align="center" style="padding: 30px;">
+<nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="">MWeb</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarText" aria-controls="navbarText"
+            aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarText">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="#">Home<span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Features</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Pricing</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="signUp" aria-expanded="true">Sign Up</a>
+            </li>
+        </ul>
+        <span class="navbar-text">
+         (c)Supported by the Ministry of Culture
+            <img src="https://images.vector-images.com/104/ministry_culture_emb_n15700.gif" alt="herb"
+                 style="width: 28px;height: 28px">
+    </span>
+    </div>
+</nav>
+<div class='container col-lg-5 col-xl-5 col-md-6 col-sm-8 col-xs-8' align="center" style="padding: 90px 30px 30px 30px;">
+    <h2>Registration</h2>
     <form method='post' action="signUp">
-        <div class="form-group col-xl-6 col-md-8 col-sm-10">
+        <div class="form-group">
             <label for='firstName'>First Name</label>
             <input type='text' class="form-control" name='firstName' placeholder='First Name' id='firstName'>
         </div>
-        <div class="form-group col-xl-6 col-md-8 col-sm-10">
+        <div class="form-group">
             <label for='lastName'>Last Name</label>
             <input type='text' class="form-control" name='lastName' placeholder='Last Name' id='lastName'>
         </div>
-        <div class="form-group col-xl-6 col-md-8 col-sm-10">
+        <div class="form-group">
             <label for='email'>Email</label>
             <input type='email' class="form-control" name='email' placeholder='Email' id='email'>
         </div>
-        <div class="form-group col-xl-6 col-md-8 col-sm-10">
+        <div class="form-group">
             <label for='password'>Password</label>
             <input type='password' class="form-control" name='password' placeholder='Password' id='password'>
         </div>
         <div style="margin: 25px">
-            <button type="submit" class="btn btn-secondary">Sign Up</button>
-            <a href="signIn" role="button" class="btn btn-primary">Sign In</a>
+            <button type="submit" class="btn btn-primary">Sign Up</button>
+            <a href="signIn" role="button" class="btn btn-secondary">Sign In</a>
         </div>
     </form>
 </div>

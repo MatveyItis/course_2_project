@@ -15,16 +15,13 @@
     <title>Sign In</title>
 </head>
 <body>
-<header>
-
-</header>
-<div class="container lg-6" style="padding: 30px" align="center">
+<div class="container col-lg-5 col-xl-4 col-md-6 col-sm-7 col-xs-7" style="padding: 60px;" align="center">
     <form method='post' action="signIn">
-        <div class="form-group col-xl-4 col-md-6 col-sm-10">
+        <div class="form-group">
             <label for='email'>E-mail</label>
             <input type='email' class="form-control" id="email" name='email' placeholder='E-mail'>
         </div>
-        <div class="form-group col-xl-4 col-md-6 col-sm-10">
+        <div class="form-group">
             <label for='password'>Password</label>
             <input type='password' class="form-control" id="password" name='password' placeholder='Password'>
         </div>

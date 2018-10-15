@@ -10,6 +10,7 @@ import ru.itis.services.UsersServiceImpl;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.DriverManager;
 
@@ -31,7 +32,7 @@ public class SignUpServlet extends HttpServlet {
     @SneakyThrows
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) {
-        getServletContext().getRequestDispatcher("/signUp.jsp").forward(request, response);
+        getServletContext().getRequestDispatcher("/jspfiles/signUp.jsp").forward(request, response);
     }
 
     @SneakyThrows
@@ -47,9 +48,18 @@ public class SignUpServlet extends HttpServlet {
                 .email(email)
                 .password(password)
                 .build();
+        PrintWriter printWriter = response.getWriter();
         if (usersService.signUp(userForm)) {
+            /*printWriter.println("<script type=\"text/javascript\">");
+            printWriter.println("alert('Email and Password is correct! Thank you')");
+            printWriter.println("location='/signUp'");
+            printWriter.println("</script>");*/
             response.sendRedirect("/signIn");
         } else {
+            /*printWriter.println("<script type=\"text/javascript\">");
+            printWriter.println("alert('Email or Password is incorrect!')");
+            printWriter.println("location='/signUp'");
+            printWriter.println("</script>");*/
             response.sendRedirect("/signUpFailed");
         }
     }

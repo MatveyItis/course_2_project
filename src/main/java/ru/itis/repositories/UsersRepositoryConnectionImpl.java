@@ -17,7 +17,7 @@ public class UsersRepositoryConnectionImpl implements UsersRepository {
     private User theOnlyUser;
 
     //language=SQL
-    private static final String SQL_INSERT_QUERY = "insert into client(first_name, last_name, email, hash_password)" +
+    private static final String SQL_INSERT_QUERY = "insert into client(first_name, last_name, email, hash_password) " +
             "values (?, ?, ?, ?);";
 
     //language=SQL
@@ -128,7 +128,7 @@ public class UsersRepositoryConnectionImpl implements UsersRepository {
     @SneakyThrows
     public Optional<User> findOne(Long id) {
         userWithSongsMap = new HashMap<>();
-        PreparedStatement statement = connection.prepareStatement(SQL_SELECT_USER_WITH_SONGS_BY_ID);
+        PreparedStatement statement =  connection.prepareStatement(SQL_SELECT_USER_WITH_SONGS_BY_ID);
         statement.setLong(1, id);
         ResultSet resultSet = statement.executeQuery();
         while (resultSet.next()) {

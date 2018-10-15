@@ -31,7 +31,7 @@ public class SignInServlet extends HttpServlet {
     @SneakyThrows
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) {
-        getServletContext().getRequestDispatcher("/signIn.jsp").forward(request, response);
+        getServletContext().getRequestDispatcher("/jspfiles/signIn.jsp").forward(request, response);
     }
 
     @SneakyThrows
