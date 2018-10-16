@@ -37,14 +37,14 @@
                 <a class="nav-link" href="signUp" aria-expanded="true">Sign Up</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" style="background-color: cornflowerblue" href="/signUp?lang=En">EN</a>
+                <a class="nav-link" href="/signUp?lang=En">EN</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" style="background-color: cornflowerblue" href="/signUp?lang=Ru">RU</a>
+                <a class="nav-link" href="/signUp?lang=Ru">RU</a>
             </li>
         </ul>
         <span class="navbar-text">
-         (c)Supported by the Ministry of Culture
+            ${locale.get("signup.header.inscription")}
             <img src="https://images.vector-images.com/104/ministry_culture_emb_n15700.gif" alt="herb"
                  style="width: 28px;height: 28px">
     </span>

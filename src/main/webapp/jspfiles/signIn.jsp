@@ -18,14 +18,14 @@
 <div class="container col-lg-5 col-xl-4 col-md-6 col-sm-7 col-xs-7" style="padding: 60px;" align="center">
     <form method='post' action="signIn">
         <div class="form-group">
-            <label for='email'>E-mail</label>
-            <input type='email' class="form-control" id="email" name='email' placeholder='E-mail'>
+            <label for='email'>${locale.get("signup.email")}</label>
+            <input type='email' class="form-control" id="email" name='email' placeholder="${locale.get("signup.email")}">
         </div>
         <div class="form-group">
-            <label for='password'>Password</label>
-            <input type='password' class="form-control" id="password" name='password' placeholder='Password'>
+            <label for='password'>${locale.get("signup.password")}</label>
+            <input type='password' class="form-control" id="password" name='password' placeholder='${locale.get("signup.password")}'>
         </div>
-        <button type="submit" class="btn btn-primary">Sign In</button>
+        <button type="submit" class="btn btn-primary">${locale.get("signup.signin")}</button>
     </form>
 </div>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
