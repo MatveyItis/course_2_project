@@ -10,10 +10,10 @@
     </welcome-file-list>
 
     <listener>
-        <listener-class>ru.itis.context.UserServiceListener</listener-class>
+        <listener-class>ru.itis.maletskov.context.UserServiceListener</listener-class>
     </listener>
     <listener>
-        <listener-class>ru.itis.context.LocaleListener</listener-class>
+        <listener-class>ru.itis.maletskov.context.LocaleListener</listener-class>
     </listener>
 
     <servlet>
