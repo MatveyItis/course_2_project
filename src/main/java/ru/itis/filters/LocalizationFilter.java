@@ -25,7 +25,7 @@ public class LocalizationFilter implements javax.servlet.Filter {
         if (lang != null) {
             if (lang.equals("En") || lang.equals("Ru")) {
                 Cookie cookie = new Cookie("locale", lang);
-                cookie.setMaxAge(60 * 60);
+                cookie.setMaxAge(60 * 60 * 24);
                 response.addCookie(cookie);
             } else {
                 for (Cookie cookie : request.getCookies()) {
