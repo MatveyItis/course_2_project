@@ -42,7 +42,7 @@
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                     <a class="dropdown-item" href="?lang=En">${locale.get("header.language.en")}</a>
-                    <a class="dropdown-item" href="lang=Ru">${locale.get("header.language.ru")}</a>
+                    <a class="dropdown-item" href="?lang=Ru">${locale.get("header.language.ru")}</a>
                     <%-- <div class="dropdown-divider"></div>
                      <a class="dropdown-item disabled" href=""></a>--%>
                 </div>
