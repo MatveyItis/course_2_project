@@ -21,7 +21,6 @@ public class LocalizationFilter implements javax.servlet.Filter {
         HttpServletResponse response = (HttpServletResponse) servletResponse;
 
         String lang = request.getParameter("lang");
-        boolean flag = false;
 
         if (lang != null) {
             if (lang.equals("En") || lang.equals("Ru")) {
@@ -29,20 +28,23 @@ public class LocalizationFilter implements javax.servlet.Filter {
                 cookie.setMaxAge(60 * 60 * 24);
                 response.addCookie(cookie);
             } else {
-                flag = true;
-            }
-        } else {
-            flag = true;
-        }
-        if (flag) {
-            for (Cookie cookie : request.getCookies()) {
-                if (cookie.getName().equals("locale")) {
-                    lang = cookie.getValue();
+                for (Cookie cookie : request.getCookies()) {
+                    if (cookie.getName().equals("locale")) {
+                        lang = cookie.getValue();
+                    }
                 }
             }
-        }
-        if (lang == null) {
-            lang = "En";
+        } else {
+            if (request.getCookies() != null) {
+                for (Cookie cookie : request.getCookies()) {
+                    if (cookie.getName().equals("locale")) {
+                        lang = cookie.getValue();
+                    }
+                }
+            }
+            if (lang == null) {
+                lang = "En";
+            }
         }
 
         Map<String, String> locale = (Map<String, String>) request.getServletContext().getAttribute("locale" + lang);

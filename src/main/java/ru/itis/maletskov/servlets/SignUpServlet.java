@@ -9,7 +9,6 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.PrintWriter;
 
 public class SignUpServlet extends HttpServlet {
     private UsersService usersService;
@@ -40,7 +39,6 @@ public class SignUpServlet extends HttpServlet {
                 .email(email)
                 .password(password)
                 .build();
-        PrintWriter printWriter = response.getWriter();
         if (usersService.signUp(userForm)) {
             /*printWriter.println("<script type=\"text/javascript\">");
             printWriter.println("alert('Email and Password is correct! Thank you')");

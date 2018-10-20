@@ -5,8 +5,8 @@
          version="3.1">
     <welcome-file-list>
         <welcome-file>Welcome</welcome-file>
+        <welcome-file>/jspfiles/home.jsp</welcome-file>
         <welcome-file>/jspfiles/signUp.jsp</welcome-file>
-        <welcome-file>/jspfiles/signIn.jsp</welcome-file>
     </welcome-file-list>
 
     <listener>
@@ -36,7 +36,15 @@
         <servlet-name>successLogIn</servlet-name>
         <jsp-file>/jspfiles/successLogIn.jsp</jsp-file>
     </servlet>
+    <servlet>
+        <servlet-name>home</servlet-name>
+        <jsp-file>/jspfiles/home.jsp</jsp-file>
+    </servlet>
 
+    <servlet-mapping>
+        <servlet-name>home</servlet-name>
+        <url-pattern>/home</url-pattern>
+    </servlet-mapping>
     <servlet-mapping>
         <servlet-name>successLogIn</servlet-name>
         <url-pattern>/successLogIn</url-pattern>
