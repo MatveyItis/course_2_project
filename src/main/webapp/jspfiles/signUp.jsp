@@ -8,13 +8,53 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie-edge">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
           integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
           crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
     <title>Sign Up</title>
 </head>
 <body>
+<div class="wrapper">
+    <header>
+        <nav>
+            <div class="menu-icon">
+                <i class="fa fa-bars fa-2x"></i>
+            </div>
+            <div class="logo">
+                WEBM
+            </div>
+            <div class="menu">
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">About</a></li>
+                    <li><a href="#">Profile</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+    <div class="header">
+        <h1>Registration</h1>
+        <p>Tag line</p>
+    </div>
+    <div class="form">
+        <form method="post">
+            <input type='text' placeholder='First Name' id='firstName'>
+            <input type='text' placeholder='Last Name' id='lastName'>
+            <input type='email' placeholder='E-mail' id='email'>
+            <input type='password' name='password' placeholder='Password' id='password'>
+            <button type="submit" class="btn btn-primary">Sign Up</button>
+            <a href="signIn" role="button" class="btn btn-secondary">Sign In</a>
+        </form>
+    </div>
+</div>
+<%--
 <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
     <a class="navbar-brand" href="">MWeb</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse"
@@ -43,8 +83,8 @@
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                     <a class="dropdown-item" href="?lang=En">${locale.get("header.language.en")}</a>
                     <a class="dropdown-item" href="?lang=Ru">${locale.get("header.language.ru")}</a>
-                    <%-- <div class="dropdown-divider"></div>
-                     <a class="dropdown-item disabled" href=""></a>--%>
+                    &lt;%&ndash; <div class="dropdown-divider"></div>
+                     <a class="dropdown-item disabled" href=""></a>&ndash;%&gt;
                 </div>
             </li>
         </ul>
@@ -89,5 +129,6 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
         integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
         crossorigin="anonymous"></script>
+--%>
 </body>
 </html>

@@ -9,6 +9,14 @@
     <script src="/scripts/scroll.js"></script>
     <link rel="stylesheet" type="text/css"
           href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        header {
+            width :100%;
+            height: 100vh;
+            background: url(https://images.wallpaperscraft.ru/image/gory_nebo_tuman_oblaka_vershiny_84363_1920x1080.jpg) no-repeat 50% 50%;
+            background-size: cover;
+        }
+    </style>
     <title>Home</title>
 </head>
 <body>
