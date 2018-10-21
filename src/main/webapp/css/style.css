@@ -11,9 +11,10 @@ body {
 
 .wrapper {
     width :100%;
-    height: 100vh;
+    height: 50vh;
     background: url(https://images.wallpaperscraft.ru/image/gory_nebo_tuman_oblaka_vershiny_84363_1920x1080.jpg) no-repeat 50% 50%;
     background-size: cover;
+    overflow: scroll;
 }
 
 .header {
@@ -26,12 +27,12 @@ body {
 
 .header h1 {
     color: #fff;
-    font-size: 32px;
+    font-size: 26px;
 }
 
 .header p {
     color: #fff;
-    font-size: 24px;
+    font-size: 14px;
 }
 
 .form {
@@ -45,8 +46,8 @@ body {
 input {
     outline: none;
     width: 100%;
-    height: 30px;
-    font-size: 24px;
+    height: 40px;
+    font-size: 20px;
     color: white;
     margin: 20px 0;
     background: rgba(0, 0, 0, 0);
@@ -56,7 +57,7 @@ input {
 
 ::-webkit-input-placeholder {
     color: #EAEAEA;
-    font-size: 20px;
+    font-size: 16px;
     letter-spacing: 2px;
 }
 /*
@@ -94,7 +95,7 @@ nav {
     left: 0;
     margin: 0;
     padding: 0;
-    height: 66px
+    height: 62px
 }
 
 nav ul {
@@ -163,5 +164,13 @@ nav ul li a {
 
     .menu-icon {
         display: block;
+    }
+
+    .header h1 {
+        padding-bottom: 30px;
+    }
+
+    .header p {
+        display: none;
     }
 }
