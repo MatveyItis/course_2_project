@@ -5,8 +5,8 @@
          version="3.1">
     <welcome-file-list>
         <welcome-file>Welcome</welcome-file>
-        <welcome-file>/jspfiles/home.jsp</welcome-file>
-        <welcome-file>/jspfiles/signUp.jsp</welcome-file>
+        <welcome-file>/views/home.jsp</welcome-file>
+        <welcome-file>/views/signUp.jsp</welcome-file>
     </welcome-file-list>
 
     <listener>
@@ -18,27 +18,27 @@
 
     <servlet>
         <servlet-name>addArtist</servlet-name>
-        <jsp-file>/jspfiles/addArtist.jsp</jsp-file>
+        <jsp-file>/views/addArtist.jsp</jsp-file>
     </servlet>
     <servlet>
         <servlet-name>signUp</servlet-name>
-        <jsp-file>/jspfiles/signUp.jsp</jsp-file>
+        <servlet-class>ru.itis.maletskov.servlets.SignUpServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>signIn</servlet-name>
-        <jsp-file>/jspfiles/signIn.jsp</jsp-file>
+        <servlet-class>ru.itis.maletskov.servlets.SignInServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>signUpFailed</servlet-name>
-        <jsp-file>/jspfiles/signUpFailed.jsp</jsp-file>
+        <jsp-file>/views/signUpFailed.jsp</jsp-file>
     </servlet>
     <servlet>
         <servlet-name>successLogIn</servlet-name>
-        <jsp-file>/jspfiles/successLogIn.jsp</jsp-file>
+        <jsp-file>/views/successLogIn.jsp</jsp-file>
     </servlet>
     <servlet>
         <servlet-name>home</servlet-name>
-        <jsp-file>/jspfiles/home.jsp</jsp-file>
+        <jsp-file>/views/home.jsp</jsp-file>
     </servlet>
 
     <servlet-mapping>

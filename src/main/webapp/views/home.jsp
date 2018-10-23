@@ -5,12 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie-edge">
     <script src="https://code.jquery.com/jquery-3.2.1.js"></script>
-    <script src="/scripts/scroll.js"></script>
-    <link rel="stylesheet" type="text/css"
-          href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script>
+        <%@include file="/js/scroll.js"%>
+    </script>
     <style>
         <%@include file="/css/style.css"%>
     </style>
+    <link rel="stylesheet" type="text/css"
+          href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <style>
         header {
             width :100%;

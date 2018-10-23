@@ -33,6 +33,5 @@ public class UserServiceListener implements ServletContextListener {
         ServletContext context = sce.getServletContext();
         context.setAttribute("usersService", usersService);
         context.setAttribute("artistService", artistService);
-
     }
 }

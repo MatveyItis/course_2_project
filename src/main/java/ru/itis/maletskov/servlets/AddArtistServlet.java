@@ -25,7 +25,7 @@ public class AddArtistServlet extends HttpServlet {
     @SneakyThrows
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) {
-        getServletContext().getRequestDispatcher("/jspfiles/addArtist.jsp").forward(request, response);
+        getServletContext().getRequestDispatcher("/views/addArtist.jsp").forward(request, response);
     }
 
     @SneakyThrows
