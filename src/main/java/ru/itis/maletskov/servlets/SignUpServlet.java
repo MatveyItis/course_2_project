@@ -40,10 +40,6 @@ public class SignUpServlet extends HttpServlet {
                 .password(password)
                 .build();
         if (usersService.signUp(userForm)) {
-            /*printWriter.println("<script type=\"text/javascript\">");
-            printWriter.println("alert('Email and Password is correct! Thank you')");
-            printWriter.println("location='/signUp'");
-            printWriter.println("</script>");*/
             response.sendRedirect("/signIn");
         } else {
             /*printWriter.println("<script type=\"text/javascript\">");

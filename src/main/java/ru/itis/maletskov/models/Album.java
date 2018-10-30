@@ -10,10 +10,9 @@ import java.util.List;
 @EqualsAndHashCode
 @Builder
 public class Album {
-    private Long albumId;
-    private Long artistId;
+    private Integer albumId;
+    private Integer artistId;
     private String albumTitle;
-    private Long albumYear;
-    private Long albumTracks;
+    private Integer albumYear;
     private List<Song> albumSongs;
 }

@@ -1,12 +1,10 @@
 package ru.itis.maletskov.app;
 
 import lombok.SneakyThrows;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import ru.itis.maletskov.models.User;
 import ru.itis.maletskov.repositories.UsersRepository;
-import ru.itis.maletskov.repositories.UsersRepositoryConnectionImpl;
-
-import java.sql.Connection;
-import java.sql.DriverManager;
+import ru.itis.maletskov.repositories.UsersRepositoryJdbcTemplateImpl;
 
 public class UsersRepositoryDemo {
     private static final String USERNAME = "postgres";
@@ -15,9 +13,12 @@ public class UsersRepositoryDemo {
 
     @SneakyThrows
     public static void main(String[] args) {
-        Connection connection =
-                DriverManager.getConnection(URL, USERNAME, PASSWORD);
-        UsersRepository usersRepository = new UsersRepositoryConnectionImpl(connection);
+        DriverManagerDataSource dataSource = new DriverManagerDataSource();
+        dataSource.setDriverClassName("org.postgresql.Driver");
+        dataSource.setUrl(URL);
+        dataSource.setUsername(USERNAME);
+        dataSource.setPassword(PASSWORD);
+        UsersRepository usersRepository = new UsersRepositoryJdbcTemplateImpl(dataSource);
         User user1 = User.builder()
                 .firstName("Anya")
                 .lastName("Kuzmenko")

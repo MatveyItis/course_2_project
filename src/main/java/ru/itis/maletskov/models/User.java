@@ -10,10 +10,11 @@ import java.util.List;
 @EqualsAndHashCode
 @Builder
 public class User {
-    private Long clientId;
+    private Integer clientId;
     private String firstName;
     private String lastName;
     private String email;
     private String hashPassword;
+    private Integer libraryId;
     private List<Song> songs;
 }

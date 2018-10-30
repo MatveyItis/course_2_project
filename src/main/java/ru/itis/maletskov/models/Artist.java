@@ -11,7 +11,7 @@ import java.util.List;
 @Builder
 @Setter
 public class Artist {
-    private Long artistId;
+    private Integer artistId;
     private String nickname;
     private String firstName;
     private String lastName;
