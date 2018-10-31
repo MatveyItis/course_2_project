@@ -4,8 +4,8 @@ import java.util.List;
 import java.util.Optional;
 
 public interface CrudRepository<T> {
-    Optional<T> findOne(Long id);
+    Optional<T> findOne(Integer id);
     void save(T model);
-    void delete(Long id);
+    void delete(Integer id);
     Optional<List<T>> findAll();
 }

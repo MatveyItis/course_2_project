@@ -42,10 +42,6 @@ public class SignUpServlet extends HttpServlet {
         if (usersService.signUp(userForm)) {
             response.sendRedirect("/signIn");
         } else {
-            /*printWriter.println("<script type=\"text/javascript\">");
-            printWriter.println("alert('Email or Password is incorrect!')");
-            printWriter.println("location='/signUp'");
-            printWriter.println("</script>");*/
             response.sendRedirect("/signUpFailed");
         }
     }
