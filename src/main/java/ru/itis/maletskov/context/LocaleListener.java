@@ -17,4 +17,9 @@ public class LocaleListener implements ServletContextListener {
         context.setAttribute("localeRu", localeRu);
     }
 
+    @Override
+    public void contextDestroyed(ServletContextEvent servletContextEvent) {
+
+    }
+
 }

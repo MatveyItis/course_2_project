@@ -5,10 +5,12 @@ import ru.itis.maletskov.services.UsersService;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+@WebServlet("/signIn")
 public class SignInServlet extends HttpServlet {
     private UsersService usersService;
 
@@ -22,12 +24,12 @@ public class SignInServlet extends HttpServlet {
     @SneakyThrows
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) {
-        request.getServletContext().getRequestDispatcher("/views/signIn.jsp").forward(request, response);
+        request.getServletContext().getRequestDispatcher("/WEB-INF/views/signUp.jsp").forward(request, response);
     }
 
     @SneakyThrows
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) {
 
     }
 }

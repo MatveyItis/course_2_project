@@ -3,9 +3,7 @@ package ru.itis.maletskov.filters;
 
 import lombok.SneakyThrows;
 
-import javax.servlet.FilterChain;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
+import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -14,6 +12,11 @@ import java.util.Map;
 
 @WebFilter("*")
 public class LocalizationFilter implements javax.servlet.Filter {
+    @Override
+    public void init(FilterConfig filterConfig) throws ServletException {
+
+    }
+
     @SneakyThrows
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) {
@@ -51,5 +54,10 @@ public class LocalizationFilter implements javax.servlet.Filter {
         request.setAttribute("locale", locale);
 
         filterChain.doFilter(request, response);
+    }
+
+    @Override
+    public void destroy() {
+
     }
 }

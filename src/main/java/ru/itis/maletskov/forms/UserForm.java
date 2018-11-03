@@ -11,7 +11,8 @@ import lombok.NoArgsConstructor;
 @Builder
 public class UserForm {
     private String email;
-    private String password;
+    private String passwordFirst;
+    private String passwordSecond;
     private String firstName;
     private String lastName;
 }

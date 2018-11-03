@@ -22,14 +22,18 @@ public class UsersServiceImpl implements UsersService {
     public boolean signUp(UserForm userForm) {
         User user = User.builder()
                 .email(userForm.getEmail())
-                .hashPassword(encoder.encode(userForm.getPassword()))
                 .firstName(userForm.getFirstName())
                 .lastName(userForm.getLastName())
                 .build();
+        if (!userForm.getPasswordFirst().equals(userForm.getPasswordSecond())) {
+            return false;
+        }
+        user.setHashPassword(encoder.encode(userForm.getPasswordFirst()));
         if ((user.getFirstName().length() >= 2) &&
                 (user.getLastName().length() >= 2) &&
-                (userForm.getPassword().length() >= 6)) {
-            usersRepository.save(user);
+                (userForm.getPasswordFirst().length() >= 6) &&
+                (userForm.getPasswordSecond().length() >= 6)) {
+            //usersRepository.save(user);
             return true;
         } else {
             return false;
