@@ -18,6 +18,14 @@
           crossorigin="anonymous">
     <link rel="stylesheet" type="text/css"
           href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Indie+Flower" rel="stylesheet">
+    <style>
+        body {
+            background: url("/images/pink dust.png");
+            font-family: 'Indie Flower', cursive;
+            font-size: 20px;
+        }
+    </style>
     <title>${title}</title>
 </head>
 <body>

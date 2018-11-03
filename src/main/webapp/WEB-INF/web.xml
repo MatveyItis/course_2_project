@@ -17,52 +17,33 @@
     </listener>
 
     <servlet>
-        <servlet-name>addArtist</servlet-name>
-        <jsp-file>/views/addArtist.jsp</jsp-file>
-    </servlet>
-    <servlet>
-        <servlet-name>signUp</servlet-name>
-        <servlet-class>ru.itis.maletskov.servlets.SignUpServlet</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>signIn</servlet-name>
-        <servlet-class>ru.itis.maletskov.servlets.SignInServlet</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>signUpFailed</servlet-name>
-        <jsp-file>/views/signUpFailed.jsp</jsp-file>
-    </servlet>
-    <servlet>
-        <servlet-name>successLogIn</servlet-name>
-        <jsp-file>/views/successLogIn.jsp</jsp-file>
+        <servlet-name>error</servlet-name>
+        <jsp-file>/WEB-INF/views/error.jsp</jsp-file>
     </servlet>
     <servlet>
         <servlet-name>home</servlet-name>
-        <jsp-file>/views/home.jsp</jsp-file>
+        <jsp-file>/WEB-INF/views/home.jsp</jsp-file>
+    </servlet>
+    <servlet>
+        <servlet-name>profile</servlet-name>
+        <jsp-file>/WEB-INF/views/profile.jsp</jsp-file>
     </servlet>
 
+    <servlet-mapping>
+        <servlet-name>error</servlet-name>
+        <url-pattern>/error</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>profile</servlet-name>
+        <url-pattern>/profile</url-pattern>
+    </servlet-mapping>
     <servlet-mapping>
         <servlet-name>home</servlet-name>
         <url-pattern>/home</url-pattern>
     </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>successLogIn</servlet-name>
-        <url-pattern>/successLogIn</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>signUpFailed</servlet-name>
-        <url-pattern>/signUpFailed</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>addArtist</servlet-name>
-        <url-pattern>/addArtist</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>signUp</servlet-name>
-        <url-pattern>/signUp</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>signIn</servlet-name>
-        <url-pattern>/signIn</url-pattern>
-    </servlet-mapping>
+
+    <error-page>
+        <error-code>404</error-code>
+        <location>/WEB-INF/errors/404.jsp</location>
+    </error-page>
 </web-app>
