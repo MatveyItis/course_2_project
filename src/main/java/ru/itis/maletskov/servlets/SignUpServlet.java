@@ -1,7 +1,6 @@
 package ru.itis.maletskov.servlets;
 
 import lombok.SneakyThrows;
-import ru.itis.maletskov.forms.UserForm;
 import ru.itis.maletskov.services.UsersService;
 
 import javax.servlet.ServletConfig;
@@ -29,20 +28,6 @@ public class SignUpServlet extends HttpServlet {
     @SneakyThrows
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) {
-        String email = request.getParameter("email");
-        String password = request.getParameter("password");
-        String firstName = request.getParameter("firstName");
-        String lastName = request.getParameter("lastName");
-        UserForm userForm = UserForm.builder()
-                .firstName(firstName)
-                .lastName(lastName)
-                .email(email)
-                .password(password)
-                .build();
-        if (usersService.signUp(userForm)) {
-            response.sendRedirect("/signIn");
-        } else {
-            response.sendRedirect("/signUpFailed");
-        }
+
     }
 }

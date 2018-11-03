@@ -12,4 +12,5 @@ public class Song {
     private String title;
     private Integer duration;
     private Integer artistId;
+    private String songSrc;
 }

@@ -16,7 +16,7 @@ public class SongRepositoryJdbcTemplateImpl implements SongRepository {
     private JdbcTemplate jdbcTemplate;
 
     //language=SQL
-    private static final String SQL_INSERT = "insert into song(song_title, song_duration, artist_id) values(?, ?, ?)";
+    private static final String SQL_INSERT = "insert into song(song_title, song_duration, artist_id, song_src) values(?, ?, ?, ?)";
 
     //language=SQL
     private static final String SQL_SELECT_SONG_BY_ID = "select * from song where song_id = ?";
@@ -37,6 +37,7 @@ public class SongRepositoryJdbcTemplateImpl implements SongRepository {
             .title(resultSet.getString("song_title"))
             .duration(resultSet.getInt("song_duration"))
             .artistId(resultSet.getInt("artist_id"))
+            .songSrc(resultSet.getString("song_src"))
             .build();
 
     @SneakyThrows
@@ -55,6 +56,7 @@ public class SongRepositoryJdbcTemplateImpl implements SongRepository {
                     statement.setString(1, model.getTitle());
                     statement.setInt(2, model.getDuration());
                     statement.setInt(3, model.getArtistId());
+                    statement.setString(4, model.getSongSrc());
                     return statement;
                 }, keyHolder);
         model.setSongId(keyHolder.getKey().intValue());
