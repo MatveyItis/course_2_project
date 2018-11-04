@@ -9,10 +9,9 @@
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <t:layout title="Oops 404!">
-    <t:navbar/>
-    <div class="container" align="center" style="margin-top: 20px">
+    <div class="container" align="center" style="margin-top: 60px">
         <div class="jumbotron">
-            <h2 class="display-6">Error 404 - Запрашиваемая вами страница не найдена</h2>
+            <h2 class="display-6">404 - Запрашиваемая вами страница не найдена</h2>
             <p class="lead"><img src="https://i.imgur.com/VJNkdvJ.gif" alt="error cat"></p>
             <hr class="my-4">
             <p>Чтобы вернуться назад просто нажмите кнопку ниже</p>
