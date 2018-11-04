@@ -5,7 +5,7 @@
   Time: 11:59
   To change this template use File | Settings | File Templates.
 --%>
-<%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
+<%@taglib prefix="t" tagdir="/WEB-INF/tags"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
@@ -54,7 +54,7 @@
                             </div>
                             <div class="col-8">
                                 <div class="container" style="padding: 10px">
-                                    <h2>First name + Last name</h2>
+                                    <h2>${user.getFirstName()} ${user.getLastName()}</h2>
                                     <hr>
                                     <div class="row">
                                         <div class="col-6">Date of birth:</div>
