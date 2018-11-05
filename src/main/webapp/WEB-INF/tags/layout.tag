@@ -3,6 +3,7 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <%@attribute name="title" required="true" type="java.lang.String" %>
+<%@attribute name="style" type="java.lang.String" %>
 
 <c:if test="${empty title}">
     <c:set var="title" value="Music"/>
@@ -25,6 +26,7 @@
             font-family: 'Indie Flower', cursive;
             font-size: 20px;
         }
+        <jsp:include page="${style}"/>
     </style>
     <title>${title}</title>
 </head>

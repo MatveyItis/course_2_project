@@ -1,0 +1,8 @@
+@media (max-width: 780px) {
+    div.container-fluid.row.col-3 {
+        display: none;
+    }
+    div.container-fluid.row.col-4.container {
+        display: block;
+    }
+}

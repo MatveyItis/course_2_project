@@ -10,15 +10,23 @@
     </welcome-file-list>
 
     <listener>
-        <listener-class>ru.itis.maletskov.context.UserServiceListener</listener-class>
+        <listener-class>ru.itis.maletskov.context.ComponentsListener</listener-class>
     </listener>
     <listener>
         <listener-class>ru.itis.maletskov.context.LocaleListener</listener-class>
     </listener>
 
     <servlet>
-        <servlet-name>error</servlet-name>
-        <jsp-file>/WEB-INF/views/error.jsp</jsp-file>
+        <servlet-name>about</servlet-name>
+        <jsp-file>/WEB-INF/views/about.jsp</jsp-file>
+    </servlet>
+    <servlet>
+        <servlet-name>library</servlet-name>
+        <jsp-file>/WEB-INF/views/library.jsp</jsp-file>
+    </servlet>
+    <servlet>
+        <servlet-name>people</servlet-name>
+        <jsp-file>/WEB-INF/views/people.jsp</jsp-file>
     </servlet>
     <servlet>
         <servlet-name>home</servlet-name>
@@ -30,8 +38,16 @@
     </servlet>
 
     <servlet-mapping>
-        <servlet-name>error</servlet-name>
-        <url-pattern>/error</url-pattern>
+        <servlet-name>about</servlet-name>
+        <url-pattern>/about</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>library</servlet-name>
+        <url-pattern>/library</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>people</servlet-name>
+        <url-pattern>/people</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>profile</servlet-name>

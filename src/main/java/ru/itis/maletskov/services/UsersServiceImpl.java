@@ -33,7 +33,7 @@ public class UsersServiceImpl implements UsersService {
                 (user.getLastName().length() >= 2) &&
                 (userForm.getPasswordFirst().length() >= 6) &&
                 (userForm.getPasswordSecond().length() >= 6)) {
-            //usersRepository.save(user);
+            usersRepository.save(user);
             return true;
         } else {
             return false;
@@ -53,5 +53,10 @@ public class UsersServiceImpl implements UsersService {
         } else {
             return false;
         }
+    }
+
+    @Override
+    public UsersRepository getUsersRepository() {
+        return usersRepository;
     }
 }

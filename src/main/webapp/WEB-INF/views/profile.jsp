@@ -9,7 +9,7 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
-<t:layout title="Profile">
+<t:layout title="Profile" >
     <t:navbar/>
     <div class="container-fluid row" style="padding-top: 20px">
         <div class="col-3">
@@ -46,14 +46,15 @@
                      aria-labelledby="list-profile-list">
                     <div class="container-fluid" style="background-color:  rgb(198, 200, 202); border-radius: 15px">
                         <div class="row">
-                            <div class="col-4">
-                                <div class="container" style="width: inherit; padding: 10px">
-                                    <img src="/images/avatarcat.png" alt="avatar" width="" height="33%"
-                                         style="border-radius: 50%">
+                            <div class="col-4" style="padding: 10px">
+                                <div class="container" style="background-color: white;
+                                border-radius: 50%;width: 270px;height: 270px;">
+                                    <img src="/images/avatarcat.png" alt="avatar" width="250" height="250"
+                                         style="border-radius: 50%;margin-top: 10px; margin-left: -5px;">
                                 </div>
                             </div>
-                            <div class="col-8">
-                                <div class="container" style="padding: 10px">
+                            <div class="col-8" style="padding: 10px;">
+                                <div class="container" style="height: 270px; border-radius: 10px;background-color: white">
                                     <h2>${user.getFirstName()} ${user.getLastName()}</h2>
                                     <hr>
                                     <div class="row">
@@ -71,9 +72,8 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row">
-                            <hr>
-                            <div class="container-fluid">
+                        <div class="row" style="padding: 10px">
+                            <div class="container-fluid" style="background-color: white; border-radius: 10px;">
                                 <p>Here is my lovely songs:</p>
                                 <p>Дорогие друзья, социально-экономическое развитие требует от нас анализа модели
                                     развития? Соображения высшего порядка, а также новая модель организационной

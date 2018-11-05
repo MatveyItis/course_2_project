@@ -29,7 +29,7 @@ public class UsersRepositoryJdbcTemplateImpl implements UsersRepository {
     //language=SQL
     private static final String SQL_SELECT_USER_BY_EMAIL = "select * from client " +
             "join library l on client.client_id = l.client_id " +
-            "where email = ?";
+            "where client.email = ?";
 
     //language=SQL
     private static final String SQL_SELECT_USER = "select * from client " +

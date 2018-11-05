@@ -8,7 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<t:layout title="Oops 404!">
+<t:layout title="Oops 500!">
     <div class="container" align="center" style="margin-top: 60px">
         <div class="jumbotron">
             <h2 class="display-6">500 - Внутренняя ошибка сервера</h2>
