@@ -1,4 +1,4 @@
-<%@ page import="java.util.Date" %><%--
+<%--
   Created by IntelliJ IDEA.
   User: matveymaletskov
   Date: 05/10/2018
@@ -72,7 +72,7 @@
                                    id="firstName" required>
                         </div>
                         <div class="form-group">
-                            <label for="lastName">First name</label>
+                            <label for="lastName">Last name</label>
                             <input type="text" class="form-control" name="lastName" placeholder="Enter last name"
                                    id="lastName" required>
                         </div>

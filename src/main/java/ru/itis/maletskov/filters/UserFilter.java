@@ -1,6 +1,7 @@
 package ru.itis.maletskov.filters;
 
 import lombok.SneakyThrows;
+import ru.itis.maletskov.models.User;
 import ru.itis.maletskov.services.UsersService;
 
 import javax.servlet.*;
@@ -10,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-@WebFilter(urlPatterns = {"/profile", "/library"})
+@WebFilter(urlPatterns = {"/profile", "/library", "/adminPage"})
 public class UserFilter implements Filter {
     private UsersService usersService;
 
@@ -31,12 +32,18 @@ public class UserFilter implements Filter {
 
         if (!session.isNew()) {
             String auth = (String) session.getAttribute("authorized");
-            System.out.println(auth);
+
 
             if (auth == null || !auth.equals("true")) {
                 request.getServletContext().getRequestDispatcher("/WEB-INF/views/signUp.jsp").forward(request, response);
-            } else {
-                filterChain.doFilter(request, response);
+            } else if (auth.equals("true")) {
+                User user = (User) session.getAttribute("user");
+                if (user.getEmail().equals("maletskovitis@mail.ru")) {
+                    session.setAttribute("admin", true);
+                    filterChain.doFilter(request, response);
+                } else {
+                    filterChain.doFilter(request, response);
+                }
             }
         } else {
             request.getServletContext().getRequestDispatcher("/WEB-INF/views/signUp.jsp").forward(request, response);

@@ -36,7 +36,15 @@
         <servlet-name>profile</servlet-name>
         <jsp-file>/WEB-INF/views/profile.jsp</jsp-file>
     </servlet>
+    <servlet>
+        <servlet-name>admin</servlet-name>
+        <jsp-file>/WEB-INF/views/admin.jsp</jsp-file>
+    </servlet>
 
+    <servlet-mapping>
+        <servlet-name>admin</servlet-name>
+        <url-pattern>/admin</url-pattern>
+    </servlet-mapping>
     <servlet-mapping>
         <servlet-name>about</servlet-name>
         <url-pattern>/about</url-pattern>
