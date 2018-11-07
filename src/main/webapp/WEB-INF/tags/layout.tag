@@ -19,15 +19,11 @@
           crossorigin="anonymous">
     <link rel="stylesheet" type="text/css"
           href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link href="https://fonts.googleapis.com/css?family=Indie+Flower" rel="stylesheet">
-    <style>
-        body {
-            background: url("/images/pink dust.png");
-            font-family: 'Indie Flower', cursive;
-            font-size: 20px;
-        }
-        <jsp:include page="${style}"/>
-    </style>
+    <link href="https://fonts.googleapis.com/css?family=Dosis" rel="stylesheet">
+    <link href="http://localhost:8080/css/default.css" rel="stylesheet">
+   <style>
+       <jsp:include page="${style}" />
+   </style>
     <title>${title}</title>
 </head>
 <body>

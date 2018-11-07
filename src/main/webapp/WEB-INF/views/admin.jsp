@@ -13,36 +13,33 @@
     <t:layout title="Admin Page">
         <t:navbar/>
         <div class="container-fluid" style="padding: 20px">
-            <div class="row">
-                <div class="container col-6" align="center" style="padding: 20px; background-color: white">
-                    <h3>Song Upload</h3>
-                    <div class="container">
-                        <form method="post">
-                            <div class="form-group">
-                                <label for="song-title">Enter please title of song</label>
-                                <input type="text" class="form-control" placeholder="Song title" id="song-title" name="song-title">
-                            </div>
-                            <div class="custom-file col-10">
-                                <label class="custom-file-label" for="song-file">Choose file</label>
-                                <input type="file" class="custom-file-input" id="song-file" name="song-file">
-                            </div>
-                            <input type="submit" class="btn btn-dark" value="Upload">
-                        </form>
-                    </div>
+            <div class="container col-6" align="center" style="padding: 20px; background-color: white">
+                <h3>Song Upload</h3>
+                <div class="container">
+                    <form method="post">
+                        <div class="form-group">
+                            <label for="song-title">Enter please title of song</label>
+                            <input type="text" class="form-control" placeholder="Song title" id="song-title"
+                                   name="song-title">
+                        </div>
+                        <div class="custom-file col-10">
+                            <label class="custom-file-label" for="song-file">Choose file</label>
+                            <input type="file" class="custom-file-input" id="song-file" name="song-file">
+                        </div>
+                        <input type="submit" class="btn btn-dark" value="Upload">
+                    </form>
                 </div>
-                <div class="container col-6" align="center" style="padding: 20px; background-color: white">
-                    <h3>Adding Artist to Music Library</h3>
-                    <div class="container">
-                        <form method="post">
+            </div>
+            <div class="container col-6" align="center" style="padding: 20px; background-color: white">
+                <h3>Adding Artist to Music Library</h3>
+                <div class="container">
+                    <form method="post">
 
-                        </form>
-                    </div>
+                    </form>
                 </div>
             </div>
-            <div class="row">
-                <div class="container col-6" align="center" style="padding: 20px; background-color: white"></div>
-                <div class="container col-6" align="center" style="padding: 20px; background-color: white"></div>
-            </div>
+            <div class="container col-6" align="center" style="padding: 20px; background-color: white"></div>
+            <div class="container col-6" align="center" style="padding: 20px; background-color: white"></div>
         </div>
     </t:layout>
 </c:if>

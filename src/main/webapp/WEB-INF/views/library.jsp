@@ -8,7 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<t:layout title="Library" style="/WEB-INF/css/style.css">
+<t:layout title="Library">
     <t:navbar/>
     <div class="container-fluid row" style="padding-top: 20px">
         <div class="col-3">
@@ -39,11 +39,14 @@
                      aria-labelledby="list-library-list">
                     <div class="container-fluid"
                          style="background: url('/images/paper_2.png'); border-radius: 15px; height: 600px;padding: 10px;">
-                        <div class="head">
+                        <div class="container" align="center">
                             <h2>The best library of the music<span class="badge badge-secondary">v1.0</span></h2>
                         </div>
-                        <div class="content">
-
+                        <div class="container">
+                            <c:forEach var="song" items="${songs}">
+                                <t:audio src="${song.getSongSrc()}" songId="${song.getSongId()}"
+                                         songTitle="${song.getTitle()}"/>
+                            </c:forEach>
                         </div>
                     </div>
                 </div>
