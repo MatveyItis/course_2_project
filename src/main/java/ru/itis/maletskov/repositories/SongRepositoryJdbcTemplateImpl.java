@@ -52,7 +52,7 @@ public class SongRepositoryJdbcTemplateImpl implements SongRepository {
         KeyHolder keyHolder = new GeneratedKeyHolder();
         jdbcTemplate.update(
                 connection -> {
-                    PreparedStatement statement = connection.prepareStatement(SQL_INSERT, new String[]{"client_id"});
+                    PreparedStatement statement = connection.prepareStatement(SQL_INSERT, new String[]{"song_id"});
                     statement.setString(1, model.getTitle());
                     statement.setInt(2, model.getDuration());
                     statement.setInt(3, model.getArtistId());

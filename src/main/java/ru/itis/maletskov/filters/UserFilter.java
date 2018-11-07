@@ -2,6 +2,7 @@ package ru.itis.maletskov.filters;
 
 import lombok.SneakyThrows;
 import ru.itis.maletskov.models.User;
+import ru.itis.maletskov.services.SongService;
 import ru.itis.maletskov.services.UsersService;
 
 import javax.servlet.*;
@@ -14,12 +15,14 @@ import java.io.IOException;
 @WebFilter(urlPatterns = {"/profile", "/library", "/adminPage"})
 public class UserFilter implements Filter {
     private UsersService usersService;
+    private SongService songService;
 
     @SneakyThrows
     @Override
     public void init(FilterConfig filterConfig) {
         ServletContext context = filterConfig.getServletContext();
         usersService = (UsersService) context.getAttribute("usersService");
+        songService = (SongService) context.getAttribute("songService");
     }
 
     @SneakyThrows
@@ -33,6 +36,7 @@ public class UserFilter implements Filter {
         if (!session.isNew()) {
             String auth = (String) session.getAttribute("authorized");
 
+            session.setAttribute("songs", songService.getAllSongs());
 
             if (auth == null || !auth.equals("true")) {
                 request.getServletContext().getRequestDispatcher("/WEB-INF/views/signUp.jsp").forward(request, response);

@@ -2,14 +2,8 @@ package ru.itis.maletskov.context;
 
 import lombok.SneakyThrows;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
-import ru.itis.maletskov.repositories.LibraryRepository;
-import ru.itis.maletskov.repositories.LibraryRepositoryJdbcTemplateImpl;
-import ru.itis.maletskov.repositories.UsersRepository;
-import ru.itis.maletskov.repositories.UsersRepositoryJdbcTemplateImpl;
-import ru.itis.maletskov.services.LibraryService;
-import ru.itis.maletskov.services.LibraryServiceImpl;
-import ru.itis.maletskov.services.UsersService;
-import ru.itis.maletskov.services.UsersServiceImpl;
+import ru.itis.maletskov.repositories.*;
+import ru.itis.maletskov.services.*;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
@@ -32,9 +26,12 @@ public class ComponentsListener implements ServletContextListener {
         UsersService usersService = new UsersServiceImpl(usersRepository);
         LibraryRepository libraryRepository = new LibraryRepositoryJdbcTemplateImpl(dataSource);
         LibraryService libraryService = new LibraryServiceImpl(libraryRepository);
+        SongRepository songRepository = new SongRepositoryJdbcTemplateImpl(dataSource);
+        SongService songService = new SongServiceImpl(songRepository);
         ServletContext context = sce.getServletContext();
         context.setAttribute("usersService", usersService);
         context.setAttribute("libraryService", libraryService);
+        context.setAttribute("songService", songService);
     }
 
     @Override
