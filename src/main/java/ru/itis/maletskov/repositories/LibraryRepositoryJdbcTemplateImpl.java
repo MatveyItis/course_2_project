@@ -23,13 +23,13 @@ public class LibraryRepositoryJdbcTemplateImpl implements LibraryRepository {
     //language=SQL
     private static final String SQL_SELECT_LIBRARY = "select * from library " +
             "left join songs_library l on library.library_id = l.library_id " +
-            "join song s2 on l.song_id = s2.song_id " +
+            "left join song s2 on l.song_id = s2.song_id " +
             "where library.library_id = ?";
 
     //language=SQL
     private static final String SQL_SELECT_LIBRARIES = "select * from library " +
             "left join songs_library l on library.library_id = l.library_id " +
-            "join song s2 on l.song_id = s2.song_id ";
+            "left join song s2 on l.song_id = s2.song_id ";
 
 
     public LibraryRepositoryJdbcTemplateImpl(DataSource dataSource) {

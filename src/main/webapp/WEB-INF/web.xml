@@ -20,10 +20,7 @@
         <servlet-name>about</servlet-name>
         <jsp-file>/WEB-INF/views/about.jsp</jsp-file>
     </servlet>
-    <servlet>
-        <servlet-name>library</servlet-name>
-        <jsp-file>/WEB-INF/views/library.jsp</jsp-file>
-    </servlet>
+
     <servlet>
         <servlet-name>people</servlet-name>
         <jsp-file>/WEB-INF/views/people.jsp</jsp-file>
@@ -49,10 +46,7 @@
         <servlet-name>about</servlet-name>
         <url-pattern>/about</url-pattern>
     </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>library</servlet-name>
-        <url-pattern>/library</url-pattern>
-    </servlet-mapping>
+
     <servlet-mapping>
         <servlet-name>people</servlet-name>
         <url-pattern>/people</url-pattern>

@@ -131,6 +131,9 @@
                 </div>
                 <div class="tab-pane fade" id="list-music" role="tabpanel" aria-labelledby="list-music-list">
                     <div class="container-fluid" style="background-color:  rgb(198, 200, 202); border-radius: 15px">
+                        <div class="container" align="center">
+                            <h4>Music</h4>
+                        </div>
                     </div>
                 </div>
                 <div class="tab-pane fade" id="list-settings" role="tabpanel" aria-labelledby="list-settings-list">

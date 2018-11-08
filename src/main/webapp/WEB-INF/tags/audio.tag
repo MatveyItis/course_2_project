@@ -6,15 +6,13 @@
 <%@attribute name="songTitle" required="true" type="java.lang.String" %>
 
 <div class="container">
-    <form method="post" id="${songId}">
-        <div class="row d-flex justify-content-between align-items-center">
-            <audio controls style="background-color: rgba(0, 0, 0, 0)">
-                <source src="${src}" type="audio/mpeg">
-            </audio>
-            <h4>${songTitle}</h4>
-            <button type="submit" class="btn btn-primary btn-dark">
-                Add
-            </button>
-        </div>
-    </form>
+    <div class="row d-flex justify-content-between align-items-center">
+        <audio controls style="background-color: rgba(0, 0, 0, 0)">
+            <source src="${src}" type="audio/mpeg">
+        </audio>
+        <h5>${songTitle}</h5>
+        <button id="b${songId}" onclick="sendSongId(${songId})" type="button" class="btn btn-primary btn-dark">
+            Add
+        </button>
+    </div>
 </div>
