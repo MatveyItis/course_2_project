@@ -4,6 +4,9 @@ import lombok.SneakyThrows;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import ru.itis.maletskov.models.Library;
+
+import java.util.Optional;
 
 public class LibraryRepositoryJdbcTemplateImplTest {
     private static final String USERNAME = "postgres";
@@ -30,6 +33,16 @@ public class LibraryRepositoryJdbcTemplateImplTest {
     @Test
     public void removeSongFromLibrary() {
 
+    }
+
+    @Test
+    public void findOne() {
+        Optional<Library> optionalLibrary = libraryRepository.findOne(1);
+        Library library = null;
+        if (optionalLibrary.isPresent()) {
+            library = optionalLibrary.get();
+        }
+        System.out.println(library);
     }
 
 }
