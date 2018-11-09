@@ -1,6 +1,3 @@
-# course_2_project
-## ITIS Programming Course. 2nd semestr
+# ITIS Programming Course. 3nd semestr. JavaLab
 
-''
 Курсовая работа в лаборатории JavaLab. Тема - музыкальный сервис.
-''
