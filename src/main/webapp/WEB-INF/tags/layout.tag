@@ -24,7 +24,7 @@
     <link rel="stylesheet" type="text/css"
           href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="https://fonts.googleapis.com/css?family=Dosis" rel="stylesheet">
-    <link href="http://localhost:8080/css/default.css" rel="stylesheet">
+    <link href="/css/default.css" rel="stylesheet">
     <style>
         <jsp:include page="${style}" />
     </style>

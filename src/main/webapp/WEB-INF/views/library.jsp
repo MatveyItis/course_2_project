@@ -74,15 +74,10 @@
                         <div class="container" align="center">
                             <h2>The best library of the music<span class="badge badge-secondary">v1.0</span></h2>
                         </div>
-                        <div class="container">
                             <c:forEach var="song" items="${songs}">
                                 <t:audio src="${song.getSongSrc()}" songId="${song.getSongId()}"
                                          songTitle="${song.getTitle()}"/>
                             </c:forEach>
-                        </div>
-                        <div id="table">
-
-                        </div>
                     </div>
                 </div>
                 <div class="tab-pane fade" id="list-top" role="tabpanel" aria-labelledby="list-top-list">

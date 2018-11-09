@@ -38,6 +38,10 @@
                             <input type='password' class="form-control" name='password' placeholder='Password'
                                    id='password' minlength="8" required>
                         </div>
+                        <div class="form-group">
+                            <label for="remember">Remember me</label>
+                            <input type="checkbox" id="remember" name="remember">
+                        </div>
                         <button type="submit" class="btn btn-dark">Sign In</button>
                     </form>
                     <div class="row" align="center" style="justify-content: center">

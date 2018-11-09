@@ -8,12 +8,12 @@ import ru.itis.maletskov.services.SongService;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -29,20 +29,34 @@ public class LibraryServlet extends HttpServlet {
         songService = (SongService) context.getAttribute("songService");
     }
 
+    @SneakyThrows
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) {
         req.getRequestDispatcher("/WEB-INF/views/library.jsp").forward(req, resp);
     }
 
+    @SneakyThrows
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) {
         User user = (User) req.getSession().getAttribute("user");
         System.out.println(user);
 
         List<Song> currentSongs = songService.getSongsByUserId(user.getClientId());
+        if (currentSongs.size() == 1 & currentSongs.get(0).getSongId() == 0) {
+            currentSongs = new ArrayList<>();
+        }
         System.out.println(Arrays.toString(currentSongs.toArray()));
 
         Integer songId = Integer.parseInt(req.getParameter("songId"));
+        for (Song song : currentSongs) {
+            if (songId.equals(song.getSongId())) {
+                PrintWriter printWriter = resp.getWriter();
+                printWriter.write("<script type='text/javascript'>");
+                printWriter.write("alert('Песня уже есть в вашей библиотеке')");
+                printWriter.write("</script>");
+                break;
+            }
+        }
         System.out.println(songId);
         if (songId != 0) {
             songService.addSongToLibrary(songId, user.getLibrary().getLibraryId());

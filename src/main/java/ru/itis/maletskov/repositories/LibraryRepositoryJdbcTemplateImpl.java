@@ -7,12 +7,12 @@ import ru.itis.maletskov.models.Library;
 import ru.itis.maletskov.models.Song;
 
 import javax.sql.DataSource;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 public class LibraryRepositoryJdbcTemplateImpl implements LibraryRepository {
     private JdbcTemplate jdbcTemplate;
+    private Map<Library, List<Song>> libraryWithSongsMap = new HashMap<>();
+    private Library theOnlyLibrary;
 
     //language=SQL
     private static final String SQL_INSERT_SONG_INTO_LIBRARY = "insert into songs_library(library_id, song_id) values(?, ?)";
@@ -22,46 +22,72 @@ public class LibraryRepositoryJdbcTemplateImpl implements LibraryRepository {
 
     //language=SQL
     private static final String SQL_SELECT_LIBRARY = "select * from library " +
+            "join songs_library l on library.library_id = l.library_id " +
+            "join song s2 on l.song_id = s2.song_id " +
+            "where library.library_id = ?";
+
+    //language=SQL
+    private static final String SQL_SELECT_LIBRARY_WITH_SONGS = "select * from library " +
             "left join songs_library l on library.library_id = l.library_id " +
             "left join song s2 on l.song_id = s2.song_id " +
             "where library.library_id = ?";
 
     //language=SQL
     private static final String SQL_SELECT_LIBRARIES = "select * from library " +
-            "left join songs_library l on library.library_id = l.library_id " +
-            "left join song s2 on l.song_id = s2.song_id ";
+            "join songs_library l on library.library_id = l.library_id " +
+            "join song s2 on l.song_id = s2.song_id ";
 
 
     public LibraryRepositoryJdbcTemplateImpl(DataSource dataSource) {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
+    public RowMapper<Library> libraryWithoutSongsRowMapper = (resultSet, i) -> Library.builder()
+            .clientId(resultSet.getInt("client_id"))
+            .libraryId(resultSet.getInt("library_id"))
+            .build();
+
+
     public RowMapper<Library> libraryRowMapper = (resultSet, i) -> {
-        List<Song> songs = new ArrayList<>();
-        Library library = null;
-        do {
-            if (library == null) {
-                library = Library.builder()
-                        .libraryId(resultSet.getInt("library_id"))
-                        .clientId(resultSet.getInt("client_id"))
-                        .build();
-            }
-            Song song = Song.builder()
-                    .songId(resultSet.getInt("song_id"))
-                    .title(resultSet.getString("song_title"))
-                    .duration(resultSet.getInt("song_duration"))
-                    .artistId(resultSet.getInt("artist_id"))
-                    .songSrc(resultSet.getString("song_src"))
-                    .build();
-            if (song != null) {
-                songs.add(song);
-            }
-        } while (resultSet.next());
-        library.setSongs(songs);
-        return library;
+        if (libraryWithSongsMap.size() == 0) {
+            Library newLibrary = libraryWithoutSongsRowMapper.mapRow(resultSet, i);
+            libraryWithSongsMap.put(newLibrary, new ArrayList<>());
+            theOnlyLibrary = newLibrary;
+        }
+
+        Song song = Song.builder()
+                .songId(resultSet.getInt("song_id"))
+                .title(resultSet.getString("song_title"))
+                .duration(resultSet.getInt("song_duration"))
+                .artistId(resultSet.getInt("artist_id"))
+                .songSrc(resultSet.getString("song_src"))
+                .build();
+
+        if (song.getSongId() != 0) {
+            libraryWithSongsMap.get(theOnlyLibrary).add(song);
+        }
+        return theOnlyLibrary;
+        /*List<Song> songs = new ArrayList<>();
+        Library library = Library.builder()
+                .libraryId(resultSet.getInt("library_id"))
+                .clientId(resultSet.getInt("client_id"))
+                .build();
+        Song song = Song.builder()
+                .songId(resultSet.getInt("song_id"))
+                .title(resultSet.getString("song_title"))
+                .duration(resultSet.getInt("song_duration"))
+                .artistId(resultSet.getInt("artist_id"))
+                .songSrc(resultSet.getString("song_src"))
+                .build();
+        if (song != null && song.getSongId() != 0) {
+            songs.add(song);
+        }
+        if (library != null) {
+            library.setSongs(songs);
+        }
+        return library;*/
     };
 
-    @SneakyThrows
     @Override
     public void saveSongToLibrary(Integer songId, Integer libraryId) {
         jdbcTemplate.update(SQL_INSERT_SONG_INTO_LIBRARY, libraryId, songId);
@@ -76,7 +102,17 @@ public class LibraryRepositoryJdbcTemplateImpl implements LibraryRepository {
     @SneakyThrows
     @Override
     public Optional<Library> findOne(Integer id) {
-        return Optional.of(jdbcTemplate.queryForObject(SQL_SELECT_LIBRARY, libraryRowMapper, id));
+        List<Library> libraryList = jdbcTemplate.query(SQL_SELECT_LIBRARY_WITH_SONGS, libraryRowMapper, id);
+        if (libraryList.size() != 0) {
+            Library currentLibrary = theOnlyLibrary;
+            theOnlyLibrary = null;
+            currentLibrary.setSongs(libraryWithSongsMap.get(currentLibrary));
+            libraryWithSongsMap = null;
+            libraryWithSongsMap = new HashMap<>();
+            return Optional.of(currentLibrary);
+        } else {
+            return Optional.empty();
+        }
     }
 
     @SneakyThrows
