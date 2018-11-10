@@ -12,9 +12,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.Arrays;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @WebServlet("/library")
@@ -38,34 +36,25 @@ public class LibraryServlet extends HttpServlet {
     @SneakyThrows
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) {
-        User user = (User) req.getSession().getAttribute("user");
-        System.out.println(user);
+        HttpSession session = req.getSession();
+        User user = (User) session.getAttribute("user");
+        if (user != null) {
+            List<Song> currentSongs = user.getLibrary().getSongs();
+            Integer songId = Integer.parseInt(req.getParameter("songId"));
 
-        List<Song> currentSongs = songService.getSongsByUserId(user.getClientId());
-        if (currentSongs.size() == 1 & currentSongs.get(0).getSongId() == 0) {
-            currentSongs = new ArrayList<>();
-        }
-        System.out.println(Arrays.toString(currentSongs.toArray()));
+            session.setAttribute("addingSong", true);
 
-        Integer songId = Integer.parseInt(req.getParameter("songId"));
-        for (Song song : currentSongs) {
-            if (songId.equals(song.getSongId())) {
-                PrintWriter printWriter = resp.getWriter();
-                printWriter.write("<script type='text/javascript'>");
-                printWriter.write("alert('Песня уже есть в вашей библиотеке')");
-                printWriter.write("</script>");
-                break;
+            System.out.println(songId);
+            if (songId != 0) {
+                songService.addSongToLibrary(songId, user.getLibrary().getLibraryId());
             }
-        }
-        System.out.println(songId);
-        if (songId != 0) {
-            songService.addSongToLibrary(songId, user.getLibrary().getLibraryId());
-        }
-        currentSongs.add(songService.getSongById(songId));
-        String json = objectMapper.writeValueAsString(currentSongs);
-        System.out.println(json);
+            currentSongs.add(songService.getSongById(songId));
+            String json = objectMapper.writeValueAsString(currentSongs);
+            System.out.println(json);
 
-        resp.setContentType("application/json");
-        resp.getWriter().write(json);
+            resp.setContentType("application/json");
+            resp.getWriter().write(json);
+
+        }
     }
 }

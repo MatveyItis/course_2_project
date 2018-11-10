@@ -9,6 +9,5 @@
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <t:layout title="About Us">
-    <t:navbar/>
 
 </t:layout>

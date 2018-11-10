@@ -10,7 +10,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <t:layout title="Profile" >
-    <t:navbar/>
     <div class="container-fluid row" style="padding-top: 20px">
         <div class="col-3">
             <div class="list-group" id="list-tab" role="tablist">
@@ -135,7 +134,8 @@
                             <h3>Music</h3>
                         </div>
                         <c:forEach var="song" items="${userSongs}">
-                            <t:audio src="${song.getSongSrc()}" songId="${song.getSongId()}" songTitle="${song.getTitle()}"/>
+                            <t:audio src="${song.getSongSrc()}" songId="${song.getSongId()}" songTitle="${song.getTitle()}" isHaving="${song.isHaving()}"/>
+
                         </c:forEach>
                     </div>
                 </div>

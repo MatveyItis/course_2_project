@@ -9,39 +9,6 @@
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <t:layout title="Library">
-    <script>
-        function sendSongId(songId) {
-            $.ajax({
-                    type: 'post',
-                    url: '/library',
-                    data: {
-                        songId: songId
-                    }
-                }
-            ).done(function () {
-                var differentButton = "<img src=\"https://img.icons8.com/metro/50/000000/checkmark.png\" width='20' height='20'>";
-                var buttonDiv = document.getElementById("b" + songId);
-                buttonDiv.innerHTML = "";
-                buttonDiv.innerHTML = differentButton;
-                /*var contentTableHTML = "<table>";
-                contentTableHTML += "<tr>" +
-                    "<th>Номер</th>" +
-                    "</tr>";
-                for (var i = 0; i < data.length; i++) {
-                    contentTableHTML += "<tr>";
-                    contentTableHTML += "<td>" + [i] + "</td>";
-                    contentTableHTML += "</tr>";
-                }
-                contentTableHTML += "</table>";
-                var contentTableDiv = document.getElementById("table");
-                contentTableDiv.innerHTML = contentTableHTML;*/
-
-            }).fail(function () {
-                alert("Error");
-            });
-        }
-    </script>
-    <t:navbar/>
     <div class="container-fluid row" style="padding-top: 20px">
         <div class="col-3">
             <div class="list-group" id="list-tab" role="tablist">
@@ -74,10 +41,10 @@
                         <div class="container" align="center">
                             <h2>The best library of the music<span class="badge badge-secondary">v1.0</span></h2>
                         </div>
-                            <c:forEach var="song" items="${songs}">
-                                <t:audio src="${song.getSongSrc()}" songId="${song.getSongId()}"
-                                         songTitle="${song.getTitle()}"/>
-                            </c:forEach>
+                        <c:forEach var="song" items="${songs}">
+                            <t:audio src="${song.getSongSrc()}" songId="${song.getSongId()}"
+                                     songTitle="${song.getTitle()}" isHaving="${song.isHaving()}"/>
+                        </c:forEach>
                     </div>
                 </div>
                 <div class="tab-pane fade" id="list-top" role="tabpanel" aria-labelledby="list-top-list">

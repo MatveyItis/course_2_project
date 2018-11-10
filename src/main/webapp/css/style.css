@@ -1,6 +1,14 @@
 body {
-    background: url("/images/guitarBG.jpg") 50% 50% no-repeat;
-    background-size: cover;
+    background: url("/images/wheat.png");
+    width: 100%;
+    height: 100%;
     font-family: 'Dosis', sans-serif;
     font-size: 20px;
+}
+
+.content-slider {
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    height: 853px;
 }

@@ -9,7 +9,6 @@
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <t:layout title="Registration">
-    <t:navbar/>
     <div class="container col-lg-6 col-xl-6 col-md-7 col-sm-8 col-xs-8 shadow-lg p-3 mb-5 bg-white rounded"
          style="margin-top: 30px; border-radius: 15px"
          align="center">

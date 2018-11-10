@@ -11,7 +11,6 @@
 
 <c:if test="${not empty admin}">
     <t:layout title="Admin Page">
-        <t:navbar/>
         <div class="container-fluid" style="padding: 20px">
             <div class="container col-6" align="center" style="padding: 20px; background-color: white">
                 <h3>Song Upload</h3>
