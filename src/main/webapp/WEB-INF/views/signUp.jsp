@@ -81,8 +81,9 @@
                         </div>
                         <div class="form-group">
                             <label for='email'>Email</label>
-                            <input type='email' class="form-control" name='email' placeholder='Enter email' id='email'
+                            <input type='email' class="form-control" name='email' aria-describedby="emailHelp" placeholder='Enter email' id='email'
                                    required>
+                            <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
                         </div>
                         <div class="form-group">
                             <label for="passwordFirst">Password</label>
@@ -104,7 +105,5 @@
             </div>
         </div>
     </div>
-    <script type="text/javascript">
-        <%@include file="/WEB-INF/js/check.js"%>
-    </script>
+    <script type="text/javascript" src="/js/check.js"></script>
 </t:layout>
