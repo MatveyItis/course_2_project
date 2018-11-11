@@ -7,11 +7,13 @@ function playMusic(e) {
         aud.play();
         currentSong = e;
         isPlaying = true;
+        setPlayPause();
     } else if (!isPlaying && currentSong !== 1) {
         pauseMusic(currentSong);
         aud.play();
         currentSong = e;
         isPlaying = true;
+        setPlayPause();
     } else if (currentSong === e && isPlaying) {
         pauseMusic(e);
     } else if (isPlaying) {
@@ -19,6 +21,7 @@ function playMusic(e) {
         aud.play();
         currentSong = e;
         isPlaying = true;
+        setPlayPause();
     }
 };
 
@@ -26,6 +29,7 @@ function pauseMusic(e) {
     var aud = document.getElementById(e);
     aud.pause();
     isPlaying = false;
+    setPlayPause();
 };
 
 function stopMusic(e) {
@@ -34,6 +38,7 @@ function stopMusic(e) {
         aud.pause();
         aud.currentTime = 0;
         isPlaying = false;
+        setPlayPause();
     }
 };
 
@@ -108,5 +113,15 @@ function playPrevTrack() {
         } else {
             currentSong = currentSong - 1;
         }
+    }
+};
+
+function setPlayPause() {
+    var playPause = document.getElementById('play-pause');
+    playPause.innerHTML = "";
+    if (isPlaying) {
+        playPause.innerHTML = "<img src='/images/player/iconmonstr-media-control-49-24.png'>";
+    } else {
+        playPause.innerHTML = "<img src='/images/player/iconmonstr-media-control-48-24.png'>";
     }
 };

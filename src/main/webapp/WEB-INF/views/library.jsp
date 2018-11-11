@@ -37,7 +37,7 @@
                 <div class="tab-pane fade show active" id="list-library" role="tabpanel"
                      aria-labelledby="list-library-list">
                     <div class="container-fluid"
-                         style="background: url('/images/paper_2.png'); border-radius: 15px; height: 600px;padding: 10px;overflow: scroll">
+                         style="background: url('/images/bg/paper_2.png'); border-radius: 15px; height: 600px;padding: 10px;overflow: scroll">
                         <div class="container" align="center">
                             <h2>The best library of the music<span class="badge badge-secondary">v1.0</span></h2>
                         </div>
@@ -53,19 +53,19 @@
                 </div>
                 <div class="tab-pane fade" id="list-top" role="tabpanel" aria-labelledby="list-top-list">
                     <div class="container-fluid"
-                         style="background: url('/images/paper_2.png'); border-radius: 15px">
+                         style="background: url('/images/bg/paper_2.png'); border-radius: 15px">
 
                     </div>
                 </div>
                 <div class="tab-pane fade" id="list-albums" role="tabpanel" aria-labelledby="list-albums-list">
                     <div class="container-fluid"
-                         style="background: url('/images/paper_2.png'); border-radius: 15px">
+                         style="background: url('/images/bg/paper_2.png'); border-radius: 15px">
 
                     </div>
                 </div>
                 <div class="tab-pane fade" id="list-search" role="tabpanel" aria-labelledby="list-search-list">
                     <div class="container-fluid"
-                         style="background: url('/images/paper_2.png'); border-radius: 15px;padding: 10px">
+                         style="background: url('/images/bg/paper_2.png'); border-radius: 15px;padding: 10px">
                         <div class="search-class">
                             <form class="form-inline my-2 my-lg-0">
                                 <input class="form-control mr-sm-2" type="search" placeholder="Search"
