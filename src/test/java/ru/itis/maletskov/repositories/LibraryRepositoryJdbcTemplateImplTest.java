@@ -42,7 +42,6 @@ public class LibraryRepositoryJdbcTemplateImplTest {
         if (optionalLibrary.isPresent()) {
             library = optionalLibrary.get();
         }
-        System.out.println(library);
     }
 
 }

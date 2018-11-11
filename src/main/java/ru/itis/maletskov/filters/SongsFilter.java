@@ -4,6 +4,7 @@ import lombok.SneakyThrows;
 import ru.itis.maletskov.models.Library;
 import ru.itis.maletskov.models.Song;
 import ru.itis.maletskov.models.User;
+import ru.itis.maletskov.services.ArtistService;
 import ru.itis.maletskov.services.SongService;
 
 import javax.servlet.*;
@@ -16,14 +17,16 @@ import java.util.List;
 @WebFilter(urlPatterns = {"/library", "/profile"})
 public class SongsFilter implements Filter {
     private SongService songService;
-    private int count;
+    private ArtistService artistService;
+    private int countOfQueries;
 
     @SneakyThrows
     @Override
     public void init(FilterConfig filterConfig) {
         ServletContext context = filterConfig.getServletContext();
         songService = (SongService) context.getAttribute("songService");
-        count = 0;
+        artistService = (ArtistService) context.getAttribute("artistService");
+        countOfQueries = 0;
     }
 
     @SneakyThrows
@@ -37,9 +40,12 @@ public class SongsFilter implements Filter {
         User user = (User) session.getAttribute("user");
         boolean addingSong = session.getAttribute("addingSong") != null && (boolean) session.getAttribute("addingSong");
 
-        if (count == 0 | addingSong) {
-            count++;
-            System.out.println("Пошел запрос к бд в " + count + " раз");
+        if (countOfQueries == 0 | addingSong) {
+            if (countOfQueries == 0) {
+                session.setAttribute("artists", artistService.getAllArtists());
+            }
+            countOfQueries++;
+            System.out.println("Пошел запрос к бд в " + countOfQueries + " раз");
             Library userLibrary = Library.builder()
                     .libraryId(user.getLibrary().getLibraryId())
                     .clientId(user.getClientId())
@@ -48,6 +54,8 @@ public class SongsFilter implements Filter {
             user.setLibrary(userLibrary);
             List<Song> userSongs = user.getLibrary().getSongs();
             session.setAttribute("userSongs", userSongs);
+
+
 
             List<Song> allSongs = songService.getAllSongs();
 

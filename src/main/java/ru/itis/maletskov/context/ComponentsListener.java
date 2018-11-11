@@ -27,9 +27,12 @@ public class ComponentsListener implements ServletContextListener {
         LibraryRepository libraryRepository = new LibraryRepositoryJdbcTemplateImpl(dataSource);
         SongRepository songRepository = new SongRepositoryJdbcTemplateImpl(dataSource);
         SongService songService = new SongServiceImpl(songRepository, libraryRepository);
+        ArtistRepository artistRepository = new ArtistRepositoryJdbcTemplateImpl(dataSource);
+        ArtistService artistService = new ArtistServiceImpl(artistRepository);
         ServletContext context = sce.getServletContext();
         context.setAttribute("usersService", usersService);
         context.setAttribute("songService", songService);
+        context.setAttribute("artistService", artistService);
     }
 
     @Override

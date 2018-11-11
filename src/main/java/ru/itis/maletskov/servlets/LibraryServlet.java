@@ -18,13 +18,14 @@ import java.util.List;
 @WebServlet("/library")
 public class LibraryServlet extends HttpServlet {
     private SongService songService;
-    private ObjectMapper objectMapper = new ObjectMapper();
+    private ObjectMapper objectMapper;
 
     @SneakyThrows
     @Override
     public void init(ServletConfig config) {
         ServletContext context = config.getServletContext();
         songService = (SongService) context.getAttribute("songService");
+        objectMapper = new ObjectMapper();
     }
 
     @SneakyThrows
@@ -44,13 +45,11 @@ public class LibraryServlet extends HttpServlet {
 
             session.setAttribute("addingSong", true);
 
-            System.out.println(songId);
             if (songId != 0) {
                 songService.addSongToLibrary(songId, user.getLibrary().getLibraryId());
             }
             currentSongs.add(songService.getSongById(songId));
             String json = objectMapper.writeValueAsString(currentSongs);
-            System.out.println(json);
 
             resp.setContentType("application/json");
             resp.getWriter().write(json);
