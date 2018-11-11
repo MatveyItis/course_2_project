@@ -1,9 +1,14 @@
 body {
     background: url("/images/pink dust.png");
-    font-family: 'Dosis', sans-serif;
-    font-size: 20px;
+    font-size: 18px;
+    font-family: 'Exo 2', sans-serif;
 }
 
 #settings-form {
     color: white;
+}
+
+#friends img {
+    float:left;
+    padding: 5px;
 }

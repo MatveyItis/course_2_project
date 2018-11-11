@@ -1,40 +1,39 @@
 <%@tag description="Tag for audio form" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<%@attribute name="src" required="true" type="java.lang.String" %>
-<%@attribute name="songId" required="true" type="java.lang.String" %>
-<%@attribute name="songTitle" required="true" type="java.lang.String" %>
-<%@attribute name="isHaving" type="java.lang.String" %>
 <%@attribute name="artistImageSrc" type="java.lang.String" %>
+<%@attribute name="song" required="true" type="ru.itis.maletskov.models.Song" %>
+<%@attribute name="audioId" required="true" type="java.lang.Integer" %>
 
 <c:if test="${empty artistImageSrc}">
     <c:set var="artistImageSrc" value="/images/artists/default.png"/>
 </c:if>
 
-<div class="container" style="margin: 5px;">
-    <div class="container row">
-        <div class="col-1">
-            <button class="btn btn-dark" type="button" onclick="playMusic(${songId})">
+<li>
+    <div class="container row" style="margin: 5px;">
+        <div class="col-md-2">
+            <b></b>
+            <button class="btn btn-dark" type="button" onclick="playMusic(${audioId})">
                 <img id="play" src="${artistImageSrc}" width="24" height="24">
             </button>
         </div>
-        <div class="col-5">
-            <audio id="${songId}">
-                <source src="${src}" type="audio/mpeg">
+        <div class="col-md-7">
+            <audio id="${audioId}">
+                <source src="${song.getSongSrc()}" type="audio/mpeg">
             </audio>
-            <h6>${songTitle}</h6>
+            <h6>${artists.get(song.getArtistId() - 1).getNickname()} - ${song.getTitle()}</h6>
         </div>
-        <div class="col-2">
-            <c:if test="${isHaving == false}">
-                <button id="b${songId}" onclick="sendSongId(${songId})" type="button" class="btn btn-primary btn-dark">
+        <div class="col-md-2" align="right">
+            <h6></h6>
+            <c:if test="${song.isHaving() == false}">
+                <button id="b${song.getSongId()}" onclick="sendSongId(${song.getSongId()})" type="button"
+                        class="btn btn-primary btn-dark">
                     Add
                 </button>
             </c:if>
-            <c:if test="${isHaving == true}">
-                <%--<button type="button" class="btn btn-primary btn-dark">
-                    <img src="https://img.icons8.com/metro/50/000000/checkmark.png" width='20' height='20'>
-                </button>--%>
+            <c:if test="${song.isHaving() == true}">
+
             </c:if>
         </div>
     </div>
-</div>
+</li>

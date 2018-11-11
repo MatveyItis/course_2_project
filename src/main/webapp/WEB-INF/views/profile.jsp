@@ -1,4 +1,5 @@
-<%--
+<%@ page import="ru.itis.maletskov.models.Song" %>
+<%@ page import="java.util.List" %><%--
   Created by IntelliJ IDEA.
   User: matveymaletskov
   Date: 03/11/2018
@@ -7,7 +8,7 @@
 --%>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
 
 <t:layout title="Profile" style="/css/default.css">
     <div class="container-fluid row" style="padding-top: 20px">
@@ -43,94 +44,73 @@
             <div class="tab-content" id="nav-tabContent">
                 <div class="tab-pane fade show active" id="list-profile" role="tabpanel"
                      aria-labelledby="list-profile-list">
-                    <div class="container-fluid" style="background-color:  rgb(198, 200, 202); border-radius: 15px">
+                    <div class="container-fluid" style="background-color:  rgb(58, 63, 78); color: white">
                         <div class="row">
-                            <div class="col-4" style="padding: 10px">
+                            <div class="col-md-4" style="padding: 10px">
                                 <div class="container" style="background-color: white;
                                 border-radius: 50%;width: 270px;height: 270px;">
                                     <img src="/images/avatarcat.png" alt="avatar" width="250" height="250"
                                          style="border-radius: 50%;margin-top: 10px; margin-left: -5px;">
                                 </div>
                             </div>
-                            <div class="col-8" style="padding: 10px;">
+                            <div class="col-md-8" style="padding: 10px;">
                                 <div class="container"
-                                     style="height: 270px; border-radius: 10px;background-color: white">
+                                     style="border-radius: 10px;">
                                     <h2>${user.getFirstName()} ${user.getLastName()}</h2>
                                     <hr>
                                     <div class="row">
-                                        <div class="col-6">Date of birth:</div>
-                                        <div class="col-6">11.11.1999</div>
+                                        <div class="col-md-6">Date of birth:</div>
+                                        <div class="col-md-6">11.11.1999</div>
                                     </div>
                                     <div class="row">
-                                        <div class="col-6">City:</div>
-                                        <div class="col-6">Kazan</div>
+                                        <div class="col-md-6">City:</div>
+                                        <div class="col-md-6">Kazan</div>
                                     </div>
                                     <div class="row">
-                                        <div class="col-6">Lovely music:</div>
-                                        <div class="col-6">Pop, Rap and etc</div>
+                                        <div class="col-md-6">Lovely music:</div>
+                                        <div class="col-md-6">Pop, Rap and etc</div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">Phone number:</div>
+                                        <div class="col-md-6">+79991231239</div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="row" style="padding: 10px">
-                            <div class="container-fluid" style="background-color: white; border-radius: 10px;">
-                                <p>Here is my lovely songs:</p>
-                                <p>Дорогие друзья, социально-экономическое развитие требует от нас анализа модели
-                                    развития? Соображения высшего порядка, а также новая модель организационной
-                                    деятельности влечет за собой процесс внедрения и модернизации системы обучения
-                                    кадров, соответствующей насущным потребностям. Равным образом постоянное
-                                    информационно-техническое обеспечение нашей деятельности представляет собой
-                                    интересный эксперимент проверки существующих финансовых и административных
-                                    условий?
-
-                                    Значимость этих проблем настолько очевидна, что курс на
-                                    социально-ориентированный национальный проект способствует повышению
-                                    актуальности экономической целесообразности принимаемых решений.
-
-                                    Задача организации, в особенности же начало повседневной работы по формированию
-                                    позиции требует определения и уточнения существующих финансовых и
-                                    административных условий. С другой стороны социально-экономическое развитие
-                                    позволяет оценить значение форм воздействия? Таким образом, консультация с
-                                    профессионалами из IT обеспечивает актуальность дальнейших направлений развитая
-                                    системы массового участия!</p>
+                        <div class="row" style="width: 90%">
+                            <div class="container col-md-4" id="friends">
+                                <h3>Friends</h3>
+                                <img src="/images/avatar_default.png" width="60" height="60">
+                                <img src="/images/avatar_default.png" width="60" height="60">
+                                <img src="/images/avatar_default.png" width="60" height="60">
+                                <img src="/images/avatar_default.png" width="60" height="60">
+                            </div>
+                            <div class="container col-md-8" style="width: 90%">
+                                <form>
+                                    <div class="form-group">
+                                        <label for="new-music">Share:</label>
+                                        <textarea class="form-control" rows="4" id="new-music"
+                                                  placeholder="Say something for your friends.."></textarea>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary btn-dark">Send</button>
+                                </form>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="tab-pane fade" id="list-friends" role="tabpanel" aria-labelledby="list-friends-list">
-                    <div class="container-fluid" style="background-color:  rgb(198, 200, 202); border-radius: 15px">
-                        <p>Разнообразный и богатый опыт реализация намеченного плана развития позволяет выполнить
-                            важнейшие
-                            задания по разработке экономической целесообразности принимаемых решений. Значимость этих
-                            проблем настолько очевидна, что сложившаяся структура организации позволяет выполнить
-                            важнейшие
-                            задания по разработке новых предложений! Повседневная практика показывает, что рамки и место
-                            обучения кадров обеспечивает актуальность направлений прогрессивного развития.
+                    <div class="container-fluid"
+                         style="background-color:  rgb(58, 63, 78);color: white;padding: 10px">
+                        <div class="container" align="center">
+                            <form class="form-inline my-2 my-lg-0">
+                                <input class="form-control mr-sm-2" type="search" placeholder="Search"
+                                       aria-label="Search">
+                                <button class="btn btn-online-info my-2 my-sm-0" type="submit">Search</button>
+                            </form>
+                        </div>
+                        <div class="container" id="my-music-search-result">
 
-                            Таким образом, постоянное информационно-техническое обеспечение нашей деятельности играет
-                            важную
-                            роль в формировании соответствующих условий активизации.
-
-                            Значимость этих проблем настолько очевидна, что рамки и место обучения кадров позволяет
-                            оценить
-                            значение дальнейших направлений развития проекта. С другой стороны повышение уровня
-                            гражданского
-                            сознания позволяет оценить значение новых предложений. С другой стороны постоянный
-                            количественный рост и сфера нашей активности напрямую зависит от дальнейших направлений
-                            развитая
-                            системы массового участия.
-
-                            Повседневная практика показывает, что новая модель организационной деятельности играет
-                            важную
-                            роль в формировании форм воздействия. Разнообразный и богатый опыт новая модель
-                            организационной
-                            деятельности обеспечивает широкому кругу специалистов участие в формировании направлений
-                            прогрессивного развития. Таким образом, дальнейшее развитие различных форм деятельности
-                            представляет собой интересный эксперимент проверки форм воздействия. Не следует, однако,
-                            забывать о том, что рамки и место обучения кадров обеспечивает актуальность соответствующих
-                            условий активизации! Задача организации, в особенности же дальнейшее развитие различных форм
-                            деятельности способствует повышению актуальности новых предложений? Таким образом, начало
-                            повседневной работы по формированию позиции...</p>
+                        </div>
                     </div>
                 </div>
                 <div class="tab-pane fade" id="list-messages" role="tabpanel" aria-labelledby="list-messages-list">
@@ -139,15 +119,53 @@
                 </div>
                 <div class="tab-pane fade" id="list-music" role="tabpanel" aria-labelledby="list-music-list">
                     <div class="container-fluid"
-                         style="background-color:  rgb(198, 200, 202); border-radius: 15px; padding: 15px;">
-                        <div class="container" align="center">
-                            <h3>Music</h3>
-                            <hr>
+                         style="background-color:  rgb(198, 200, 202); border-radius: 5px;padding-bottom: 20px; ">
+                        <h3 align="center">Music</h3>
+                        <hr>
+                        <div class="row">
+                            <div class="container col-md-4" style="border-radius: 8px;">
+                                <div id="carouselCovers" class="carousel slide" data-ride="carousel">
+                                    <div class="carousel-inner">
+                                        <div class="carousel-item active">
+                                            <img class="d-block w-100"
+                                                 src="/images/albumcovers/eminem_revival_cover_art.png"
+                                                 alt="First slide">
+                                        </div>
+                                        <div class="carousel-item">
+                                            <img class="d-block w-100"
+                                                 src="/images/albumcovers/Обложка_альбома_Noize_MC_Хипхопера_Орфей_&_Эвридика.jpg"
+                                                 alt="Second slide">
+                                        </div>
+                                        <div class="carousel-item">
+                                            <img class="d-block w-100"
+                                                 src="/images/albumcovers/kandrick_lamar_album_cover_damn.jpg"
+                                                 alt="Third slide">
+                                        </div>
+                                    </div>
+                                    <a class="carousel-control-prev" href="#carouselCovers" role="button"
+                                       data-slide="prev">
+                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                        <span class="sr-only">Previous</span>
+                                    </a>
+                                    <a class="carousel-control-next" href="#carouselCovers" role="button"
+                                       data-slide="next">
+                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                        <span class="sr-only">Next</span>
+                                    </a>
+                                </div>
+
+                            </div>
+                            <div class="container col-md-8" style="overflow: scroll;">
+                                <c:set var="number" value="1"/>
+                                <ol id="music">
+                                    <c:forEach var="song" items="${userSongs}">
+                                        <t:audio song="${song}" audioId="${number}"/>
+                                        <hr>
+                                        <c:set var="number" value="${number + 1}"/>
+                                    </c:forEach>
+                                </ol>
+                            </div>
                         </div>
-                        <c:forEach var="song" items="${userSongs}">
-                            <t:audio src="${song.getSongSrc()}" songId="${song.getSongId()}"
-                                     songTitle="${song.getTitle()}" isHaving="${song.isHaving()}"/>
-                        </c:forEach>
                     </div>
                 </div>
                 <div class="tab-pane fade" id="list-settings" role="tabpanel" aria-labelledby="list-settings-list">
@@ -203,4 +221,5 @@
             </div>
         </div>
     </div>
+    <t:player/>
 </t:layout>

@@ -37,14 +37,18 @@
                 <div class="tab-pane fade show active" id="list-library" role="tabpanel"
                      aria-labelledby="list-library-list">
                     <div class="container-fluid"
-                         style="background: url('/images/paper_2.png'); border-radius: 15px; height: 600px;padding: 10px;">
+                         style="background: url('/images/paper_2.png'); border-radius: 15px; height: 600px;padding: 10px;overflow: scroll">
                         <div class="container" align="center">
                             <h2>The best library of the music<span class="badge badge-secondary">v1.0</span></h2>
                         </div>
-                        <c:forEach var="song" items="${songs}">
-                            <t:audio src="${song.getSongSrc()}" songId="${song.getSongId()}"
-                                     songTitle="${song.getTitle()}" isHaving="${song.isHaving()}"/>
-                        </c:forEach>
+                        <c:set var="number" value="1"/>
+                        <ol id="music">
+                            <c:forEach var="song" items="${songs}">
+                                <t:audio song="${song}" audioId="${number}"/>
+                                <hr>
+                                <c:set var="number" value="${number + 1}"/>
+                            </c:forEach>
+                        </ol>
                     </div>
                 </div>
                 <div class="tab-pane fade" id="list-top" role="tabpanel" aria-labelledby="list-top-list">
@@ -79,4 +83,5 @@
             </div>
         </div>
     </div>
+    <t:player/>
 </t:layout>
