@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
-@WebFilter(urlPatterns = {"/library", "/profile"})
+@WebFilter(urlPatterns = {"/library", "/profile", "/admin"})
 public class SongsFilter implements Filter {
     private SongService songService;
     private ArtistService artistService;

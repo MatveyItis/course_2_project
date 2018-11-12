@@ -38,8 +38,6 @@ public class SignInServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) {
         String email = req.getParameter("e-mail");
         String password = req.getParameter("password");
-        String remember = req.getParameter("remember");
-        System.out.println(remember);
         LoginForm loginForm = LoginForm.builder()
                 .email(email)
                 .password(password)

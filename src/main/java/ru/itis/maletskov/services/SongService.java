@@ -10,4 +10,5 @@ public interface SongService {
     List<Song> getSongsByUserId(Integer userId);
     void addSongToLibrary(Integer songId, Integer libraryId);
     void removeSongFromLibrary(Integer songId, Integer libraryId);
+    void saveSong(Song song);
 }

@@ -48,4 +48,9 @@ public class SongServiceImpl implements SongService {
     public void removeSongFromLibrary(Integer songId, Integer libraryId) {
         libraryRepository.removeSongFromLibrary(songId, libraryId);
     }
+
+    @Override
+    public void saveSong(Song song) {
+        songRepository.save(song);
+    }
 }
