@@ -10,7 +10,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <t:layout title="Library">
     <div class="container-fluid row" style="padding-top: 20px">
-        <div class="col-3">
+        <div class="container col-md-3">
             <div class="list-group" id="list-tab" role="tablist">
                 <a class="list-group-item list-group-item-action  list-group-item-dark active show"
                    id="list-library-list" data-toggle="list"
@@ -30,9 +30,12 @@
                    id="list-search-list"
                    data-toggle="list"
                    href="#list-search" role="tab" aria-controls="search">Search</a>
+                <div class="list-group-item list-group-item-action d-flex justify-content-between align-items-center list-group-item-dark">
+                    <t:player/>
+                </div>
             </div>
         </div>
-        <div class="col-9">
+        <div class="container col-md-9">
             <div class="tab-content" id="nav-tabContent">
                 <div class="tab-pane fade show active" id="list-library" role="tabpanel"
                      aria-labelledby="list-library-list">
@@ -49,18 +52,21 @@
                                 <c:set var="number" value="${number + 1}"/>
                             </c:forEach>
                         </ol>
+                        <t:info/>
                     </div>
                 </div>
                 <div class="tab-pane fade" id="list-top" role="tabpanel" aria-labelledby="list-top-list">
                     <div class="container-fluid"
                          style="background: url('/images/bg/paper_2.png'); border-radius: 15px">
 
+                        <t:info/>
                     </div>
                 </div>
                 <div class="tab-pane fade" id="list-albums" role="tabpanel" aria-labelledby="list-albums-list">
                     <div class="container-fluid"
                          style="background: url('/images/bg/paper_2.png'); border-radius: 15px">
 
+                        <t:info/>
                     </div>
                 </div>
                 <div class="tab-pane fade" id="list-search" role="tabpanel" aria-labelledby="list-search-list">
@@ -78,10 +84,10 @@
 
                             </div>
                         </div>
+                        <t:info/>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <t:player/>
 </t:layout>

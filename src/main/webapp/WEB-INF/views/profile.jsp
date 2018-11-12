@@ -1,5 +1,4 @@
-<%@ page import="ru.itis.maletskov.models.Song" %>
-<%@ page import="java.util.List" %><%--
+<%--
   Created by IntelliJ IDEA.
   User: matveymaletskov
   Date: 03/11/2018
@@ -12,7 +11,7 @@
 
 <t:layout title="Profile" style="/css/default.css">
     <div class="container-fluid row" style="padding-top: 20px">
-        <div class="col-3">
+        <div class="container col-md-3">
             <div class="list-group" id="list-tab" role="tablist">
                 <a class="list-group-item list-group-item-action  list-group-item-dark active show"
                    id="list-profile-list" data-toggle="list"
@@ -38,9 +37,13 @@
                    id="list-settings-list"
                    data-toggle="list"
                    href="#list-settings" role="tab" aria-controls="settings">Settings</a>
+                <div class="list-group-item list-group-item-action d-flex justify-content-between align-items-center list-group-item-dark">
+                    <t:player/>
+                </div>
             </div>
+
         </div>
-        <div class="col-9">
+        <div class="container col-md-9">
             <div class="tab-content" id="nav-tabContent">
                 <div class="tab-pane fade show active" id="list-profile" role="tabpanel"
                      aria-labelledby="list-profile-list">
@@ -84,6 +87,7 @@
                                 <img src="/images/avatar_default.png" width="60" height="60">
                                 <img src="/images/avatar_default.png" width="60" height="60">
                                 <img src="/images/avatar_default.png" width="60" height="60">
+                                <img src="/images/avatar_default.png" width="60" height="60">
                             </div>
                             <div class="container col-md-8" style="width: 90%">
                                 <form>
@@ -96,6 +100,7 @@
                                 </form>
                             </div>
                         </div>
+                        <t:info/>
                     </div>
                 </div>
                 <div class="tab-pane fade" id="list-friends" role="tabpanel" aria-labelledby="list-friends-list">
@@ -111,10 +116,12 @@
                         <div class="container" id="my-music-search-result">
 
                         </div>
+                        <t:info/>
                     </div>
                 </div>
                 <div class="tab-pane fade" id="list-messages" role="tabpanel" aria-labelledby="list-messages-list">
                     <div class="container-fluid" style="background-color:  rgb(198, 200, 202); border-radius: 15px">
+                        <t:info/>
                     </div>
                 </div>
                 <div class="tab-pane fade" id="list-music" role="tabpanel" aria-labelledby="list-music-list">
@@ -155,7 +162,8 @@
                                 </div>
 
                             </div>
-                            <div class="container col-md-8" style="overflow: scroll;">
+                            <div class="container col-md-8" style="height: 270px;overflow: scroll;">
+                                <h5>Favourite music</h5>
                                 <c:set var="number" value="1"/>
                                 <ol id="music">
                                     <c:forEach var="song" items="${userSongs}">
@@ -166,6 +174,7 @@
                                 </ol>
                             </div>
                         </div>
+                        <t:info/>
                     </div>
                 </div>
                 <div class="tab-pane fade" id="list-settings" role="tabpanel" aria-labelledby="list-settings-list">
@@ -216,10 +225,10 @@
                             </form>
                             <a href="#">Delete your account</a>
                         </div>
+                        <t:info/>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <t:player/>
 </t:layout>
