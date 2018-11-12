@@ -52,21 +52,18 @@
                                 <c:set var="number" value="${number + 1}"/>
                             </c:forEach>
                         </ol>
-                        <t:info/>
                     </div>
                 </div>
                 <div class="tab-pane fade" id="list-top" role="tabpanel" aria-labelledby="list-top-list">
                     <div class="container-fluid"
                          style="background: url('/images/bg/paper_2.png'); border-radius: 15px">
 
-                        <t:info/>
                     </div>
                 </div>
                 <div class="tab-pane fade" id="list-albums" role="tabpanel" aria-labelledby="list-albums-list">
                     <div class="container-fluid"
                          style="background: url('/images/bg/paper_2.png'); border-radius: 15px">
 
-                        <t:info/>
                     </div>
                 </div>
                 <div class="tab-pane fade" id="list-search" role="tabpanel" aria-labelledby="list-search-list">
@@ -84,10 +81,10 @@
 
                             </div>
                         </div>
-                        <t:info/>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <t:info/>
 </t:layout>

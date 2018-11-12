@@ -15,17 +15,27 @@
             <div class="container col-6" align="center" style="padding: 20px; background-color: white">
                 <h3>Song Upload</h3>
                 <div class="container">
-                    <form method="post">
+                    <form enctype="multipart/form-data" method="post" action="uploadSong">
                         <div class="form-group">
                             <label for="song-title">Enter please title of song</label>
                             <input type="text" class="form-control" placeholder="Song title" id="song-title"
-                                   name="song-title">
+                                   name="song-title" required>
                         </div>
-                        <div class="custom-file col-10">
+                        <div class="form-group">
+                            <label for="artist">Choose artist:</label>
+                            <select id="artist" name="artist" class="form-control" required>
+                                <c:forEach var="artist" items="${artists}">
+                                    <option value="${artist.getArtistId()}">
+                                            ${artist.getNickname()}
+                                    </option>
+                                </c:forEach>
+                            </select>
+                        </div>
+                        <div class="custom-file">
                             <label class="custom-file-label" for="song-file">Choose file</label>
-                            <input type="file" class="custom-file-input" id="song-file" name="song-file">
+                            <input type="file" class="custom-file-input" id="song-file" name="song-file" required>
                         </div>
-                        <input type="submit" class="btn btn-dark" value="Upload">
+                        <input type="submit" class="btn btn-dark" value="Upload" style="margin-top: 20px">
                     </form>
                 </div>
             </div>

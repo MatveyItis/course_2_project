@@ -18,7 +18,7 @@
             </button>
         </div>
         <div class="col-md-7">
-            <audio id="${audioId}">
+            <audio id="${audioId}" onended="playNextTrack()">
                 <source src="${song.getSongSrc()}" type="audio/mpeg">
             </audio>
             <h6>${artists.get(song.getArtistId() - 1).getNickname()} - ${song.getTitle()}</h6>

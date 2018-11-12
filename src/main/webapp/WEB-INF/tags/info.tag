@@ -1,8 +1,8 @@
 <%@tag description="Info down page" pageEncoding="UTF-8" %>
 
-<div class="row" id="info" style="justify-content: space-between;margin: 10px 15px -5px 15px;">
-    <a style="color: gray; font-size: 12px" href="about">(c)Privacy policy</a>
-    <a style="color: gray; font-size: 12px">(c)All rights reserved</a>
-    <a style="color: gray; font-size: 12px" href="https://vk.com/mmaletskov">(c)maletskov</a>
-    <a style="color: gray; font-size: 12px">JavaBack</a>
-</div>
+<nav class="navbar fixed-bottom navbar-light" style="background-color: rgba(0,0,0,0);justify-content: space-between;">
+    <a class="nav-link" style="color: gray; font-size: 14px" href="about">(c)Privacy policy</a>
+    <a class="nav-link" style="color: gray; font-size: 14px">(c)All rights reserved</a>
+    <a class="nav-link" style="color: gray; font-size: 14px" target="_blank" href="https://vk.com/mmaletskov">(c)maletskov</a>
+    <a class="nav-link" style="color: gray; font-size: 14px">JavaBack</a>
+</nav>

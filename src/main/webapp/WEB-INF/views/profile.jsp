@@ -100,7 +100,6 @@
                                 </form>
                             </div>
                         </div>
-                        <t:info/>
                     </div>
                 </div>
                 <div class="tab-pane fade" id="list-friends" role="tabpanel" aria-labelledby="list-friends-list">
@@ -116,12 +115,10 @@
                         <div class="container" id="my-music-search-result">
 
                         </div>
-                        <t:info/>
                     </div>
                 </div>
                 <div class="tab-pane fade" id="list-messages" role="tabpanel" aria-labelledby="list-messages-list">
                     <div class="container-fluid" style="background-color:  rgb(198, 200, 202); border-radius: 15px">
-                        <t:info/>
                     </div>
                 </div>
                 <div class="tab-pane fade" id="list-music" role="tabpanel" aria-labelledby="list-music-list">
@@ -174,7 +171,6 @@
                                 </ol>
                             </div>
                         </div>
-                        <t:info/>
                     </div>
                 </div>
                 <div class="tab-pane fade" id="list-settings" role="tabpanel" aria-labelledby="list-settings-list">
@@ -225,10 +221,10 @@
                             </form>
                             <a href="#">Delete your account</a>
                         </div>
-                        <t:info/>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <t:info/>
 </t:layout>
