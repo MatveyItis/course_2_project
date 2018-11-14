@@ -18,7 +18,6 @@ import java.util.List;
 public class SongsFilter implements Filter {
     private SongService songService;
     private ArtistService artistService;
-    private int countOfQueries;
 
     @SneakyThrows
     @Override
@@ -26,7 +25,6 @@ public class SongsFilter implements Filter {
         ServletContext context = filterConfig.getServletContext();
         songService = (SongService) context.getAttribute("songService");
         artistService = (ArtistService) context.getAttribute("artistService");
-        countOfQueries = 0;
     }
 
     @SneakyThrows
@@ -37,37 +35,42 @@ public class SongsFilter implements Filter {
 
         HttpSession session = request.getSession();
 
-        User user = (User) session.getAttribute("user");
+        String auth = (String) session.getAttribute("authorized");
         boolean addingSong = session.getAttribute("addingSong") != null && (boolean) session.getAttribute("addingSong");
+        boolean isHavingSongs = session.getAttribute("userSongs") != null;
 
-        if (countOfQueries == 0 | addingSong) {
-            if (countOfQueries == 0) {
-                session.setAttribute("artists", artistService.getAllArtists());
+
+        if (auth.equals("true")) {
+            if (!isHavingSongs | addingSong) {
+                User user = (User) session.getAttribute("user");
+                System.out.println("зашел в добавление песен");
+                if (!isHavingSongs) {
+                    session.setAttribute("artists", artistService.getAllArtists());
+                }
+                Library userLibrary = Library.builder()
+                        .libraryId(user.getLibrary().getLibraryId())
+                        .clientId(user.getClientId())
+                        .build();
+                userLibrary.setSongs(songService.getSongsByUserId(userLibrary.getClientId()));
+                user.setLibrary(userLibrary);
+                List<Song> userSongs = user.getLibrary().getSongs();
+                session.setAttribute("userSongs", userSongs);
+
+
+                List<Song> allSongs = songService.getAllSongs();
+
+                for (Song song : userSongs) {
+                    song.setHaving(true);
+                    allSongs.get(song.getSongId() - 1).setHaving(true);
+                }
+
+                session.setAttribute("songs", allSongs);
+                session.removeAttribute("addingSong");
             }
-            countOfQueries++;
-            System.out.println("Пошел запрос к бд в " + countOfQueries + " раз");
-            Library userLibrary = Library.builder()
-                    .libraryId(user.getLibrary().getLibraryId())
-                    .clientId(user.getClientId())
-                    .build();
-            userLibrary.setSongs(songService.getSongsByUserId(userLibrary.getClientId()));
-            user.setLibrary(userLibrary);
-            List<Song> userSongs = user.getLibrary().getSongs();
-            session.setAttribute("userSongs", userSongs);
-
-
-
-            List<Song> allSongs = songService.getAllSongs();
-
-            for (Song song : userSongs) {
-                song.setHaving(true);
-                allSongs.get(song.getSongId() - 1).setHaving(true);
-            }
-
-            session.setAttribute("songs", allSongs);
-            session.removeAttribute("addingSong");
+            filterChain.doFilter(request, response);
+        } else {
+            filterChain.doFilter(request, response);
         }
-        filterChain.doFilter(request, response);
     }
 
     @SneakyThrows

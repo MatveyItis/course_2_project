@@ -35,7 +35,7 @@
                         <div class="form-group">
                             <label for='password'>Password</label>
                             <input type='password' class="form-control" name='password' placeholder='Password'
-                                   id='password' minlength="8" required>
+                                   id='password' minlength="6" required>
                         </div>
                         <div class="form-group">
                             <label for="remember">Remember me</label>

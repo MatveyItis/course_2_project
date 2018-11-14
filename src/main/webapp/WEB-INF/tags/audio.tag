@@ -1,10 +1,8 @@
 <%@tag description="Tag for audio form" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
 <%@attribute name="artistImageSrc" type="java.lang.String" %>
 <%@attribute name="song" required="true" type="ru.itis.maletskov.models.Song" %>
 <%@attribute name="audioId" required="true" type="java.lang.Integer" %>
-
 <c:if test="${empty artistImageSrc}">
     <c:set var="artistImageSrc" value="/images/artists/default.png"/>
 </c:if>
@@ -21,7 +19,7 @@
             <audio id="${audioId}" onended="playNextTrack()">
                 <source src="${song.getSongSrc()}" type="audio/mpeg">
             </audio>
-            <h6>${artists.get(song.getArtistId() - 1).getNickname()} - ${song.getTitle()}</h6>
+            <h6 id="track-name">${artists.get(song.getArtistId() - 1).getNickname()} - ${song.getTitle()}</h6>
         </div>
         <div class="col-md-2" align="right">
             <h6></h6>

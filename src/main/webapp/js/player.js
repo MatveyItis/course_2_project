@@ -1,6 +1,11 @@
 var isPlaying = false;
 var currentSong = 1;
 
+function setCurrentTrackName() {
+
+    document.getElementById('track-name').innerHTML;
+};
+
 function playMusic(e) {
     var aud = document.getElementById(e);
     if (!isPlaying && currentSong === 1) {

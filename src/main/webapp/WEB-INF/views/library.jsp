@@ -9,7 +9,7 @@
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <t:layout title="Library">
-    <div class="container-fluid row" style="padding-top: 20px">
+    <div class="container-fluid row" style="padding: 20px">
         <div class="container col-md-3">
             <div class="list-group" id="list-tab" role="tablist">
                 <a class="list-group-item list-group-item-action  list-group-item-dark active show"
@@ -30,7 +30,7 @@
                    id="list-search-list"
                    data-toggle="list"
                    href="#list-search" role="tab" aria-controls="search">Search</a>
-                <div class="list-group-item list-group-item-action d-flex justify-content-between align-items-center list-group-item-dark">
+                <div class="list-group-item list-group-item-action list-group-item-dark">
                     <t:player/>
                 </div>
             </div>

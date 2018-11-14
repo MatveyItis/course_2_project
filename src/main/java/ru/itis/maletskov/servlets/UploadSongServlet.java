@@ -65,6 +65,7 @@ public class UploadSongServlet extends HttpServlet {
 
         songService.saveSong(song);
 
+        resp.setContentLength(arrays.length);
         resp.sendRedirect("/admin");
     }
 }

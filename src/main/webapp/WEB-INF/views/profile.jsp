@@ -10,7 +10,7 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 
 <t:layout title="Profile" style="/css/default.css">
-    <div class="container-fluid row" style="padding-top: 20px">
+    <div class="container-fluid row" style="padding: 20px">
         <div class="container col-md-3">
             <div class="list-group" id="list-tab" role="tablist">
                 <a class="list-group-item list-group-item-action  list-group-item-dark active show"
@@ -37,7 +37,7 @@
                    id="list-settings-list"
                    data-toggle="list"
                    href="#list-settings" role="tab" aria-controls="settings">Settings</a>
-                <div class="list-group-item list-group-item-action d-flex justify-content-between align-items-center list-group-item-dark">
+                <div class="list-group-item list-group-item-action list-group-item-dark">
                     <t:player/>
                 </div>
             </div>

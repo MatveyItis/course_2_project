@@ -9,10 +9,7 @@ import ru.itis.maletskov.services.UsersService;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import javax.servlet.http.*;
 
 @WebServlet("/signIn")
 public class SignInServlet extends HttpServlet {
@@ -38,6 +35,7 @@ public class SignInServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) {
         String email = req.getParameter("e-mail");
         String password = req.getParameter("password");
+        String rememberMe = req.getParameter("remember");
         LoginForm loginForm = LoginForm.builder()
                 .email(email)
                 .password(password)
@@ -47,6 +45,14 @@ public class SignInServlet extends HttpServlet {
             session.setAttribute("authorized", "true");
             User user = usersService.getUsersRepository().findOneByEmail(loginForm.getEmail()).get();
             session.setAttribute("user", user);
+            if (rememberMe != null && rememberMe.equals("on")) {
+                Cookie userCookie = new Cookie("uid", session.getId());
+                userCookie.setMaxAge(60 * 60 * 24);
+                Cookie userIdCookie = new Cookie("uid2", user.getClientId().toString());
+                userIdCookie.setMaxAge(60 * 60 * 24);
+                resp.addCookie(userCookie);
+                resp.addCookie(userIdCookie);
+            }
             resp.sendRedirect("/profile");
         } else {
             resp.sendRedirect("/signUp");
