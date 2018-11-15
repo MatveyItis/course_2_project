@@ -40,7 +40,7 @@ public class SongsFilter implements Filter {
         boolean isHavingSongs = session.getAttribute("userSongs") != null;
 
 
-        if (auth.equals("true")) {
+        if (auth != null && auth.equals("true")) {
             if (!isHavingSongs | addingSong) {
                 User user = (User) session.getAttribute("user");
                 System.out.println("зашел в добавление песен");
