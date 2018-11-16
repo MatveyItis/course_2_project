@@ -40,18 +40,22 @@
                 <div class="tab-pane fade show active" id="list-library" role="tabpanel"
                      aria-labelledby="list-library-list">
                     <div class="container-fluid"
-                         style="background: url('/images/bg/paper_2.png'); border-radius: 15px; height: 600px;padding: 10px;overflow: scroll">
+                         style="background: url('/images/bg/paper_2.png'); border-radius: 15px;padding: 10px;">
                         <div class="container" align="center">
                             <h2>The best library of the music<span class="badge badge-secondary">v1.0</span></h2>
+                            <img class="d-block w-50" src="/images/man-earphones-1.jpeg">
+                            <h3>Enjoy listening music with us</h3>
                         </div>
-                        <c:set var="number" value="1"/>
-                        <ol id="music">
-                            <c:forEach var="song" items="${songs}">
-                                <t:audio song="${song}" audioId="${number}"/>
-                                <hr>
-                                <c:set var="number" value="${number + 1}"/>
-                            </c:forEach>
-                        </ol>
+                        <div class="container col-md-12" style="padding: 10px;height: 650px;overflow: scroll">
+                            <c:set var="number" value="1"/>
+                            <ol id="music">
+                                <c:forEach var="song" items="${songs}">
+                                    <t:audio song="${song}" audioId="${number}"/>
+                                    <hr>
+                                    <c:set var="number" value="${number + 1}"/>
+                                </c:forEach>
+                            </ol>
+                        </div>
                     </div>
                 </div>
                 <div class="tab-pane fade" id="list-top" role="tabpanel" aria-labelledby="list-top-list">

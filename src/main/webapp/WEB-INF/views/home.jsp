@@ -9,39 +9,12 @@
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 
 <t:layout title="Home">
-    <div id="carouselFirst" class="carousel slide" data-ride="carousel">
-        <div class="carousel-inner">
-            <div class="carousel-item active">
-                <img class="d-block w-100" src="https://images.wallpaperscraft.ru/image/dzhimi_khendriks_gitarist_virtuoz_pevets_kompozitor_98151_1920x1080.jpg" alt="First slide">
-                <div class="carousel-caption d-none d-md-block">
-                    <h1>New level of Music</h1>
-                    <p>"Amazing" - The New York Times(c)</p>
-                </div>
-            </div>
-            <div class="carousel-item">
-                <img class="d-block w-100" src="https://images.wallpaperscraft.ru/image/lindsi_stirling_skripka_devushka_muzykant_100465_1920x1080.jpg"
-                     alt="Second slide">
-                <div class="carousel-caption d-none d-md-block">
-                    <h1>New ideas</h1>
-                    <p>Give the World a new talent</p>
-                </div>
-            </div>
-        </div>
-        <a class="carousel-control-prev" href="#carouselFirst" role="button" data-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="sr-only">Previous</span>
-        </a>
-        <a class="carousel-control-next" href="#carouselFirst" role="button" data-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="sr-only">Next</span>
-        </a>
-    </div>
     <div id="carouselSecond" class="carousel slide" data-ride="carousel">
         <div class="carousel-inner">
             <div class="carousel-item active">
                 <img class="d-block w-100" src="https://7themes.su/_ph/29/560093602.jpg?1536888260" alt="First slide">
                 <div class="carousel-caption d-none d-md-block">
-                    <h1>New algorithm of search</h1>
+                    <h1>New algorithms of search</h1>
                     <p>"I like it" - Oxxxymiron(c)</p>
                 </div>
             </div>
@@ -66,6 +39,40 @@
             <span class="sr-only">Previous</span>
         </a>
         <a class="carousel-control-next" href="#carouselSecond" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+        </a>
+    </div>
+    <div id="carouselFirst" class="carousel slide" data-ride="carousel">
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img class="d-block w-100" src="https://images.wallpaperscraft.ru/image/dzhimi_khendriks_gitarist_virtuoz_pevets_kompozitor_98151_1920x1080.jpg" alt="First slide">
+                <div class="carousel-caption d-none d-md-block">
+                    <h1>New level of Music</h1>
+                    <p>"Amazing" - The New York Times(c)</p>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <img class="d-block w-100" src="/images/carousel/guitarist.jpeg"
+                     alt="Second slide">
+                <div class="carousel-caption d-none d-md-block">
+                    <h1>New ideas</h1>
+                    <p>Give the World a new talent</p>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <img class="d-block w-100" src="/images/carousel/concert.jpeg"
+                alt="Third Slide">
+                <div class="carousel-caption d-none d-lg-block">
+                    <h1>New new new</h1>
+                </div>
+            </div>
+        </div>
+        <a class="carousel-control-prev" href="#carouselFirst" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#carouselFirst" role="button" data-slide="next">
             <span class="carousel-control-next-icon" aria-hidden="true"></span>
             <span class="sr-only">Next</span>
         </a>

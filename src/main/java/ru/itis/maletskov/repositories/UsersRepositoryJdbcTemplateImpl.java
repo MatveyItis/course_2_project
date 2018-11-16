@@ -1,6 +1,7 @@
 package ru.itis.maletskov.repositories;
 
 import lombok.SneakyThrows;
+import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -40,17 +41,18 @@ public class UsersRepositoryJdbcTemplateImpl implements UsersRepository {
     private static final String SQL_SELECT_USERS = "select * from client " +
             "join library l on client.client_id = l.client_id";
 
-    public RowMapper<User> userRowMapper = (resultSet, i) -> User.builder()
-            .clientId(resultSet.getInt("client_id"))
-            .firstName(resultSet.getString("first_name"))
-            .lastName(resultSet.getString("last_name"))
-            .email(resultSet.getString("email"))
-            .hashPassword(resultSet.getString("hash_password"))
-            .library(Library.builder()
+    public RowMapper<User> userRowMapper = (resultSet, i) ->
+            User.builder()
                     .clientId(resultSet.getInt("client_id"))
-                    .libraryId(resultSet.getInt("library_id"))
-                    .build())
-            .build();
+                    .firstName(resultSet.getString("first_name"))
+                    .lastName(resultSet.getString("last_name"))
+                    .email(resultSet.getString("email"))
+                    .hashPassword(resultSet.getString("hash_password"))
+                    .library(Library.builder()
+                            .clientId(resultSet.getInt("client_id"))
+                            .libraryId(resultSet.getInt("library_id"))
+                            .build())
+                    .build();
 
 
     public UsersRepositoryJdbcTemplateImpl(DataSource dataSource) {
@@ -69,10 +71,14 @@ public class UsersRepositoryJdbcTemplateImpl implements UsersRepository {
         return Optional.of(jdbcTemplate.queryForObject(SQL_SELECT_USER_BY_EMAIL, userRowMapper, email));
     }
 
-    @SneakyThrows
     @Override
     public Optional<User> findOne(Integer id) {
-        return Optional.of(jdbcTemplate.queryForObject(SQL_SELECT_USER, userRowMapper, id));
+        try {
+            User user = jdbcTemplate.queryForObject(SQL_SELECT_USER, userRowMapper, id);
+            return Optional.of(user);
+        } catch (IncorrectResultSizeDataAccessException e) {
+            return Optional.empty();
+        }
     }
 
     @SneakyThrows

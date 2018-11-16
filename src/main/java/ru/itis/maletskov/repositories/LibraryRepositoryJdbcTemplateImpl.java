@@ -67,25 +67,6 @@ public class LibraryRepositoryJdbcTemplateImpl implements LibraryRepository {
             libraryWithSongsMap.get(theOnlyLibrary).add(song);
         }
         return theOnlyLibrary;
-        /*List<Song> songs = new ArrayList<>();
-        Library library = Library.builder()
-                .libraryId(resultSet.getInt("library_id"))
-                .clientId(resultSet.getInt("client_id"))
-                .build();
-        Song song = Song.builder()
-                .songId(resultSet.getInt("song_id"))
-                .title(resultSet.getString("song_title"))
-                .duration(resultSet.getInt("song_duration"))
-                .artistId(resultSet.getInt("artist_id"))
-                .songSrc(resultSet.getString("song_src"))
-                .build();
-        if (song != null && song.getSongId() != 0) {
-            songs.add(song);
-        }
-        if (library != null) {
-            library.setSongs(songs);
-        }
-        return library;*/
     };
 
     @Override

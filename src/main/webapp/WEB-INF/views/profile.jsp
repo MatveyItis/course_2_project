@@ -13,7 +13,7 @@
     <div class="container-fluid row" style="padding: 20px">
         <div class="container col-md-3">
             <div class="list-group" id="list-tab" role="tablist">
-                <a class="list-group-item list-group-item-action  list-group-item-dark active show"
+                <a class="list-group-item list-group-item-action show active list-group-item-dark"
                    id="list-profile-list" data-toggle="list"
                    href="#list-profile" role="tab" aria-controls="profile">Profile
                 </a>
@@ -33,7 +33,7 @@
                    id="list-music-list"
                    data-toggle="list"
                    href="#list-music" role="tab" aria-controls="music">Music</a>
-                <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center list-group-item-dark"
+                <a class="list-group-item list-group-item-action list-group-item-dark"
                    id="list-settings-list"
                    data-toggle="list"
                    href="#list-settings" role="tab" aria-controls="settings">Settings</a>
@@ -41,7 +41,6 @@
                     <t:player/>
                 </div>
             </div>
-
         </div>
         <div class="container col-md-9">
             <div class="tab-content" id="nav-tabContent">
@@ -80,14 +79,21 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row" style="width: 90%">
-                            <div class="container col-md-4" id="friends">
+                        <div class="row" style="width: 95%">
+                            <div class="container justify-content-between align-items-center col-md-4" id="friends">
                                 <h3>Friends</h3>
-                                <img src="/images/avatar_default.png" width="60" height="60">
-                                <img src="/images/avatar_default.png" width="60" height="60">
-                                <img src="/images/avatar_default.png" width="60" height="60">
-                                <img src="/images/avatar_default.png" width="60" height="60">
-                                <img src="/images/avatar_default.png" width="60" height="60">
+                                <img src="/images/default_cat_avatar.jpg" width="80" height="80"
+                                     style="border-radius: 50%">
+                                <img src="/images/default_cat_avatar.jpg" width="80" height="80"
+                                     style="border-radius: 50%">
+                                <img src="/images/default_cat_avatar.jpg" width="80" height="80"
+                                     style="border-radius: 50%">
+                                <img src="/images/default_cat_avatar.jpg" width="80" height="80"
+                                     style="border-radius: 50%">
+                                <img src="/images/default_cat_avatar.jpg" width="80" height="80"
+                                     style="border-radius: 50%">
+                                <img src="/images/default_cat_avatar.jpg" width="80" height="80"
+                                     style="border-radius: 50%">
                             </div>
                             <div class="container col-md-8" style="width: 90%">
                                 <form>

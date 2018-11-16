@@ -2,19 +2,24 @@ package ru.itis.maletskov.services;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import ru.itis.maletskov.forms.UserForm;
+import ru.itis.maletskov.forms.AuthForm;
 import ru.itis.maletskov.forms.LoginForm;
+import ru.itis.maletskov.forms.UserForm;
+import ru.itis.maletskov.models.Auth;
 import ru.itis.maletskov.models.User;
+import ru.itis.maletskov.repositories.AuthRepository;
 import ru.itis.maletskov.repositories.UsersRepository;
 
 import java.util.Optional;
 
 public class UsersServiceImpl implements UsersService {
     private UsersRepository usersRepository;
+    private AuthRepository authRepository;
     private PasswordEncoder encoder;
 
-    public UsersServiceImpl(UsersRepository usersRepository) {
+    public UsersServiceImpl(UsersRepository usersRepository, AuthRepository authRepository) {
         this.usersRepository = usersRepository;
+        this.authRepository = authRepository;
         this.encoder = new BCryptPasswordEncoder();
     }
 
@@ -56,7 +61,32 @@ public class UsersServiceImpl implements UsersService {
     }
 
     @Override
+    public void logOut(User user) {
+        authRepository.delete(user.getClientId());
+    }
+
+    @Override
     public UsersRepository getUsersRepository() {
         return usersRepository;
+    }
+
+    @Override
+    public void auth(AuthForm authForm) {
+        Auth auth = Auth.builder()
+                .cookieValue(authForm.getCookieValue())
+                .clientId(authForm.getClientId())
+                .build();
+        authRepository.save(auth);
+    }
+
+    @Override
+    public Integer getUserIdByCookieValue(String cookieValue) {
+        Optional<Auth> authOptional = authRepository.findAuthByCookieValue(cookieValue);
+        if (authOptional.isPresent()) {
+            Auth auth = authOptional.get();
+            return auth.getClientId();
+        } else {
+            return 0;
+        }
     }
 }

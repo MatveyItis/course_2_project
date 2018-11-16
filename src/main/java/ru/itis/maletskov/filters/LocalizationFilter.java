@@ -50,6 +50,7 @@ public class LocalizationFilter implements javax.servlet.Filter {
             }
         }
 
+        @SuppressWarnings("unchecked")
         Map<String, String> locale = (Map<String, String>) request.getServletContext().getAttribute("locale" + lang);
         request.setAttribute("locale", locale);
 

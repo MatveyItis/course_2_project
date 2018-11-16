@@ -1,7 +1,6 @@
 package ru.itis.maletskov.filters;
 
 import lombok.SneakyThrows;
-import ru.itis.maletskov.models.User;
 import ru.itis.maletskov.services.UsersService;
 
 import javax.servlet.*;
@@ -10,9 +9,8 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.util.Optional;
 
-@WebFilter(urlPatterns = {"/profile", "/library", "/admin"})
+@WebFilter(urlPatterns = {"/profile", "/library", "/admin", "/signUp"})
 public class UserFilter implements Filter {
     private UsersService usersService;
     boolean isAuthorized;
@@ -38,7 +36,7 @@ public class UserFilter implements Filter {
         if (auth == null || !auth.equals("true")) {
             isAuthorized = false;
             if (request.getCookies() != null) {
-                Cookie jsessionid = null, uid = null, uid2 = null;
+                Cookie jsessionid = null, uid = null;
                 for (Cookie cookie : request.getCookies()) {
                     switch (cookie.getName()) {
                         case "JSESSIONID":
@@ -47,21 +45,19 @@ public class UserFilter implements Filter {
                         case "uid":
                             uid = cookie;
                             break;
-                        case "uid2":
-                            uid2 = cookie;
-                            break;
                     }
                 }
-                if (jsessionid != null && uid != null && uid2 != null) {
-                    jsessionid.setValue(uid.getValue());
-                    Optional<User> userOptional = usersService.getUsersRepository()
-                            .findOne(Integer.parseInt(uid2.getValue()));
-                    if (userOptional.isPresent()) {
-                        session.setAttribute("user", userOptional.get());
+                if (jsessionid != null && uid != null) {
+                    Integer userId = usersService.getUserIdByCookieValue(uid.getValue());
+                    if (userId != 0) {
+                        jsessionid.setValue(uid.getValue());
+                        session.setAttribute("user", usersService.getUsersRepository().findOne(userId).get());
                         session.setAttribute("authorized", "true");
                         isAuthorized = true;
-                        filterChain.doFilter(request, response);
+                    } else {
+                        isAuthorized = false;
                     }
+                    filterChain.doFilter(request, response);
                 }
             }
             if (!isAuthorized) {

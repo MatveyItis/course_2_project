@@ -23,7 +23,8 @@ public class ComponentsListener implements ServletContextListener {
         dataSource.setUsername(USERNAME);
         dataSource.setPassword(PASSWORD);
         UsersRepository usersRepository = new UsersRepositoryJdbcTemplateImpl(dataSource);
-        UsersService usersService = new UsersServiceImpl(usersRepository);
+        AuthRepository authRepository = new AuthRepositoryJdbcTemplateImpl(dataSource);
+        UsersService usersService = new UsersServiceImpl(usersRepository, authRepository);
         LibraryRepository libraryRepository = new LibraryRepositoryJdbcTemplateImpl(dataSource);
         SongRepository songRepository = new SongRepositoryJdbcTemplateImpl(dataSource);
         SongService songService = new SongServiceImpl(songRepository, libraryRepository);
