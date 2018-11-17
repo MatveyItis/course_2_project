@@ -110,15 +110,20 @@
                 </div>
                 <div class="tab-pane fade" id="list-friends" role="tabpanel" aria-labelledby="list-friends-list">
                     <div class="container-fluid"
-                         style="background-color:  rgb(58, 63, 78);color: white;padding: 10px">
-                        <div class="container" align="center">
-                            <form class="form-inline my-2 my-lg-0">
+                         style="background-color:  rgb(58, 63, 78);color: white;padding: 10px; height: 700px">
+                        <h2 align="center">Friends</h2>
+                        <div class="container row" align="center" style="margin-bottom: 10px">
+                            <div class="col-md-10">
                                 <input class="form-control mr-sm-2" type="search" placeholder="Search"
+                                       name="userName"
+                                       id="userName"
                                        aria-label="Search">
-                                <button class="btn btn-online-info my-2 my-sm-0" type="submit">Search</button>
-                            </form>
+                            </div>
+                            <div class="col-md-2">
+                                <button class="btn btn-online-info my-2 my-sm-0" type="submit" id="searchPeople">Search</button>
+                            </div>
                         </div>
-                        <div class="container" id="my-music-search-result">
+                        <div class="container" id="resultPeople" style="height: 570px;overflow: scroll">
 
                         </div>
                     </div>
