@@ -4,5 +4,4 @@
     <a class="nav-link" style="color: gray; font-size: 14px" href="about">(c)Privacy policy</a>
     <a class="nav-link" style="color: gray; font-size: 14px">(c)All rights reserved</a>
     <a class="nav-link" style="color: gray; font-size: 14px" target="_blank" href="https://vk.com/mmaletskov">(c)maletskov</a>
-    <a class="nav-link" style="color: gray; font-size: 14px">JavaBack</a>
 </nav>

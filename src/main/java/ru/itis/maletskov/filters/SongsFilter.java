@@ -39,11 +39,9 @@ public class SongsFilter implements Filter {
         boolean addingSong = session.getAttribute("addingSong") != null && (boolean) session.getAttribute("addingSong");
         boolean isHavingSongs = session.getAttribute("userSongs") != null;
 
-
         if (auth != null && auth.equals("true")) {
             if (!isHavingSongs | addingSong) {
                 User user = (User) session.getAttribute("user");
-                System.out.println("зашел в добавление песен");
                 if (!isHavingSongs) {
                     session.setAttribute("artists", artistService.getAllArtists());
                 }
@@ -55,7 +53,6 @@ public class SongsFilter implements Filter {
                 user.setLibrary(userLibrary);
                 List<Song> userSongs = user.getLibrary().getSongs();
                 session.setAttribute("userSongs", userSongs);
-
 
                 List<Song> allSongs = songService.getAllSongs();
 

@@ -59,7 +59,9 @@ public class UploadSongServlet extends HttpServlet {
 
         Song song = Song.builder()
                 .title(songTitle)
-                .artistId(artistId)
+                .artist(Artist.builder()
+                        .artistId(artistId)
+                        .build())
                 .songSrc(relativeFilePath)
                 .build();
 

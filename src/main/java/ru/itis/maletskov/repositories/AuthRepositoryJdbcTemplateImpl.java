@@ -17,7 +17,7 @@ public class AuthRepositoryJdbcTemplateImpl implements AuthRepository {
     private final static String SQL_INSERT = "insert into auth (cookie_value, client_id) values (?, ?);";
 
     //language=SQL
-    private final static String SQL_SELECT_BY_CLIENT_ID = "select * from auth where auth_id = ?";
+    private final static String SQL_SELECT_BY_CLIENT_ID = "select * from auth where client_id = ?";
 
     //language=SQL
     private final static String SQL_SELECT_AUTH_BY_COOKIE_VALUE = "select * from auth where cookie_value = ?;";
@@ -59,7 +59,7 @@ public class AuthRepositoryJdbcTemplateImpl implements AuthRepository {
             delete(model.getClientId());
         }
         jdbcTemplate.update(connection -> {
-            PreparedStatement statement = connection.prepareStatement(SQL_INSERT, new String[]{"auth_id"});
+            PreparedStatement statement = connection.prepareStatement(SQL_INSERT);
             statement.setString(1, model.getCookieValue());
             statement.setInt(2, model.getClientId());
             return statement;

@@ -13,7 +13,7 @@ import java.util.Map;
 @WebFilter("*")
 public class LocalizationFilter implements javax.servlet.Filter {
     @Override
-    public void init(FilterConfig filterConfig) throws ServletException {
+    public void init(FilterConfig filterConfig)  {
 
     }
 

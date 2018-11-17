@@ -3,18 +3,18 @@ package ru.itis.maletskov.models;
 import lombok.*;
 
 import java.sql.Date;
-import java.util.List;
 
-@Getter
-@ToString
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 @EqualsAndHashCode
 @Builder
-@Setter
 public class Artist {
     private Integer artistId;
     private String nickname;
     private String firstName;
     private String lastName;
     private Date birthday;
-    private List<Album> albums;
+    private String artistImgSrc;
+    //private List<Album> albums;
 }

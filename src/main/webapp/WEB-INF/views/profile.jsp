@@ -171,7 +171,6 @@
                                 <ol id="music">
                                     <c:forEach var="song" items="${userSongs}">
                                         <t:audio song="${song}" audioId="${number}"/>
-                                        <hr>
                                         <c:set var="number" value="${number + 1}"/>
                                     </c:forEach>
                                 </ol>

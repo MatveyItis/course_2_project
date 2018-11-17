@@ -24,6 +24,7 @@ public class ArtistRepositoryJdbcTemplateImpl implements ArtistRepository {
             .firstName(resultSet.getString("first_name"))
             .lastName(resultSet.getString("last_name"))
             .birthday(resultSet.getDate("birthday"))
+            .artistImgSrc(resultSet.getString("img_src"))
             .build();
 
     @Override

@@ -1,10 +1,8 @@
 package ru.itis.maletskov.testing;
 
-import java.util.Scanner;
-
 public class Main {
     public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
+        /*Scanner sc = new Scanner(System.in);
         String s = sc.nextLine();
         int danis = 62;
         int matvey = 79;
@@ -27,7 +25,9 @@ public class Main {
                 System.out.println("Danis: " + danis + " & " + "Matvey: " + matvey + " Different: " + (danis - matvey));
             }
             s = sc.nextLine();
-        }
+        }*/
 
+        String s = "Matvey";
+        System.out.println(s.contains("Mat"));
     }
 }

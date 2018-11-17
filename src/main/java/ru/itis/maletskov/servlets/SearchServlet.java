@@ -13,11 +13,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.List;
 
-@WebServlet("/library")
-public class LibraryServlet extends HttpServlet {
+@WebServlet("/search")
+public class SearchServlet extends HttpServlet {
     private SongService songService;
+    private List<Song> songs;
+    private List<Song> currentSongs;
     private ObjectMapper objectMapper;
 
     @SneakyThrows
@@ -25,13 +28,15 @@ public class LibraryServlet extends HttpServlet {
     public void init(ServletConfig config) {
         ServletContext context = config.getServletContext();
         songService = (SongService) context.getAttribute("songService");
+        songs = songService.getAllSongs();
         objectMapper = new ObjectMapper();
+        currentSongs = new ArrayList<>();
     }
 
     @SneakyThrows
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) {
-        req.getServletContext().getRequestDispatcher("/WEB-INF/views/library.jsp").forward(req, resp);
+        req.getRequestDispatcher("/WEB-INF/views/library.jsp").forward(req, resp);
     }
 
     @SneakyThrows
@@ -39,19 +44,29 @@ public class LibraryServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) {
         HttpSession session = req.getSession();
         User user = (User) session.getAttribute("user");
-        if (user != null) {
-            List<Song> currentSongs = user.getLibrary().getSongs();
-            Integer songId = Integer.parseInt(req.getParameter("songId"));
-            System.out.println(songId);
 
-            session.setAttribute("addingSong", true);
+        if (currentSongs.size() != 0) {
+            currentSongs.clear();
+        }
 
-            if (songId != 0) {
-                songService.addSongToLibrary(songId, user.getLibrary().getLibraryId());
+        String name = req.getParameter("songName");
+        System.out.println("song name = " + name);
+
+        if (user != null && name!= null) {
+            for (int i = 0; i < songs.size(); i++) {
+                if (songs.get(i).getTitle().contains(name) && !name.equals("")) {
+                    currentSongs.add(songs.get(i));
+                }
             }
-            currentSongs.add(songService.getSongById(songId));
-            String json = objectMapper.writeValueAsString(currentSongs);
 
+            String json;
+            if (currentSongs.size() != 0) {
+                json = objectMapper.writeValueAsString(currentSongs);
+            } else {
+                String notFound = "Nothing found!";
+                json = objectMapper.writeValueAsString(notFound);
+            }
+            resp.setCharacterEncoding("UTF-8");
             resp.setContentType("application/json");
             resp.getWriter().write(json);
         }

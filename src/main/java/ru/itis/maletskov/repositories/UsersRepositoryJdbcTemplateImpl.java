@@ -61,12 +61,6 @@ public class UsersRepositoryJdbcTemplateImpl implements UsersRepository {
 
     @SneakyThrows
     @Override
-    public Optional<List<User>> findAllByFirstName(String firstName) {
-        return Optional.empty();
-    }
-
-    @SneakyThrows
-    @Override
     public Optional<User> findOneByEmail(String email) {
         return Optional.of(jdbcTemplate.queryForObject(SQL_SELECT_USER_BY_EMAIL, userRowMapper, email));
     }

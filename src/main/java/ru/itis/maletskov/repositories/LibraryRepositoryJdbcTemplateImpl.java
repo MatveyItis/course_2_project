@@ -3,6 +3,7 @@ package ru.itis.maletskov.repositories;
 import lombok.SneakyThrows;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import ru.itis.maletskov.models.Artist;
 import ru.itis.maletskov.models.Library;
 import ru.itis.maletskov.models.Song;
 
@@ -21,21 +22,28 @@ public class LibraryRepositoryJdbcTemplateImpl implements LibraryRepository {
     private static final String SQL_REMOVE_SONG_FROM_LIBRARY = "delete from songs_library where (library_id = ? and song_id = ?)";
 
     //language=SQL
-    private static final String SQL_SELECT_LIBRARY = "select * from library " +
-            "join songs_library l on library.library_id = l.library_id " +
-            "join song s2 on l.song_id = s2.song_id " +
+    private static final String SQL_SELECT_LIBRARY_WITH_SONGS = "select library.library_id, client_id, s.song_id, " +
+            "s.song_title, s.song_duration, s.song_src, a1.artist_id as artist_id, " +
+            "a1.nickname as nickname, a1.first_name as first_name, " +
+            "a1.last_name as last_name, a1.birthday as artist_birthday, " +
+            "a1.img_src as artist_img_src from library " +
+            "join songs_library as sl on library.library_id = sl.library_id " +
+            "join song as s on sl.song_id = s.song_id " +
+            "join artist as a1 on s.artist_id = a1.artist_id " +
             "where library.library_id = ?";
 
     //language=SQL
-    private static final String SQL_SELECT_LIBRARY_WITH_SONGS = "select * from library " +
-            "left join songs_library l on library.library_id = l.library_id " +
-            "left join song s2 on l.song_id = s2.song_id " +
-            "where library.library_id = ?";
+    private static final String SQL_SELECT_LIBRARIES = "select library.library_id, client_id, s.song_id, " +
+            "s.song_title, s.song_duration, s.song_src, a1.artist_id as artist_id, " +
+            "a1.nickname as nickname, a1.first_name as first_name, " +
+            "a1.last_name as last_name, a1.birthday as artist_birthday, " +
+            "a1.img_src as artist_img_src from library " +
+            "join songs_library as sl on library.library_id = sl.library_id " +
+            "join song as s on sl.song_id = s.song_id " +
+            "join artist as a1 on s.artist_id = a1.artist_id";
 
     //language=SQL
-    private static final String SQL_SELECT_LIBRARIES = "select * from library " +
-            "join songs_library l on library.library_id = l.library_id " +
-            "join song s2 on l.song_id = s2.song_id ";
+    private static final String SQL_DELETE_LIBRARY = "delete from songs_library where library_id = ?";
 
 
     public LibraryRepositoryJdbcTemplateImpl(DataSource dataSource) {
@@ -47,22 +55,26 @@ public class LibraryRepositoryJdbcTemplateImpl implements LibraryRepository {
             .libraryId(resultSet.getInt("library_id"))
             .build();
 
-
     public RowMapper<Library> libraryRowMapper = (resultSet, i) -> {
         if (libraryWithSongsMap.size() == 0) {
             Library newLibrary = libraryWithoutSongsRowMapper.mapRow(resultSet, i);
             libraryWithSongsMap.put(newLibrary, new ArrayList<>());
             theOnlyLibrary = newLibrary;
         }
-
         Song song = Song.builder()
                 .songId(resultSet.getInt("song_id"))
                 .title(resultSet.getString("song_title"))
                 .duration(resultSet.getInt("song_duration"))
-                .artistId(resultSet.getInt("artist_id"))
+                .artist(Artist.builder()
+                        .artistId(resultSet.getInt("artist_id"))
+                        .nickname(resultSet.getString("nickname"))
+                        .firstName(resultSet.getString("first_name"))
+                        .lastName(resultSet.getString("last_name"))
+                        .birthday(resultSet.getDate("artist_birthday"))
+                        .artistImgSrc(resultSet.getString("artist_img_src"))
+                        .build())
                 .songSrc(resultSet.getString("song_src"))
                 .build();
-
         if (song.getSongId() != 0) {
             libraryWithSongsMap.get(theOnlyLibrary).add(song);
         }
@@ -105,7 +117,7 @@ public class LibraryRepositoryJdbcTemplateImpl implements LibraryRepository {
     @SneakyThrows
     @Override
     public void delete(Integer id) {
-
+        jdbcTemplate.update(SQL_DELETE_LIBRARY, id);
     }
 
     @SneakyThrows

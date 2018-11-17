@@ -51,7 +51,6 @@
                             <ol id="music">
                                 <c:forEach var="song" items="${songs}">
                                     <t:audio song="${song}" audioId="${number}"/>
-                                    <hr>
                                     <c:set var="number" value="${number + 1}"/>
                                 </c:forEach>
                             </ol>
@@ -72,15 +71,20 @@
                 </div>
                 <div class="tab-pane fade" id="list-search" role="tabpanel" aria-labelledby="list-search-list">
                     <div class="container-fluid"
-                         style="background: url('/images/bg/paper_2.png'); border-radius: 15px;padding: 10px">
-                        <div class="search-class">
-                            <form class="form-inline my-2 my-lg-0">
-                                <input class="form-control mr-sm-2" type="search" placeholder="Search"
+                         style="background: url('/images/bg/paper_2.png'); border-radius: 15px;padding: 10px;height: 600px;overflow: scroll">
+                        <h2 align="center">Search your lovely songs:</h2>
+                        <div class="container row">
+                            <div class="col-md-10">
+                                <input class="form-control mr-sm-2" type="search" placeholder="Search" name="songName"
+                                       id="songName"
                                        aria-label="Search">
-                                <button class="btn btn-online-info my-2 my-sm-0" type="submit">Search</button>
-                            </form>
+                            </div>
+                            <div class="col-md-2">
+                                <button class="btn btn-online-info my-2 my-sm-0" type="submit" id="searchSong">Search
+                                </button>
+                            </div>
                         </div>
-                        <div class="container" align="center">
+                        <div class="container col-md-12" align="center">
                             <div class="result-search" id="result">
 
                             </div>
