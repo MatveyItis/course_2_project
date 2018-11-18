@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-@WebFilter(urlPatterns = {"/profile", "/library", "/admin", "/signUp"})
+@WebFilter(urlPatterns = {"/profile", "/library", "/admin"})
 public class UserFilter implements Filter {
     private UsersService usersService;
     boolean isAuthorized;

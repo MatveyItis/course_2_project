@@ -25,7 +25,7 @@ public class SignInServlet extends HttpServlet {
     @SneakyThrows
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) {
-        request.getServletContext().getRequestDispatcher("/WEB-INF/views/signUp.jsp").forward(request, response);
+        response.sendRedirect("/profile");
     }
 
     @SneakyThrows

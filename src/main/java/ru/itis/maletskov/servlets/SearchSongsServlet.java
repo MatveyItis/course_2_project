@@ -60,16 +60,12 @@ public class SearchSongsServlet extends HttpServlet {
                 }
             }
 
-            String json;
             if (currentSongs.size() != 0) {
-                json = objectMapper.writeValueAsString(currentSongs);
-            } else {
-                String notFound = "Nothing found!";
-                json = objectMapper.writeValueAsString(notFound);
+                String json = objectMapper.writeValueAsString(currentSongs);
+                resp.setCharacterEncoding("UTF-8");
+                resp.setContentType("application/json");
+                resp.getWriter().write(json);
             }
-            resp.setCharacterEncoding("UTF-8");
-            resp.setContentType("application/json");
-            resp.getWriter().write(json);
         }
     }
 }

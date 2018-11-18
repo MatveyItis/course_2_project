@@ -10,6 +10,17 @@ import java.util.Optional;
 public class AlbumRepositoryJdbcTemplateImpl implements AlbumRepository {
     private JdbcTemplate jdbcTemplate;
 
+    //language=SQL
+    private final static String SQL_SELECT_ALBUM_WITH_SONGS = "select album.album_id, " +
+            "album.artist_id, a2.nickname as artist_nickname, a2.first_name as artist_first_name, " +
+            "a2.last_name as artist_last_name, a2.birthday as artist_birthday, a2.img_src as artist_img_src, " +
+            "album.album_title, album.album_year, album.album_cover_src, a.song_id as song_id, " +
+            "s2.song_title as song_title, s2.song_duration as song_duration, s2.song_src as song_src from album " +
+            "join albums_songs a on album.album_id = a.album_id " +
+            "join song s2 on a.song_id = s2.song_id " +
+            "join artist a2 on album.artist_id = a2.artist_id " +
+            "where album.album_id = ?";
+
     public AlbumRepositoryJdbcTemplateImpl(DataSource dataSource) {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
     }

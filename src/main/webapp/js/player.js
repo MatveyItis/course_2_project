@@ -47,31 +47,6 @@ function stopMusic(e) {
     }
 };
 
-/*
-document.getElementById(currentSong + '').onended = function () {
-    alert("song is ended");
-    isPlaying = false;
-    if (currentSong === lastSong) {
-        this.src = document.getElementById(1 + '').src;
-        this.play();
-        currentSong = 1;
-    } else {
-        this.src = document.getElementById(currentSong + 1 + '');
-        this.play();
-        currentSong = currentSong + 1;
-    }
-    isPlaying = true;
-    /!*isPlaying = false;
-    if (currentSong === lastSong) {
-        playMusic(1);
-        currentSong = 1;
-    } else {
-        playMusic(currentSong + 1);
-        currentSong = currentSong + 1;
-    }
-    isPlaying = true;*!/
-};*/
-
 function playTrack() {
     if (isPlaying) {
         pauseMusic(currentSong);

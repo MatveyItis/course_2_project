@@ -52,22 +52,20 @@ public class SearchPeopleServlet extends HttpServlet {
 
         if (session.getAttribute("user") != null && userName != null && !userName.equals("")) {
             for (int i = 0; i < users.size(); i++) {
-                if (users.get(i).getFirstName().contains(userName) ||
-                        users.get(i).getLastName().contains(userName)) {
+                if (org.apache.commons.lang3.StringUtils.containsIgnoreCase(users.get(i).getFirstName(), userName)
+                        || org.apache.commons.lang3.StringUtils.containsIgnoreCase(users.get(i).getLastName(), userName)) {
                     currentUsers.add(users.get(i));
                 }
             }
 
-            String json;
-
             if (currentUsers.size() != 0) {
-                json = objectMapper.writeValueAsString(currentUsers);
-            } else {
-                json = objectMapper.writeValueAsString("Nothing found!");
+                String json = objectMapper.writeValueAsString(currentUsers);
+
+                resp.setCharacterEncoding("UTF-8");
+                resp.setContentType("application/json");
+                resp.getWriter().write(json);
+                currentUsers.clear();
             }
-            resp.setCharacterEncoding("UTF-8");
-            resp.setContentType("application/json");
-            resp.getWriter().write(json);
         }
     }
 }

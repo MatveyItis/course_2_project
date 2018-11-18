@@ -49,10 +49,9 @@
                     <div class="container-fluid" style="background-color:  rgb(58, 63, 78); color: white">
                         <div class="row">
                             <div class="col-md-4" style="padding: 10px">
-                                <div class="container" style="background-color: white;
-                                border-radius: 50%;width: 270px;height: 270px;">
-                                    <img src="/images/avatarcat.png" alt="avatar" width="250" height="250"
-                                         style="border-radius: 50%;margin-top: 10px; margin-left: -5px;">
+                                <div class="container">
+                                    <img src="/images/avatarcat.png" class="d-block w-100"
+                                         style="border-radius: 50%">
                                 </div>
                             </div>
                             <div class="col-md-8" style="padding: 10px;">
@@ -82,20 +81,25 @@
                         <div class="row" style="width: 95%">
                             <div class="container justify-content-between align-items-center col-md-4" id="friends">
                                 <h3>Friends</h3>
-                                <img src="/images/default_cat_avatar.jpg" width="80" height="80"
+                                <img src="/images/default_cat_avatar.jpg" class="d-block w-25"
                                      style="border-radius: 50%">
-                                <img src="/images/default_cat_avatar.jpg" width="80" height="80"
+                                <img src="/images/default_cat_avatar.jpg" class="d-block w-25"
                                      style="border-radius: 50%">
-                                <img src="/images/default_cat_avatar.jpg" width="80" height="80"
+                                <img src="/images/default_cat_avatar.jpg" class="d-block w-25"
                                      style="border-radius: 50%">
-                                <img src="/images/default_cat_avatar.jpg" width="80" height="80"
+                                <img src="/images/default_cat_avatar.jpg" class="d-block w-25"
                                      style="border-radius: 50%">
-                                <img src="/images/default_cat_avatar.jpg" width="80" height="80"
+                                <img src="/images/default_cat_avatar.jpg" class="d-block w-25"
                                      style="border-radius: 50%">
-                                <img src="/images/default_cat_avatar.jpg" width="80" height="80"
+                                <img src="/images/default_cat_avatar.jpg" class="d-block w-25"
+                                     style="border-radius: 50%">
+                                <img src="/images/default_cat_avatar.jpg" class="d-block w-25"
+                                     style="border-radius: 50%">
+                                <img src="/images/default_cat_avatar.jpg" class="d-block w-25"
                                      style="border-radius: 50%">
                             </div>
-                            <div class="container col-md-8" style="width: 90%">
+                            <div class="container col-md-8">
+                                <h3>Wall posts</h3>
                                 <form>
                                     <div class="form-group">
                                         <label for="new-music">Share:</label>
@@ -120,7 +124,9 @@
                                        aria-label="Search">
                             </div>
                             <div class="col-md-2">
-                                <button class="btn btn-online-info my-2 my-sm-0" type="submit" id="searchPeople">Search</button>
+                                <button class="btn btn-online-info my-2 my-sm-0" type="submit" id="searchPeople">
+                                    Search
+                                </button>
                             </div>
                         </div>
                         <div class="container" id="resultPeople" style="height: 570px;overflow: scroll">
@@ -155,6 +161,11 @@
                                             <img class="d-block w-100"
                                                  src="/images/albumcovers/kandrick_lamar_album_cover_damn.jpg"
                                                  alt="Third slide">
+                                        </div>
+                                        <div class="carousel-item">
+                                            <img class="d-block w-100"
+                                                 src="/images/albumcovers/oxxxy_long_way_to_home.jpeg"
+                                                 alt="Fourth slide">
                                         </div>
                                     </div>
                                     <a class="carousel-control-prev" href="#carouselCovers" role="button"
@@ -236,5 +247,4 @@
             </div>
         </div>
     </div>
-    <t:info/>
 </t:layout>
