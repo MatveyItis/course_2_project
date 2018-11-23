@@ -66,6 +66,11 @@ public class UsersRepositoryJdbcTemplateImpl implements UsersRepository {
     }
 
     @Override
+    public Optional<List<User>> searchPeopleByName(String name) {
+        return Optional.empty();
+    }
+
+    @Override
     public Optional<User> findOne(Integer id) {
         try {
             User user = jdbcTemplate.queryForObject(SQL_SELECT_USER, userRowMapper, id);

@@ -18,13 +18,16 @@
         </div>
         <div class='col-md-2 col-sm-2' align='right' id='addingSong${song.getSongId()}'>
             <c:if test='${song.isHaving() == false}'>
-                <button id='b${song.getSongId()}' onclick='sendSongId(${song.getSongId()})' type='button'
+                <button id='b${song.getSongId()}' onclick='addSong(${song.getSongId()})' type='button'
                         class='btn btn-primary btn-dark'>
-                    Add
+                    <b>+</b>
                 </button>
             </c:if>
             <c:if test='${song.isHaving() == true}'>
-
+                <button id='r${song.getSongId()}' onclick='removeSong(${song.getSongId()})' type='button'
+                        class='btn btn-primary btn-dark'>
+                    <b>-</b>
+                </button>
             </c:if>
         </div>
     </div>

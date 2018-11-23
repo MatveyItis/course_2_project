@@ -7,20 +7,20 @@
         <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbar">
-        <a class="navbar-brand" href="home">Home</a>
+        <a class="navbar-brand" href="<c:url value="/home"/>">Home</a>
         <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
             <li class="nav-item active">
-                <a class="nav-link" href="profile">Profile</a>
+                <a class="nav-link" href="<c:url value="/profile"/> ">Profile</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="library">Library</a>
+                <a class="nav-link" href="<c:url value="/library"/> ">Library</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="about">About us</a>
+                <a class="nav-link" href="<c:url value="/about"/> ">About us</a>
             </li>
             <c:if test="${not empty admin}">
                 <li class="nav-item">
-                    <a class="nav-link" href="admin">Admin</a>
+                    <a class="nav-link" href="<c:url value="/admin"/>">Admin</a>
                 </li>
             </c:if>
         </ul>

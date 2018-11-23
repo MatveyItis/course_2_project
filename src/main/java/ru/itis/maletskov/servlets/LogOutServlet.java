@@ -40,7 +40,10 @@ public class LogOutServlet extends HttpServlet {
         if (isHavingUid) {
             usersService.logOut((User) req.getSession().getAttribute("user"));
             req.getSession().invalidate();
+        } else {
+            req.getSession().invalidate();
         }
+
         req.getRequestDispatcher("/WEB-INF/views/signUp.jsp").forward(req, resp);
     }
 

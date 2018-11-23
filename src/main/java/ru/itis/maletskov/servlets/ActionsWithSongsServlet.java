@@ -16,7 +16,7 @@ import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @WebServlet("/library")
-public class LibraryServlet extends HttpServlet {
+public class ActionsWithSongsServlet extends HttpServlet {
     private SongService songService;
     private ObjectMapper objectMapper;
 
@@ -50,6 +50,30 @@ public class LibraryServlet extends HttpServlet {
                 songService.addSongToLibrary(songId, user.getLibrary().getLibraryId());
             }
             currentSongs.add(songService.getSongById(songId));
+            String json = objectMapper.writeValueAsString(currentSongs);
+
+            resp.setContentType("application/json");
+            resp.getWriter().write(json);
+        }
+    }
+
+    @SneakyThrows
+    @Override
+    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) {
+        System.out.println("Я в делите, парни");
+        HttpSession session = req.getSession();
+        User user = (User) session.getAttribute("user");
+        if (user != null) {
+            List<Song> currentSongs = user.getLibrary().getSongs();
+            Integer songId = Integer.parseInt(req.getParameter("songId"));
+            System.out.println(songId);
+
+            session.setAttribute("removingSong", true);
+
+            if (songId != 0) {
+                songService.removeSongFromLibrary(songId, user.getLibrary().getLibraryId());
+            }
+            currentSongs.remove(songService.getSongById(songId));
             String json = objectMapper.writeValueAsString(currentSongs);
 
             resp.setContentType("application/json");

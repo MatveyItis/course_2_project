@@ -1,4 +1,4 @@
-function sendSongId(songId) {
+function addSong(songId) {
     $.ajax({
             type: 'post',
             url: '/library',
@@ -8,11 +8,22 @@ function sendSongId(songId) {
         }
     ).done(function () {
         document.getElementById('addingSong' + songId).innerHTML = "";
-        /*var differentButton = "<img src=\"https://img.icons8.com/metro/50/000000/checkmark.png\" width='20' height='20'>";
-        var buttonDiv = document.getElementById("b" + songId);
-        buttonDiv.innerHTML = "";
-        buttonDiv.innerHTML = differentButton;*/
     }).fail(function () {
-        alert("Error");
+        alert('Опять 25. Пишите разработчику в вк, чтобы чинил сервак, все упало:(');
     });
 };
+
+function removeSong(songId) {
+    $.ajax({
+        type: 'DELETE',
+        url: '/library',
+        data: {
+            songId: songId
+        },
+        dataType: 'json'
+    }).done(function () {
+        location.reload();
+    }).fail(
+        alert('Опять 25. Пишите разработчику в вк, чтобы чинил сервак, все упало:(')
+    );
+}

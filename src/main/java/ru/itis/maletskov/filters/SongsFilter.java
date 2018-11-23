@@ -37,11 +37,12 @@ public class SongsFilter implements Filter {
 
         String auth = (String) session.getAttribute("authorized");
         boolean addingSong = session.getAttribute("addingSong") != null && (boolean) session.getAttribute("addingSong");
+        boolean removingSong = session.getAttribute("removingSong") != null && (boolean) session.getAttribute("removingSong");
         boolean isHavingSongs = session.getAttribute("userSongs") != null;
 
         if (auth != null && auth.equals("true")) {
-            if (!isHavingSongs | addingSong) {
-                User user = (User) session.getAttribute("user");
+            User user = (User) session.getAttribute("user");
+            if (!isHavingSongs | addingSong | removingSong) {
                 if (!isHavingSongs) {
                     session.setAttribute("artists", artistService.getAllArtists());
                 }
@@ -52,7 +53,6 @@ public class SongsFilter implements Filter {
                 userLibrary.setSongs(songService.getSongsByUserId(userLibrary.getClientId()));
                 user.setLibrary(userLibrary);
                 List<Song> userSongs = user.getLibrary().getSongs();
-                session.setAttribute("userSongs", userSongs);
 
                 List<Song> allSongs = songService.getAllSongs();
 
@@ -61,8 +61,14 @@ public class SongsFilter implements Filter {
                     allSongs.get(song.getSongId() - 1).setHaving(true);
                 }
 
+                session.setAttribute("userSongs", userSongs);
                 session.setAttribute("songs", allSongs);
-                session.removeAttribute("addingSong");
+                if (addingSong) {
+                    session.removeAttribute("addingSong");
+                }
+                if (removingSong) {
+                    session.removeAttribute("removingSong");
+                }
             }
             filterChain.doFilter(request, response);
         } else {

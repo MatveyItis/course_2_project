@@ -10,6 +10,8 @@ import ru.itis.maletskov.models.User;
 import ru.itis.maletskov.repositories.AuthRepository;
 import ru.itis.maletskov.repositories.UsersRepository;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 public class UsersServiceImpl implements UsersService {
@@ -50,11 +52,7 @@ public class UsersServiceImpl implements UsersService {
         Optional<User> userOptional = usersRepository.findOneByEmail(loginForm.getEmail());
         if (userOptional.isPresent()) {
             User user = userOptional.get();
-            if (!encoder.matches(loginForm.getPassword(), user.getHashPassword())) {
-                return false;
-            } else {
-                return true;
-            }
+            return encoder.matches(loginForm.getPassword(), user.getHashPassword());
         } else {
             return false;
         }
@@ -63,11 +61,6 @@ public class UsersServiceImpl implements UsersService {
     @Override
     public void logOut(User user) {
         authRepository.delete(user.getClientId());
-    }
-
-    @Override
-    public UsersRepository getUsersRepository() {
-        return usersRepository;
     }
 
     @Override
@@ -88,5 +81,22 @@ public class UsersServiceImpl implements UsersService {
         } else {
             return 0;
         }
+    }
+
+    @Override
+    public User findByEmail(String email) {
+        Optional<User> optionalUser = usersRepository.findOneByEmail(email);
+        return optionalUser.orElse(null);
+    }
+
+    @Override
+    public User findOneById(Integer id) {
+        Optional<User> optionalUser = usersRepository.findOne(id);
+        return optionalUser.orElse(null);
+    }
+
+    @Override
+    public List<User> searchPeople(String userName) {
+        return usersRepository.searchPeopleByName(userName).orElse(new ArrayList<>());
     }
 }

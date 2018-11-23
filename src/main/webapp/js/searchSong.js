@@ -13,18 +13,17 @@ document.addEventListener("DOMContentLoaded", function () {
                     var resultSearch = "<ol>";
                     for (var i = 0; i < data.length; i++) {
                         resultSearch += "<li>\n" +
+                            "<hr>\n" +
                             "    <div class='container row' style='margin: 5px;'>\n" +
                             "        <div class='col-md-2'>\n" +
-                            "            <b></b>\n" +
-                            "            <button class='btn btn-dark' type='button'>\n" +
-                            "                <img src='" + data[i].artist.artistImgSrc + "' width='24' height='24'>\n" +
-                            "            </button>\n" +
+                            "            <img src='" + data[i].artist.artistImgSrc + "' class='d-block w-50'>\n" +
                             "        </div>\n" +
                             "        <div class='col-md-8'>\n" +
                             "            <h6 id='track-name'>" + data[i].artist.nickname + " - " + data[i].title + "</h6>\n" +
                             "        </div>\n" +
                             "    </div>\n" +
-                            "</li>";
+                            "</li>\n" +
+                            "<hr>";
                     }
                     resultSearch += "</ol>";
                     var resultSearchBlock = document.getElementById('result');

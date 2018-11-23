@@ -11,4 +11,5 @@ public interface SongService {
     void addSongToLibrary(Integer songId, Integer libraryId);
     void removeSongFromLibrary(Integer songId, Integer libraryId);
     void saveSong(Song song);
+    List<Song> searchSongs(String songName);
 }

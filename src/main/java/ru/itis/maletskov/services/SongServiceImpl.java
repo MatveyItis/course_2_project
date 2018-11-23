@@ -53,4 +53,10 @@ public class SongServiceImpl implements SongService {
     public void saveSong(Song song) {
         songRepository.save(song);
     }
+
+    @Override
+    public List<Song> searchSongs(String songName) {
+        Optional<List<Song>> optionalSongs = songRepository.searchByName(songName);
+        return optionalSongs.orElseGet(ArrayList::new);
+    }
 }

@@ -40,7 +40,7 @@ public class SignInServlet extends HttpServlet {
                 .build();
         if (usersService.signIn(loginForm)) {
             HttpSession session = req.getSession(true);
-            User user = usersService.getUsersRepository().findOneByEmail(loginForm.getEmail()).get();
+            User user = usersService.findByEmail(loginForm.getEmail());
             session.setAttribute("user", user);
             session.setAttribute("authorized", "true");
             if (rememberMe != null && rememberMe.equals("on")) {

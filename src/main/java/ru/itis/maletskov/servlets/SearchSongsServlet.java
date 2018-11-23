@@ -13,14 +13,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
 import java.util.List;
 
 @WebServlet("/library/search")
 public class SearchSongsServlet extends HttpServlet {
     private SongService songService;
-    private List<Song> songs;
-    private List<Song> currentSongs;
     private ObjectMapper objectMapper;
 
     @SneakyThrows
@@ -28,9 +25,7 @@ public class SearchSongsServlet extends HttpServlet {
     public void init(ServletConfig config) {
         ServletContext context = config.getServletContext();
         songService = (SongService) context.getAttribute("songService");
-        songs = songService.getAllSongs();
         objectMapper = new ObjectMapper();
-        currentSongs = new ArrayList<>();
     }
 
     @SneakyThrows
@@ -45,23 +40,12 @@ public class SearchSongsServlet extends HttpServlet {
         HttpSession session = req.getSession();
         User user = (User) session.getAttribute("user");
 
-        if (currentSongs.size() != 0) {
-            currentSongs.clear();
-        }
-
         String name = req.getParameter("songName");
-        System.out.println("song name = " + name);
 
         if (user != null && name != null && !name.equals("")) {
-            for (int i = 0; i < songs.size(); i++) {
-                if (songs.get(i).getTitle().contains(name) ||
-                        songs.get(i).getArtist().getNickname().contains(name)) {
-                    currentSongs.add(songs.get(i));
-                }
-            }
-
-            if (currentSongs.size() != 0) {
-                String json = objectMapper.writeValueAsString(currentSongs);
+            List<Song> listSongs = songService.searchSongs(name);
+            if (listSongs.size() != 0) {
+                String json = objectMapper.writeValueAsString(listSongs);
                 resp.setCharacterEncoding("UTF-8");
                 resp.setContentType("application/json");
                 resp.getWriter().write(json);

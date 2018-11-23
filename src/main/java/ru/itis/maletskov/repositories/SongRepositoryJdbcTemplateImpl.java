@@ -92,4 +92,9 @@ public class SongRepositoryJdbcTemplateImpl implements SongRepository {
     public Optional<List<Song>> findAll() {
         return Optional.of(jdbcTemplate.query(SQL_SELECT_SONGS, songRowMapper));
     }
+
+    @Override
+    public Optional<List<Song>> searchByName(String songName) {
+        return Optional.empty();
+    }
 }

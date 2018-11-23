@@ -12,14 +12,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
 import java.util.List;
 
 @WebServlet("/profile/search")
 public class SearchPeopleServlet extends HttpServlet {
     private UsersService usersService;
-    private List<User> users;
-    private List<User> currentUsers;
     private ObjectMapper objectMapper;
 
     @SneakyThrows
@@ -27,9 +24,7 @@ public class SearchPeopleServlet extends HttpServlet {
     public void init(ServletConfig config) {
         ServletContext context = config.getServletContext();
         usersService = (UsersService) context.getAttribute("usersService");
-        users = usersService.getUsersRepository().findAll().get();
         objectMapper = new ObjectMapper();
-        currentUsers = new ArrayList<>();
     }
 
     @SneakyThrows
@@ -43,28 +38,18 @@ public class SearchPeopleServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) {
         HttpSession session = req.getSession();
 
-        if (currentUsers.size() != 0) {
-            currentUsers.clear();
-        }
-
         String userName = req.getParameter("userName");
-        System.out.println("username = " + userName);
 
         if (session.getAttribute("user") != null && userName != null && !userName.equals("")) {
-            for (int i = 0; i < users.size(); i++) {
-                if (org.apache.commons.lang3.StringUtils.containsIgnoreCase(users.get(i).getFirstName(), userName)
-                        || org.apache.commons.lang3.StringUtils.containsIgnoreCase(users.get(i).getLastName(), userName)) {
-                    currentUsers.add(users.get(i));
-                }
-            }
+            List<User> users = usersService.searchPeople(userName);
 
-            if (currentUsers.size() != 0) {
-                String json = objectMapper.writeValueAsString(currentUsers);
+            if (users.size() != 0) {
+                String json = objectMapper.writeValueAsString(users);
 
                 resp.setCharacterEncoding("UTF-8");
                 resp.setContentType("application/json");
                 resp.getWriter().write(json);
-                currentUsers.clear();
+                users.clear();
             }
         }
     }
