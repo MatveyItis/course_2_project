@@ -31,7 +31,7 @@ public class ActionsWithSongsServlet extends HttpServlet {
     @SneakyThrows
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) {
-        req.getServletContext().getRequestDispatcher("/WEB-INF/views/library.jsp").forward(req, resp);
+        req.getRequestDispatcher("/WEB-INF/ftl/library.ftl").forward(req, resp);
     }
 
     @SneakyThrows
@@ -65,6 +65,7 @@ public class ActionsWithSongsServlet extends HttpServlet {
         User user = (User) session.getAttribute("user");
         if (user != null) {
             List<Song> currentSongs = user.getLibrary().getSongs();
+
             Integer songId = Integer.parseInt(req.getParameter("songId"));
             System.out.println(songId);
 

@@ -2,7 +2,6 @@ var isPlaying = false;
 var currentSong = 1;
 
 function setCurrentTrackName() {
-
     document.getElementById('track-name').innerHTML;
 };
 
@@ -100,8 +99,8 @@ function setPlayPause() {
     var playPause = document.getElementById('play-pause');
     playPause.innerHTML = "";
     if (isPlaying) {
-        playPause.innerHTML = "<img src='/images/player/iconmonstr-media-control-49-24.png'>";
+        playPause.innerHTML = "<img src='/images/player/iconmonstr-media-control-49-240.png' width='24' height='24'>";
     } else {
-        playPause.innerHTML = "<img src='/images/player/iconmonstr-media-control-48-24.png'>";
+        playPause.innerHTML = "<img src='/images/player/iconmonstr-media-control-48-240.png' width='24' height='24'>";
     }
 };

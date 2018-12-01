@@ -1,8 +1,5 @@
-<%@tag description="Tag for audio form" %>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@attribute name="song" required="true" type="ru.itis.maletskov.models.Song" %>
-<%@attribute name="audioId" required="true" type="java.lang.Integer" %>
-
+<#function audio song audioId>
+<#assign t>
 <li>
     <div class='container row' style='margin: 5px;'>
         <div class='col-md-3 col-sm-3'>
@@ -17,19 +14,21 @@
             <h6 id='track-name'>${song.getArtist().getNickname()} - ${song.getTitle()}</h6>
         </div>
         <div class='col-md-2 col-sm-2' align='right' id='addingSong${song.getSongId()}'>
-            <c:if test='${song.isHaving() == false}'>
+            <#if !song.isHaving()>
                 <button id='b${song.getSongId()}' onclick='addSong(${song.getSongId()})' type='button'
                         class='btn btn-primary btn-dark'>
                     <b>+</b>
                 </button>
-            </c:if>
-            <c:if test='${song.isHaving() == true}'>
+            <#else>
                 <button id='r${song.getSongId()}' onclick='removeSong(${song.getSongId()})' type='button'
                         class='btn btn-primary btn-dark'>
                     <b>-</b>
                 </button>
-            </c:if>
+            </#if>
         </div>
     </div>
+    <hr>
 </li>
-<hr>
+</#assign>
+<#return t>
+</#function>

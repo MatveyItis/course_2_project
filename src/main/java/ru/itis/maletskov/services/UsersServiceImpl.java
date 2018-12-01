@@ -1,6 +1,5 @@
 package ru.itis.maletskov.services;
 
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import ru.itis.maletskov.forms.AuthForm;
 import ru.itis.maletskov.forms.LoginForm;
@@ -19,10 +18,10 @@ public class UsersServiceImpl implements UsersService {
     private AuthRepository authRepository;
     private PasswordEncoder encoder;
 
-    public UsersServiceImpl(UsersRepository usersRepository, AuthRepository authRepository) {
+    public UsersServiceImpl(UsersRepository usersRepository, AuthRepository authRepository, PasswordEncoder encoder) {
         this.usersRepository = usersRepository;
         this.authRepository = authRepository;
-        this.encoder = new BCryptPasswordEncoder();
+        this.encoder = encoder;
     }
 
     @Override

@@ -17,48 +17,63 @@
     </listener>
 
     <servlet>
-        <servlet-name>about</servlet-name>
-        <jsp-file>/WEB-INF/views/about.jsp</jsp-file>
+        <servlet-name>freemarker</servlet-name>
+        <servlet-class>freemarker.ext.servlet.FreemarkerServlet</servlet-class>
+
+        <init-param>
+            <param-name>TemplatePath</param-name>
+            <param-value>/</param-value>
+        </init-param>
+        <init-param>
+            <param-name>NoCache</param-name>
+            <param-value>true</param-value>
+        </init-param>
+        <init-param>
+            <param-name>incompatible_improvements</param-name>
+            <param-value>2.3.23</param-value>
+        </init-param>
+        <init-param>
+            <param-name>template_exception_handler</param-name>
+            <param-value>html_debug</param-value>
+        </init-param>
+        <init-param>
+            <param-name>default_encoding</param-name>
+            <param-value>UTF-8</param-value>
+        </init-param>
+        <init-param>
+            <param-name>output_encoding</param-name>
+            <param-value>UTF-8</param-value>
+        </init-param>
+        <init-param>
+            <param-name>locale</param-name>
+            <param-value>en_US</param-value>
+        </init-param>
+        <init-param>
+            <param-name>number_format</param-name>
+            <param-value>0.##########</param-value>
+        </init-param>
+        <load-on-startup>1</load-on-startup>
     </servlet>
 
-    <servlet>
-        <servlet-name>people</servlet-name>
-        <jsp-file>/WEB-INF/views/people.jsp</jsp-file>
-    </servlet>
-    <servlet>
-        <servlet-name>home</servlet-name>
-        <jsp-file>/WEB-INF/views/home.jsp</jsp-file>
-    </servlet>
-    <servlet>
-        <servlet-name>profile</servlet-name>
-        <jsp-file>/WEB-INF/views/profile.jsp</jsp-file>
-    </servlet>
-    <servlet>
-        <servlet-name>admin</servlet-name>
-        <jsp-file>/WEB-INF/views/admin.jsp</jsp-file>
-    </servlet>
-
     <servlet-mapping>
-        <servlet-name>admin</servlet-name>
-        <url-pattern>/admin</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>about</servlet-name>
-        <url-pattern>/about</url-pattern>
+        <servlet-name>freemarker</servlet-name>
+        <url-pattern>*.ftl</url-pattern>
     </servlet-mapping>
 
-    <servlet-mapping>
-        <servlet-name>people</servlet-name>
-        <url-pattern>/people</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>profile</servlet-name>
-        <url-pattern>/profile</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>home</servlet-name>
-        <url-pattern>/home</url-pattern>
-    </servlet-mapping>
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>FreeMarker MVC Views</web-resource-name>
+            <url-pattern>*.ftl</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+        </auth-constraint>
+    </security-constraint>
+
+    <session-config>
+        <session-timeout>
+            30
+        </session-timeout>
+    </session-config>
 
     <error-page>
         <error-code>500</error-code>

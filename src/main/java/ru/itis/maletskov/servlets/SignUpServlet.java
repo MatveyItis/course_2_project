@@ -25,7 +25,7 @@ public class SignUpServlet extends HttpServlet {
     @SneakyThrows
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) {
-        response.sendRedirect("/profile");
+        request.getServletContext().getRequestDispatcher("/WEB-INF/ftl/signUp.ftl").forward(request, response);
     }
 
     @SneakyThrows
@@ -44,7 +44,7 @@ public class SignUpServlet extends HttpServlet {
                 .passwordSecond(passwordSecond)
                 .build();
         if (usersService.signUp(userForm)) {
-            resp.sendRedirect("/signUp");
+            resp.sendRedirect(req.getServletContext().getContextPath() + "/signUp");
         }
     }
 }

@@ -30,7 +30,7 @@ public class SearchPeopleServlet extends HttpServlet {
     @SneakyThrows
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) {
-        req.getServletContext().getRequestDispatcher("/WEB-INF/views/profile.jsp").forward(req, resp);
+        req.getServletContext().getRequestDispatcher("/WEB-INF/ftl/profile.ftl").forward(req, resp);
     }
 
     @SneakyThrows

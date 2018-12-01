@@ -14,7 +14,7 @@ import javax.servlet.http.HttpSession;
 @WebFilter(urlPatterns = {"/profile", "/library", "/admin"})
 public class UserFilter implements Filter {
     private UsersService usersService;
-    boolean isAuthorized;
+    private boolean isAuthorized;
 
     @SneakyThrows
     @Override
@@ -68,7 +68,7 @@ public class UserFilter implements Filter {
                 }
             }
             if (!isAuthorized) {
-                request.getRequestDispatcher("/WEB-INF/views/signUp.jsp").forward(request, response);
+                request.getRequestDispatcher("/WEB-INF/ftl/signUp.ftl").forward(request, response);
             }
         } else if (auth.equals("true")) {
             isAuthorized = true;

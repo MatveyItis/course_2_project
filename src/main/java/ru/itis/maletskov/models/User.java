@@ -2,10 +2,7 @@ package ru.itis.maletskov.models;
 
 import lombok.*;
 
-@Getter
-@Setter
-@ToString
-@EqualsAndHashCode
+@Data
 @Builder
 public class User {
     private Integer clientId;

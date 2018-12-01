@@ -1,14 +1,10 @@
-<%@tag description="Main Settings Tag" pageEncoding="UTF-8" %>
+<#import "/WEB-INF/ftltags/layout.ftl" as layout>
+<#import "/WEB-INF/ftltags/navbar.ftl" as navbar>
+<#import "/WEB-INF/ftltags/player.ftl" as player>
+<#import "/WEB-INF/ftltags/audio.ftl" as audio>
 
-<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
-<%@attribute name="title" required="true" type="java.lang.String" %>
-<%@attribute name="style" type="java.lang.String" %>
-
-<c:if test="${empty title}">
-    <c:set var="title" value="Music"/>
-</c:if>
-
+<#macro template>
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">
@@ -33,14 +29,17 @@
     <link href="https://fonts.googleapis.com/css?family=Exo+2" rel="stylesheet">
     <link rel="stylesheet" type="text/css"
           href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link href="/css/default.css" rel="stylesheet">
-    <style>
-        <jsp:include page="${style}" />
-    </style>
-    <title>${title}</title>
+    <link href='/css/default.css' rel="stylesheet">
+    <#if title??>
+        <title>${title}</title>
+    <#else>
+        <title>Music</title>
+    </#if>
 </head>
 <body>
-<t:navbar/>
-<jsp:doBody/>
+
+ <#nested>
+
 </body>
 </html>
+</#macro>

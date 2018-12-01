@@ -45,7 +45,7 @@ public class SongRepositoryJdbcTemplateImpl implements SongRepository {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
-    public RowMapper<Song> songRowMapper = (resultSet, i) -> Song.builder()
+    private RowMapper<Song> songRowMapper = (resultSet, i) -> Song.builder()
             .songId(resultSet.getInt("song_id"))
             .title(resultSet.getString("song_title"))
             .duration(resultSet.getInt("song_duration"))

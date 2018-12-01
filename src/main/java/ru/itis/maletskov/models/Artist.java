@@ -2,6 +2,7 @@ package ru.itis.maletskov.models;
 
 import lombok.*;
 
+import java.io.Serializable;
 import java.sql.Date;
 
 @Data
@@ -9,7 +10,7 @@ import java.sql.Date;
 @AllArgsConstructor
 @EqualsAndHashCode
 @Builder
-public class Artist {
+public class Artist implements Serializable {
     private Integer artistId;
     private String nickname;
     private String firstName;

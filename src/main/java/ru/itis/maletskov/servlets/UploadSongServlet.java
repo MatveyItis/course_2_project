@@ -33,7 +33,7 @@ public class UploadSongServlet extends HttpServlet {
     @SneakyThrows
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) {
-        req.getRequestDispatcher("/WEB-INF/views/admin.jsp").forward(req, resp);
+        req.getRequestDispatcher("/WEB-INF/ftl/admin.ftl").forward(req, resp);
     }
 
     @SneakyThrows

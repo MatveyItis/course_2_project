@@ -37,6 +37,7 @@ public class LogOutServlet extends HttpServlet {
             }
         }
 
+        //сделай по-другому через удаление аттрибутов
         if (isHavingUid) {
             usersService.logOut((User) req.getSession().getAttribute("user"));
             req.getSession().invalidate();
@@ -44,7 +45,7 @@ public class LogOutServlet extends HttpServlet {
             req.getSession().invalidate();
         }
 
-        req.getRequestDispatcher("/WEB-INF/views/signUp.jsp").forward(req, resp);
+        req.getRequestDispatcher("/WEB-INF/ftl/signUp.ftl").forward(req, resp);
     }
 
     @SneakyThrows
