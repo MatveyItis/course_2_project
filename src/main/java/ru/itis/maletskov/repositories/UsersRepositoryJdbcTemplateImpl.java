@@ -3,9 +3,9 @@ package ru.itis.maletskov.repositories;
 import lombok.SneakyThrows;
 import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
+import ru.itis.maletskov.mappers.UserRowMapper;
 import ru.itis.maletskov.models.Library;
 import ru.itis.maletskov.models.User;
 
@@ -18,51 +18,40 @@ public class UsersRepositoryJdbcTemplateImpl implements UsersRepository {
     private JdbcTemplate jdbcTemplate;
 
     //language=SQL
-    private static final String SQL_CREATE_LIBRARY_FOR_USER = "insert into library(client_id) values(?)";
+    private final String SQL_CREATE_LIBRARY_FOR_USER = "insert into library(client_id) values(?)";
 
     //language=SQL
-    private static final String SQL_INSERT = "insert into client(first_name, last_name, email, hash_password) " +
+    private final String SQL_INSERT = "insert into client(first_name, last_name, email, hash_password) " +
             "values (?, ?, ?, ?);";
 
     //language=SQL
-    private static final String SQL_DELETE = "delete from client where client_id = ?";
+    private final String SQL_DELETE = "delete from client where client_id = ?";
 
     //language=SQL
-    private static final String SQL_SELECT_USER_BY_EMAIL = "select * from client " +
+    private final String SQL_SELECT_USER_BY_EMAIL = "select * from client " +
             "join library l on client.client_id = l.client_id " +
             "where client.email = ?";
 
     //language=SQL
-    private static final String SQL_SELECT_USER = "select * from client " +
+    private final String SQL_SELECT_USER = "select * from client " +
             "join library l on client.client_id = l.client_id " +
             "where client.client_id = ?";
 
     //language=SQL
-    private static final String SQL_SELECT_USERS = "select * from client " +
+    private final String SQL_SELECT_USERS = "select * from client " +
             "join library l on client.client_id = l.client_id";
-
-    public RowMapper<User> userRowMapper = (resultSet, i) ->
-            User.builder()
-                    .clientId(resultSet.getInt("client_id"))
-                    .firstName(resultSet.getString("first_name"))
-                    .lastName(resultSet.getString("last_name"))
-                    .email(resultSet.getString("email"))
-                    .hashPassword(resultSet.getString("hash_password"))
-                    .library(Library.builder()
-                            .clientId(resultSet.getInt("client_id"))
-                            .libraryId(resultSet.getInt("library_id"))
-                            .build())
-                    .build();
-
 
     public UsersRepositoryJdbcTemplateImpl(DataSource dataSource) {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
+    public UsersRepositoryJdbcTemplateImpl() {
+    }
+
     @SneakyThrows
     @Override
     public Optional<User> findOneByEmail(String email) {
-        return Optional.of(jdbcTemplate.queryForObject(SQL_SELECT_USER_BY_EMAIL, userRowMapper, email));
+        return Optional.of(jdbcTemplate.queryForObject(SQL_SELECT_USER_BY_EMAIL, UserRowMapper.userRowMapper, email));
     }
 
     @Override
@@ -73,7 +62,7 @@ public class UsersRepositoryJdbcTemplateImpl implements UsersRepository {
     @Override
     public Optional<User> findOne(Integer id) {
         try {
-            User user = jdbcTemplate.queryForObject(SQL_SELECT_USER, userRowMapper, id);
+            User user = jdbcTemplate.queryForObject(SQL_SELECT_USER, UserRowMapper.userRowMapper, id);
             return Optional.of(user);
         } catch (IncorrectResultSizeDataAccessException e) {
             return Optional.empty();
@@ -106,7 +95,7 @@ public class UsersRepositoryJdbcTemplateImpl implements UsersRepository {
     @SneakyThrows
     @Override
     public Optional<List<User>> findAll() {
-        return Optional.of(jdbcTemplate.query(SQL_SELECT_USERS, userRowMapper));
+        return Optional.of(jdbcTemplate.query(SQL_SELECT_USERS, UserRowMapper.userRowMapper));
     }
 
     /*Service methods*/

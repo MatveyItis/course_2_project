@@ -1,5 +1,6 @@
 package ru.itis.maletskov.services;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import ru.itis.maletskov.forms.AuthForm;
 import ru.itis.maletskov.forms.LoginForm;
@@ -16,12 +17,12 @@ import java.util.Optional;
 public class UsersServiceImpl implements UsersService {
     private UsersRepository usersRepository;
     private AuthRepository authRepository;
-    private PasswordEncoder encoder;
 
-    public UsersServiceImpl(UsersRepository usersRepository, AuthRepository authRepository, PasswordEncoder encoder) {
+    public UsersServiceImpl() {}
+
+    public UsersServiceImpl(UsersRepository usersRepository, AuthRepository authRepository) {
         this.usersRepository = usersRepository;
         this.authRepository = authRepository;
-        this.encoder = encoder;
     }
 
     @Override
@@ -34,6 +35,7 @@ public class UsersServiceImpl implements UsersService {
         if (!userForm.getPasswordFirst().equals(userForm.getPasswordSecond())) {
             return false;
         }
+        PasswordEncoder encoder = new BCryptPasswordEncoder();
         user.setHashPassword(encoder.encode(userForm.getPasswordFirst()));
         if ((user.getFirstName().length() >= 2) &&
                 (user.getLastName().length() >= 2) &&
@@ -51,6 +53,7 @@ public class UsersServiceImpl implements UsersService {
         Optional<User> userOptional = usersRepository.findOneByEmail(loginForm.getEmail());
         if (userOptional.isPresent()) {
             User user = userOptional.get();
+            PasswordEncoder encoder = new BCryptPasswordEncoder();
             return encoder.matches(loginForm.getPassword(), user.getHashPassword());
         } else {
             return false;

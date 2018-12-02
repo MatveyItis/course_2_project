@@ -2,11 +2,11 @@ package ru.itis.maletskov.servlets;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.SneakyThrows;
+import ru.itis.maletskov.context.Contexts;
 import ru.itis.maletskov.models.User;
 import ru.itis.maletskov.services.UsersService;
 
 import javax.servlet.ServletConfig;
-import javax.servlet.ServletContext;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -22,8 +22,7 @@ public class SearchPeopleServlet extends HttpServlet {
     @SneakyThrows
     @Override
     public void init(ServletConfig config) {
-        ServletContext context = config.getServletContext();
-        usersService = (UsersService) context.getAttribute("usersService");
+        usersService = Contexts.primitive().getComponent(UsersService.class);
         objectMapper = new ObjectMapper();
     }
 

@@ -8,6 +8,8 @@ import java.util.List;
 public class ArtistServiceImpl implements ArtistService {
     private ArtistRepository artistRepository;
 
+    public ArtistServiceImpl() {}
+
     public ArtistServiceImpl(ArtistRepository artistRepository) {
         this.artistRepository = artistRepository;
     }

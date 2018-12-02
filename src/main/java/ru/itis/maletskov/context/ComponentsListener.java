@@ -2,7 +2,6 @@ package ru.itis.maletskov.context;
 
 import lombok.SneakyThrows;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import ru.itis.maletskov.repositories.*;
 import ru.itis.maletskov.services.*;
 
@@ -25,7 +24,7 @@ public class ComponentsListener implements ServletContextListener {
         dataSource.setPassword(PASSWORD);
         UsersRepository usersRepository = new UsersRepositoryJdbcTemplateImpl(dataSource);
         AuthRepository authRepository = new AuthRepositoryJdbcTemplateImpl(dataSource);
-        UsersService usersService = new UsersServiceImpl(usersRepository, authRepository, new BCryptPasswordEncoder());
+        UsersService usersService = new UsersServiceImpl(usersRepository, authRepository);
         LibraryRepository libraryRepository = new LibraryRepositoryJdbcTemplateImpl(dataSource);
         SongRepository songRepository = new SongRepositoryJdbcTemplateImpl(dataSource);
         SongService songService = new SongServiceImpl(songRepository, libraryRepository);

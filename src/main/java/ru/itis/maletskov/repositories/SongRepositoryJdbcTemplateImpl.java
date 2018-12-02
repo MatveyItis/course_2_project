@@ -2,10 +2,9 @@ package ru.itis.maletskov.repositories;
 
 import lombok.SneakyThrows;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
-import ru.itis.maletskov.models.Artist;
+import ru.itis.maletskov.mappers.SongRowMapper;
 import ru.itis.maletskov.models.Song;
 
 import javax.sql.DataSource;
@@ -17,11 +16,11 @@ public class SongRepositoryJdbcTemplateImpl implements SongRepository {
     private JdbcTemplate jdbcTemplate;
 
     //language=SQL
-    private static final String SQL_INSERT = "insert into " +
+    private final String SQL_INSERT = "insert into " +
             "song(song_title, artist_id, song_src) values(?, ?, ?)";
 
     //language=SQL
-    private static final String SQL_SELECT_SONG_BY_ID = "select song_id, " +
+    private final String SQL_SELECT_SONG_BY_ID = "select song_id, " +
             "song_title, song_duration, song_src, a1.artist_id as artist_id, " +
             "a1.nickname as nickname, a1.first_name as first_name, " +
             "a1.last_name as last_name, a1.birthday as artist_birthday, " +
@@ -30,7 +29,7 @@ public class SongRepositoryJdbcTemplateImpl implements SongRepository {
             "where song_id = ?";
 
     //language=SQL
-    private static final String SQL_SELECT_SONGS = "select song_id, " +
+    private final String SQL_SELECT_SONGS = "select song_id, " +
             "song_title, song_duration, song_src, a1.artist_id as artist_id, " +
             "a1.nickname as nickname, a1.first_name as first_name, " +
             "a1.last_name as last_name, a1.birthday as artist_birthday, " +
@@ -38,32 +37,18 @@ public class SongRepositoryJdbcTemplateImpl implements SongRepository {
             "join artist as a1 on song.artist_id = a1.artist_id";
 
     //language=SQL
-    private static final String SQL_DELETE_SONG_BY_ID = "delete from song where song_id = ?";
+    private final String SQL_DELETE_SONG_BY_ID = "delete from song where song_id = ?";
 
+    public SongRepositoryJdbcTemplateImpl() {}
 
     public SongRepositoryJdbcTemplateImpl(DataSource dataSource) {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
-    private RowMapper<Song> songRowMapper = (resultSet, i) -> Song.builder()
-            .songId(resultSet.getInt("song_id"))
-            .title(resultSet.getString("song_title"))
-            .duration(resultSet.getInt("song_duration"))
-            .artist(Artist.builder()
-                    .artistId(resultSet.getInt("artist_id"))
-                    .nickname(resultSet.getString("nickname"))
-                    .firstName(resultSet.getString("first_name"))
-                    .lastName(resultSet.getString("last_name"))
-                    .birthday(resultSet.getDate("artist_birthday"))
-                    .artistImgSrc(resultSet.getString("artist_img_src"))
-                    .build())
-            .songSrc(resultSet.getString("song_src"))
-            .build();
-
     @SneakyThrows
     @Override
     public Optional<Song> findOne(Integer id) {
-        return Optional.of(jdbcTemplate.queryForObject(SQL_SELECT_SONG_BY_ID, songRowMapper, id));
+        return Optional.of(jdbcTemplate.queryForObject(SQL_SELECT_SONG_BY_ID, SongRowMapper.songRowMapper, id));
     }
 
     @SneakyThrows
@@ -90,7 +75,7 @@ public class SongRepositoryJdbcTemplateImpl implements SongRepository {
     @SneakyThrows
     @Override
     public Optional<List<Song>> findAll() {
-        return Optional.of(jdbcTemplate.query(SQL_SELECT_SONGS, songRowMapper));
+        return Optional.of(jdbcTemplate.query(SQL_SELECT_SONGS, SongRowMapper.songRowMapper));
     }
 
     @Override

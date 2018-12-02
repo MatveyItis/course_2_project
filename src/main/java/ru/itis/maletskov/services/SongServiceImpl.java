@@ -14,6 +14,8 @@ public class SongServiceImpl implements SongService {
     private SongRepository songRepository;
     private LibraryRepository libraryRepository;
 
+    public SongServiceImpl() {}
+
     public SongServiceImpl(SongRepository songRepository, LibraryRepository libraryRepository) {
         this.songRepository = songRepository;
         this.libraryRepository = libraryRepository;

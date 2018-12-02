@@ -2,6 +2,7 @@ package ru.itis.maletskov.servlets;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.SneakyThrows;
+import ru.itis.maletskov.context.Contexts;
 import ru.itis.maletskov.models.Song;
 import ru.itis.maletskov.models.User;
 import ru.itis.maletskov.services.SongService;
@@ -24,7 +25,8 @@ public class ActionsWithSongsServlet extends HttpServlet {
     @Override
     public void init(ServletConfig config) {
         ServletContext context = config.getServletContext();
-        songService = (SongService) context.getAttribute("songService");
+        //songService = (SongService) context.getAttribute("songService");
+        songService = Contexts.primitive().getComponent(SongService.class);
         objectMapper = new ObjectMapper();
     }
 

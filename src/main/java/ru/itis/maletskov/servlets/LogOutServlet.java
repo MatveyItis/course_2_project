@@ -1,6 +1,7 @@
 package ru.itis.maletskov.servlets;
 
 import lombok.SneakyThrows;
+import ru.itis.maletskov.context.Contexts;
 import ru.itis.maletskov.models.User;
 import ru.itis.maletskov.services.UsersService;
 
@@ -18,7 +19,7 @@ public class LogOutServlet extends HttpServlet {
     @SneakyThrows
     @Override
     public void init(ServletConfig config) {
-        usersService = (UsersService) config.getServletContext().getAttribute("usersService");
+        usersService = Contexts.primitive().getComponent(UsersService.class);
     }
 
     @SneakyThrows
