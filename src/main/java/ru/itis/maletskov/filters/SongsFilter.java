@@ -1,6 +1,7 @@
 package ru.itis.maletskov.filters;
 
 import lombok.SneakyThrows;
+import ru.itis.maletskov.context.Contexts;
 import ru.itis.maletskov.models.Library;
 import ru.itis.maletskov.models.Song;
 import ru.itis.maletskov.models.User;
@@ -22,9 +23,8 @@ public class SongsFilter implements Filter {
     @SneakyThrows
     @Override
     public void init(FilterConfig filterConfig) {
-        ServletContext context = filterConfig.getServletContext();
-        songService = (SongService) context.getAttribute("songService");
-        artistService = (ArtistService) context.getAttribute("artistService");
+        songService = Contexts.primitive().getComponent(SongService.class);
+        artistService = Contexts.primitive().getComponent(ArtistService.class);
     }
 
     @SneakyThrows

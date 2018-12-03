@@ -8,10 +8,7 @@
         <welcome-file>/views/home.jsp</welcome-file>
         <welcome-file>/views/signUp.jsp</welcome-file>
     </welcome-file-list>
-
-    <listener>
-        <listener-class>ru.itis.maletskov.context.ComponentsListener</listener-class>
-    </listener>
+    
     <listener>
         <listener-class>ru.itis.maletskov.context.LocaleListener</listener-class>
     </listener>

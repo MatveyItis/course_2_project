@@ -1,13 +1,15 @@
 package ru.itis.maletskov.repositories;
 
+import lombok.NoArgsConstructor;
 import org.springframework.jdbc.core.JdbcTemplate;
-import ru.itis.maletskov.mappers.ArtistRowMapper;
+import ru.itis.maletskov.mappers.ContextRowMapper;
 import ru.itis.maletskov.models.Artist;
 
 import javax.sql.DataSource;
 import java.util.List;
 import java.util.Optional;
 
+@NoArgsConstructor
 public class ArtistRepositoryJdbcTemplateImpl implements ArtistRepository {
     private JdbcTemplate jdbcTemplate;
 
@@ -17,8 +19,6 @@ public class ArtistRepositoryJdbcTemplateImpl implements ArtistRepository {
     public ArtistRepositoryJdbcTemplateImpl(DataSource dataSource) {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
-
-    public ArtistRepositoryJdbcTemplateImpl() {}
 
     @Override
     public Optional<Artist> findOne(Integer id) {
@@ -37,6 +37,6 @@ public class ArtistRepositoryJdbcTemplateImpl implements ArtistRepository {
 
     @Override
     public Optional<List<Artist>> findAll() {
-        return Optional.of(jdbcTemplate.query(SQL_SELECT_ALL_ARTISTS, ArtistRowMapper.artistRowMapper));
+        return Optional.of(jdbcTemplate.query(SQL_SELECT_ALL_ARTISTS, ContextRowMapper.artistRowMapper));
     }
 }

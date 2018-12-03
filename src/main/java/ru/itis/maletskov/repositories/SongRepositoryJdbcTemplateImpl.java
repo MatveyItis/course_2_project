@@ -1,10 +1,11 @@
 package ru.itis.maletskov.repositories;
 
+import lombok.NoArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
-import ru.itis.maletskov.mappers.SongRowMapper;
+import ru.itis.maletskov.mappers.ContextRowMapper;
 import ru.itis.maletskov.models.Song;
 
 import javax.sql.DataSource;
@@ -12,6 +13,7 @@ import java.sql.PreparedStatement;
 import java.util.List;
 import java.util.Optional;
 
+@NoArgsConstructor
 public class SongRepositoryJdbcTemplateImpl implements SongRepository {
     private JdbcTemplate jdbcTemplate;
 
@@ -39,8 +41,6 @@ public class SongRepositoryJdbcTemplateImpl implements SongRepository {
     //language=SQL
     private final String SQL_DELETE_SONG_BY_ID = "delete from song where song_id = ?";
 
-    public SongRepositoryJdbcTemplateImpl() {}
-
     public SongRepositoryJdbcTemplateImpl(DataSource dataSource) {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
@@ -48,7 +48,7 @@ public class SongRepositoryJdbcTemplateImpl implements SongRepository {
     @SneakyThrows
     @Override
     public Optional<Song> findOne(Integer id) {
-        return Optional.of(jdbcTemplate.queryForObject(SQL_SELECT_SONG_BY_ID, SongRowMapper.songRowMapper, id));
+        return Optional.of(jdbcTemplate.queryForObject(SQL_SELECT_SONG_BY_ID, ContextRowMapper.songRowMapper, id));
     }
 
     @SneakyThrows
@@ -75,7 +75,7 @@ public class SongRepositoryJdbcTemplateImpl implements SongRepository {
     @SneakyThrows
     @Override
     public Optional<List<Song>> findAll() {
-        return Optional.of(jdbcTemplate.query(SQL_SELECT_SONGS, SongRowMapper.songRowMapper));
+        return Optional.of(jdbcTemplate.query(SQL_SELECT_SONGS, ContextRowMapper.songRowMapper));
     }
 
     @Override

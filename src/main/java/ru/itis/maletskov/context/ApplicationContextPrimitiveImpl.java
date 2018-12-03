@@ -1,7 +1,6 @@
 package ru.itis.maletskov.context;
 
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
 import javax.sql.DataSource;
@@ -38,7 +37,7 @@ public class ApplicationContextPrimitiveImpl implements ApplicationContext {
                     properties.getProperty("username"),
                     properties.getProperty("password")
             );
-            //dataSource.setDriverClassName(properties.getProperty("driver.class.name"));
+            dataSource.setDriverClassName(properties.getProperty("driver.class.name"));
             components.put(DataSource.class.getName(), dataSource);
             components.put(JdbcTemplate.class.getName(), new JdbcTemplate(dataSource));
         } catch (IOException e) {
@@ -91,15 +90,13 @@ public class ApplicationContextPrimitiveImpl implements ApplicationContext {
                 for (Field field : obj.getClass().getDeclaredFields()) {
                     try {
                         if (!field.getClass().getName().equals(String.class.getName())) {
-                            if (!field.getClass().getTypeName().equals(RowMapper.class.getTypeName())) {
-                                Object dependency = getComponent(field.getType());
-                                if (!field.isAccessible()) {
-                                    field.setAccessible(true);
-                                    field.set(obj, dependency);
-                                    field.setAccessible(false);
-                                } else {
-                                    field.set(obj, dependency);
-                                }
+                            Object dependency = getComponent(field.getType());
+                            if (!field.isAccessible()) {
+                                field.setAccessible(true);
+                                field.set(obj, dependency);
+                                field.setAccessible(false);
+                            } else {
+                                field.set(obj, dependency);
                             }
                         }
                     } catch (IllegalAccessException e) {

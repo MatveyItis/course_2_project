@@ -1,9 +1,10 @@
 package ru.itis.maletskov.repositories;
 
+import lombok.NoArgsConstructor;
 import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
-import ru.itis.maletskov.mappers.AuthRowMapper;
+import ru.itis.maletskov.mappers.ContextRowMapper;
 import ru.itis.maletskov.models.Auth;
 
 import javax.sql.DataSource;
@@ -11,6 +12,7 @@ import java.sql.PreparedStatement;
 import java.util.List;
 import java.util.Optional;
 
+@NoArgsConstructor
 public class AuthRepositoryJdbcTemplateImpl implements AuthRepository {
     private JdbcTemplate jdbcTemplate;
 
@@ -35,12 +37,10 @@ public class AuthRepositoryJdbcTemplateImpl implements AuthRepository {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
-    public AuthRepositoryJdbcTemplateImpl() {}
-
     @Override
     public Optional<Auth> findOne(Integer id) {
         try {
-            return Optional.of(jdbcTemplate.queryForObject(SQL_SELECT_BY_CLIENT_ID, AuthRowMapper.authRowMapper, id));
+            return Optional.of(jdbcTemplate.queryForObject(SQL_SELECT_BY_CLIENT_ID, ContextRowMapper.authRowMapper, id));
         } catch (IncorrectResultSizeDataAccessException e) {
             return Optional.empty();
         }
@@ -49,7 +49,7 @@ public class AuthRepositoryJdbcTemplateImpl implements AuthRepository {
     @Override
     public Optional<Auth> findAuthByCookieValue(String cookieValue) {
         try {
-            return Optional.of(jdbcTemplate.queryForObject(SQL_SELECT_AUTH_BY_COOKIE_VALUE, AuthRowMapper.authRowMapper, cookieValue));
+            return Optional.of(jdbcTemplate.queryForObject(SQL_SELECT_AUTH_BY_COOKIE_VALUE, ContextRowMapper.authRowMapper, cookieValue));
         } catch (IncorrectResultSizeDataAccessException e) {
             return Optional.empty();
         }

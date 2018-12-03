@@ -1,6 +1,7 @@
 package ru.itis.maletskov.filters;
 
 import lombok.SneakyThrows;
+import ru.itis.maletskov.context.Contexts;
 import ru.itis.maletskov.models.User;
 import ru.itis.maletskov.services.UsersService;
 
@@ -19,8 +20,7 @@ public class UserFilter implements Filter {
     @SneakyThrows
     @Override
     public void init(FilterConfig filterConfig) {
-        ServletContext context = filterConfig.getServletContext();
-        usersService = (UsersService) context.getAttribute("usersService");
+        usersService = Contexts.primitive().getComponent(UsersService.class);
         isAuthorized = false;
     }
 

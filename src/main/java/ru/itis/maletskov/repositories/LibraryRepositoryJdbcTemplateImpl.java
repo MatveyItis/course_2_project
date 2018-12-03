@@ -1,8 +1,9 @@
 package ru.itis.maletskov.repositories;
 
+import lombok.NoArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.jdbc.core.JdbcTemplate;
-import ru.itis.maletskov.mappers.LibraryRowMapper;
+import ru.itis.maletskov.mappers.ContextRowMapper;
 import ru.itis.maletskov.models.Library;
 
 import javax.sql.DataSource;
@@ -10,9 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
-import static ru.itis.maletskov.mappers.LibraryRowMapper.libraryWithSongsMap;
-import static ru.itis.maletskov.mappers.LibraryRowMapper.theOnlyLibrary;
-
+@NoArgsConstructor
 public class LibraryRepositoryJdbcTemplateImpl implements LibraryRepository {
     private JdbcTemplate jdbcTemplate;
 
@@ -50,8 +49,6 @@ public class LibraryRepositoryJdbcTemplateImpl implements LibraryRepository {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
-    public LibraryRepositoryJdbcTemplateImpl() {}
-
     @Override
     public void saveSongToLibrary(Integer songId, Integer libraryId) {
         jdbcTemplate.update(SQL_INSERT_SONG_INTO_LIBRARY, libraryId, songId);
@@ -66,13 +63,13 @@ public class LibraryRepositoryJdbcTemplateImpl implements LibraryRepository {
     @SneakyThrows
     @Override
     public Optional<Library> findOne(Integer id) {
-        List<Library> libraryList = jdbcTemplate.query(SQL_SELECT_LIBRARY_WITH_SONGS, LibraryRowMapper.libraryRowMapper, id);
+        List<Library> libraryList = jdbcTemplate.query(SQL_SELECT_LIBRARY_WITH_SONGS, ContextRowMapper.libraryRowMapper, id);
         if (libraryList.size() != 0) {
-            Library currentLibrary = theOnlyLibrary;
-            theOnlyLibrary = null;
-            currentLibrary.setSongs(libraryWithSongsMap.get(currentLibrary));
-            libraryWithSongsMap = null;
-            libraryWithSongsMap = new HashMap<>();
+            Library currentLibrary = ContextRowMapper.theOnlyLibrary;
+            ContextRowMapper.theOnlyLibrary = null;
+            currentLibrary.setSongs(ContextRowMapper.libraryWithSongsMap.get(currentLibrary));
+            ContextRowMapper.libraryWithSongsMap = null;
+            ContextRowMapper.libraryWithSongsMap = new HashMap<>();
             return Optional.of(currentLibrary);
         } else {
             return Optional.empty();
@@ -94,6 +91,6 @@ public class LibraryRepositoryJdbcTemplateImpl implements LibraryRepository {
     @SneakyThrows
     @Override
     public Optional<List<Library>> findAll() {
-        return Optional.of(jdbcTemplate.query(SQL_SELECT_LIBRARIES, LibraryRowMapper.libraryRowMapper));
+        return Optional.of(jdbcTemplate.query(SQL_SELECT_LIBRARIES, ContextRowMapper.libraryRowMapper));
     }
 }

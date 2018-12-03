@@ -1,11 +1,12 @@
 package ru.itis.maletskov.repositories;
 
+import lombok.NoArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
-import ru.itis.maletskov.mappers.UserRowMapper;
+import ru.itis.maletskov.mappers.ContextRowMapper;
 import ru.itis.maletskov.models.Library;
 import ru.itis.maletskov.models.User;
 
@@ -14,6 +15,7 @@ import java.sql.PreparedStatement;
 import java.util.List;
 import java.util.Optional;
 
+@NoArgsConstructor
 public class UsersRepositoryJdbcTemplateImpl implements UsersRepository {
     private JdbcTemplate jdbcTemplate;
 
@@ -45,13 +47,10 @@ public class UsersRepositoryJdbcTemplateImpl implements UsersRepository {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
-    public UsersRepositoryJdbcTemplateImpl() {
-    }
-
     @SneakyThrows
     @Override
     public Optional<User> findOneByEmail(String email) {
-        return Optional.of(jdbcTemplate.queryForObject(SQL_SELECT_USER_BY_EMAIL, UserRowMapper.userRowMapper, email));
+        return Optional.of(jdbcTemplate.queryForObject(SQL_SELECT_USER_BY_EMAIL, ContextRowMapper.userRowMapper, email));
     }
 
     @Override
@@ -62,7 +61,7 @@ public class UsersRepositoryJdbcTemplateImpl implements UsersRepository {
     @Override
     public Optional<User> findOne(Integer id) {
         try {
-            User user = jdbcTemplate.queryForObject(SQL_SELECT_USER, UserRowMapper.userRowMapper, id);
+            User user = jdbcTemplate.queryForObject(SQL_SELECT_USER, ContextRowMapper.userRowMapper, id);
             return Optional.of(user);
         } catch (IncorrectResultSizeDataAccessException e) {
             return Optional.empty();
@@ -95,7 +94,7 @@ public class UsersRepositoryJdbcTemplateImpl implements UsersRepository {
     @SneakyThrows
     @Override
     public Optional<List<User>> findAll() {
-        return Optional.of(jdbcTemplate.query(SQL_SELECT_USERS, UserRowMapper.userRowMapper));
+        return Optional.of(jdbcTemplate.query(SQL_SELECT_USERS, ContextRowMapper.userRowMapper));
     }
 
     /*Service methods*/

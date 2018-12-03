@@ -1,5 +1,5 @@
 <#function audio song audioId>
-<#assign t>
+    <#assign t>
 <li>
     <div class='container row' style='margin: 5px;'>
         <div class='col-md-3 col-sm-3'>
@@ -29,6 +29,6 @@
     </div>
     <hr>
 </li>
-</#assign>
-<#return t>
+    </#assign>
+    <#return t>
 </#function>
