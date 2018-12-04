@@ -1,7 +1,8 @@
 package ru.itis.maletskov.servlets;
 
 import lombok.SneakyThrows;
-import ru.itis.maletskov.context.Contexts;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import ru.itis.maletskov.forms.UserForm;
 import ru.itis.maletskov.services.UsersService;
 
@@ -18,7 +19,9 @@ public class SignUpServlet extends HttpServlet {
     @Override
     @SneakyThrows
     public void init(ServletConfig config) {
-        usersService = Contexts.primitive().getComponent(UsersService.class);
+        //usersService = Contexts.primitive().getComponent(UsersService.class);
+        ApplicationContext context = new ClassPathXmlApplicationContext("ru.itis.maletskov/context.xml");
+        usersService = context.getBean(UsersService.class);
     }
 
     @SneakyThrows

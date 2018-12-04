@@ -1,4 +1,4 @@
-package ru.itis.maletskov.context;
+package ru.itis.maletskov.listeners;
 
 import ru.itis.maletskov.localization.Localizations;
 
@@ -19,7 +19,5 @@ public class LocaleListener implements ServletContextListener {
 
     @Override
     public void contextDestroyed(ServletContextEvent servletContextEvent) {
-
     }
-
 }

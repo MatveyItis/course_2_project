@@ -8,10 +8,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Field;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Properties;
+import java.util.*;
 
 public class ApplicationContextPrimitiveImpl implements ApplicationContext {
     private static ApplicationContextPrimitiveImpl context;
@@ -71,10 +68,9 @@ public class ApplicationContextPrimitiveImpl implements ApplicationContext {
             }
             for (String resourcePackageName : properties.stringPropertyNames()) {
                 List<Class<?>> classes = new ClassFinderImpl().getClasses(properties.getProperty(resourcePackageName));
-                for (int i = 0; i < classes.size(); i++) {
-                    Class component = classes.get(i);
-                    if (component.getConstructors().length > 0) {
-                        components.put(component.getName(), component.newInstance());
+                for (Class<?> aClass : classes) {
+                    if (((Class) aClass).getConstructors().length > 0) {
+                        components.put(aClass.getName(), ((Class) aClass).newInstance());
                     }
                 }
             }
