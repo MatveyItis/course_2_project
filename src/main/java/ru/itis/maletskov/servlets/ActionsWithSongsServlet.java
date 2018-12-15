@@ -7,8 +7,6 @@ import ru.itis.maletskov.models.Song;
 import ru.itis.maletskov.models.User;
 import ru.itis.maletskov.services.SongService;
 
-import javax.servlet.ServletConfig;
-import javax.servlet.ServletContext;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -23,8 +21,7 @@ public class ActionsWithSongsServlet extends HttpServlet {
 
     @SneakyThrows
     @Override
-    public void init(ServletConfig config) {
-        ServletContext context = config.getServletContext();
+    public void init() {
         //songService = (SongService) context.getAttribute("songService");
         songService = Contexts.primitive().getComponent(SongService.class);
         objectMapper = new ObjectMapper();

@@ -43,10 +43,10 @@
                         <h3>Enjoy listening music with us</h3>
                     </div>
                     <div class="container col-md-12" style="padding: 10px;height: 650px;overflow: scroll">
-                        <ol>
+                        <ol id="music">
                         <#list songs as song>
-                            <#if audio.audio(song, song_index)??>
-                                ${audio.audio(song, song_index)}
+                            <#if audio.audio(song, song_index + 1)??>
+                                ${audio.audio(song, song_index + 1)}
                             </#if>
                         </#list>
                         </ol>

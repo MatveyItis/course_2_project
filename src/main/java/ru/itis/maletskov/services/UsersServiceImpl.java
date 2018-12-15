@@ -68,7 +68,7 @@ public class UsersServiceImpl implements UsersService {
     @Override
     public void auth(AuthForm authForm) {
         Auth auth = Auth.builder()
-                .cookieValue(authForm.getCookieValue())
+                .uuid(authForm.getUuid())
                 .clientId(authForm.getClientId())
                 .build();
         authRepository.save(auth);
@@ -99,6 +99,14 @@ public class UsersServiceImpl implements UsersService {
 
     @Override
     public List<User> searchPeople(String userName) {
-        return usersRepository.searchPeopleByName(userName).orElse(new ArrayList<>());
+        if (!userName.contains(" ")) {
+            return usersRepository.searchPeopleByName(userName).orElse(new ArrayList<>());
+        }
+        String[] name = userName.split(" ");
+        if (name.length == 2) {
+            return usersRepository.searchPeopleByName(name[0] + name[1]).orElse(new ArrayList<>());
+        } else {
+            return new ArrayList<>();
+        }
     }
 }

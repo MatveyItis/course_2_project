@@ -1,15 +1,16 @@
 package ru.itis.maletskov.servlets;
 
 import lombok.SneakyThrows;
+import ru.itis.maletskov.context.ApplicationContext;
 import ru.itis.maletskov.context.Contexts;
 import ru.itis.maletskov.forms.AuthForm;
 import ru.itis.maletskov.forms.LoginForm;
 import ru.itis.maletskov.models.User;
 import ru.itis.maletskov.services.UsersService;
 
-import javax.servlet.ServletConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
+import java.util.UUID;
 
 @WebServlet("/signIn")
 public class SignInServlet extends HttpServlet {
@@ -17,14 +18,15 @@ public class SignInServlet extends HttpServlet {
 
     @Override
     @SneakyThrows
-    public void init(ServletConfig config) {
-        usersService = Contexts.primitive().getComponent(UsersService.class);
+    public void init() {
+        ApplicationContext context = Contexts.primitive();
+        usersService = context.getComponent(UsersService.class);
     }
 
     @SneakyThrows
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) {
-        request.getServletContext().getRequestDispatcher("/WEB-INF/ftl/signUp.ftl").forward(request, response);
+        request.getRequestDispatcher("/WEB-INF/ftl/signUp.ftl").forward(request, response);
     }
 
     @SneakyThrows
@@ -43,11 +45,12 @@ public class SignInServlet extends HttpServlet {
             session.setAttribute("user", user);
             session.setAttribute("authorized", "true");
             if (rememberMe != null && rememberMe.equals("on")) {
-                Cookie uid = new Cookie("uid", session.getId());
-                uid.setMaxAge(60 * 60 * 240);
-                resp.addCookie(uid);
+                UUID uuid = UUID.randomUUID();
+                Cookie cookieUuid = new Cookie("uuid", uuid.toString());
+                cookieUuid.setMaxAge(60 * 60 * 240);
+                resp.addCookie(cookieUuid);
                 usersService.auth(AuthForm.builder()
-                        .cookieValue(session.getId())
+                        .uuid(uuid)
                         .clientId(user.getClientId())
                         .build());
             }

@@ -29,7 +29,7 @@ public class LogOutServlet extends HttpServlet {
 
         if (req.getCookies() != null) {
             for (Cookie cookie : req.getCookies()) {
-                if (cookie.getName().equals("uid")) {
+                if (cookie.getName().equals("uuid")) {
                     cookie.setMaxAge(0);
                     resp.addCookie(cookie);
                     isHavingUid = true;
@@ -37,21 +37,13 @@ public class LogOutServlet extends HttpServlet {
                 }
             }
         }
-
-        //сделай по-другому через удаление аттрибутов
         if (isHavingUid) {
             usersService.logOut((User) req.getSession().getAttribute("user"));
-            req.getSession().invalidate();
-        } else {
-            req.getSession().invalidate();
+            req.getSession().removeAttribute("uuid");
         }
-
+        req.getSession().removeAttribute("authorized");
+        req.getSession().removeAttribute("user");
+        req.getSession().removeAttribute("userSongs");
         req.getRequestDispatcher("/WEB-INF/ftl/signUp.ftl").forward(req, resp);
-    }
-
-    @SneakyThrows
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) {
-        doGet(req, resp);
     }
 }

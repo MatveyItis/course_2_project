@@ -37,15 +37,19 @@ public class ApplicationContextPrimitiveImpl implements ApplicationContext {
             dataSource.setDriverClassName(properties.getProperty("driver.class.name"));
             components.put(DataSource.class.getName(), dataSource);
             components.put(JdbcTemplate.class.getName(), new JdbcTemplate(dataSource));
+            setComponents();
+            setDependencies();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        setComponents();
-        setDependencies();
     }
 
     public static ApplicationContextPrimitiveImpl getContext() {
-        return context;
+        if (context != null) {
+            return context;
+        } else {
+            return new ApplicationContextPrimitiveImpl();
+        }
     }
 
     @Override
@@ -67,7 +71,7 @@ public class ApplicationContextPrimitiveImpl implements ApplicationContext {
                 properties.load(is);
             }
             for (String resourcePackageName : properties.stringPropertyNames()) {
-                List<Class<?>> classes = new ClassFinderImpl().getClasses(properties.getProperty(resourcePackageName));
+                List<Class<?>> classes = ClassFinderImpl.getClasses(properties.getProperty(resourcePackageName));
                 for (Class<?> aClass : classes) {
                     if (((Class) aClass).getConstructors().length > 0) {
                         components.put(aClass.getName(), ((Class) aClass).newInstance());

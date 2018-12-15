@@ -5,10 +5,9 @@ import lombok.SneakyThrows;
 import java.io.File;
 import java.util.*;
 
-public class ClassFinderImpl implements ClassFinder {
+public class ClassFinderImpl {
     @SneakyThrows
-    @Override
-    public List<Class<?>> getClasses(String packageName) {
+    public static List<Class<?>> getClasses(String packageName) {
         List<Class<?>> classes = new ArrayList<>();
         List<File> allFiles = new ArrayList<>();
         File directory = new File(packageName);
@@ -16,7 +15,8 @@ public class ClassFinderImpl implements ClassFinder {
             List<File> files = Arrays.asList(directory.listFiles());
             allFiles.addAll(files);
             for (File file : allFiles) {
-                String className = file.getCanonicalPath().replace('/', '.');
+                String className = file.getPath().replace('/', '.');
+                className = className.substring(1, className.length());
                 className = className.substring(className.indexOf("ru"));
                 className = className.substring(0, className.indexOf(".java"));
                 Class c = Class.forName(className);

@@ -3,7 +3,6 @@ package ru.itis.maletskov.repositories;
 import lombok.NoArgsConstructor;
 import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowMapper;
 import ru.itis.maletskov.mappers.ContextRowMapper;
 import ru.itis.maletskov.models.Auth;
 
@@ -23,15 +22,10 @@ public class AuthRepositoryJdbcTemplateImpl implements AuthRepository {
     private final String SQL_SELECT_BY_CLIENT_ID = "select * from auth where client_id = ?";
 
     //language=SQL
-    private final String SQL_SELECT_AUTH_BY_COOKIE_VALUE = "select * from auth where cookie_value = ?;";
+    private final String SQL_SELECT_AUTH_BY_COOKIE_VALUE = "select * from auth where cookie_value = ?";
 
     //language=SQL
     private final String SQL_DELETE_BY_CLIENT_ID = "delete from auth where client_id = ?";
-
-    private final RowMapper<Auth> authRowMapper = (resultSet, i) -> Auth.builder()
-            .cookieValue(resultSet.getString("cookie_value"))
-            .clientId(resultSet.getInt("client_id"))
-            .build();
 
     public AuthRepositoryJdbcTemplateImpl(DataSource dataSource) {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
@@ -57,13 +51,9 @@ public class AuthRepositoryJdbcTemplateImpl implements AuthRepository {
 
     @Override
     public void save(Auth model) {
-        Optional<Auth> prevAuthOptional = findOne(model.getClientId());
-        if (prevAuthOptional.isPresent()) {
-            delete(model.getClientId());
-        }
         jdbcTemplate.update(connection -> {
             PreparedStatement statement = connection.prepareStatement(SQL_INSERT);
-            statement.setString(1, model.getCookieValue());
+            statement.setString(1, model.getUuid().toString());
             statement.setInt(2, model.getClientId());
             return statement;
         });

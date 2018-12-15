@@ -3,11 +3,11 @@ package ru.itis.maletskov.repositories;
 import lombok.NoArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.dao.IncorrectResultSizeDataAccessException;
+import org.springframework.jdbc.IncorrectResultSetColumnCountException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import ru.itis.maletskov.mappers.ContextRowMapper;
-import ru.itis.maletskov.models.Library;
 import ru.itis.maletskov.models.User;
 
 import javax.sql.DataSource;
@@ -20,7 +20,7 @@ public class UsersRepositoryJdbcTemplateImpl implements UsersRepository {
     private JdbcTemplate jdbcTemplate;
 
     //language=SQL
-    private final String SQL_CREATE_LIBRARY_FOR_USER = "insert into library(client_id) values(?)";
+    private final String SQL_SEARCH_BY_LIKE = "select * from client where lower(first_name || last_name) like lower(?)";
 
     //language=SQL
     private final String SQL_INSERT = "insert into client(first_name, last_name, email, hash_password) " +
@@ -55,7 +55,12 @@ public class UsersRepositoryJdbcTemplateImpl implements UsersRepository {
 
     @Override
     public Optional<List<User>> searchPeopleByName(String name) {
-        return Optional.empty();
+        try {
+            List<User> userList = jdbcTemplate.query(SQL_SEARCH_BY_LIKE, ContextRowMapper.searchingUserRowmapper, name + '%');
+            return Optional.of(userList);
+        } catch (IncorrectResultSizeDataAccessException | IncorrectResultSetColumnCountException ex)  {
+            return Optional.empty();
+        }
     }
 
     @Override
@@ -82,7 +87,6 @@ public class UsersRepositoryJdbcTemplateImpl implements UsersRepository {
                     return statement;
                 }, keyHolder);
         model.setClientId(keyHolder.getKey().intValue());
-        createLibraryForUser(model);
     }
 
     @SneakyThrows
@@ -95,21 +99,5 @@ public class UsersRepositoryJdbcTemplateImpl implements UsersRepository {
     @Override
     public Optional<List<User>> findAll() {
         return Optional.of(jdbcTemplate.query(SQL_SELECT_USERS, ContextRowMapper.userRowMapper));
-    }
-
-    /*Service methods*/
-    @SneakyThrows
-    private void createLibraryForUser(User user) {
-        KeyHolder keyHolder = new GeneratedKeyHolder();
-        jdbcTemplate.update(connection -> {
-            PreparedStatement statement = connection.prepareStatement(SQL_CREATE_LIBRARY_FOR_USER, new String[]{"library_id"});
-            statement.setLong(1, user.getClientId());
-            return statement;
-        }, keyHolder);
-        Library library = Library.builder()
-                .libraryId(keyHolder.getKey().intValue())
-                .clientId(user.getClientId())
-                .build();
-        user.setLibrary(library);
     }
 }

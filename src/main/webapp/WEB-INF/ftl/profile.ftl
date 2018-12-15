@@ -178,10 +178,10 @@
                         </div>
                         <div class="container col-md-8" style="overflow: scroll;height: inherit">
                             <h5>Favourite music</h5>
-                            <ol>
+                            <ol id="music">
                             <#list userSongs as song>
-                                <#if audio.audio(song, song_index)??>
-                                    ${audio.audio(song, song_index)}
+                                <#if audio.audio(song, song_index + 1)??>
+                                    ${audio.audio(song, song_index + 1)}
                                 </#if>
                             </#list>
                             </ol>

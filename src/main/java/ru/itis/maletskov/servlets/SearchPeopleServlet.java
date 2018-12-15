@@ -6,12 +6,10 @@ import ru.itis.maletskov.context.Contexts;
 import ru.itis.maletskov.models.User;
 import ru.itis.maletskov.services.UsersService;
 
-import javax.servlet.ServletConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @WebServlet("/profile/search")
@@ -21,7 +19,7 @@ public class SearchPeopleServlet extends HttpServlet {
 
     @SneakyThrows
     @Override
-    public void init(ServletConfig config) {
+    public void init() {
         usersService = Contexts.primitive().getComponent(UsersService.class);
         objectMapper = new ObjectMapper();
     }
@@ -35,21 +33,14 @@ public class SearchPeopleServlet extends HttpServlet {
     @SneakyThrows
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) {
-        HttpSession session = req.getSession();
-
         String userName = req.getParameter("userName");
-
-        if (session.getAttribute("user") != null && userName != null && !userName.equals("")) {
+        if (!userName.equals("")) {
             List<User> users = usersService.searchPeople(userName);
-
-            if (users.size() != 0) {
-                String json = objectMapper.writeValueAsString(users);
-
-                resp.setCharacterEncoding("UTF-8");
-                resp.setContentType("application/json");
-                resp.getWriter().write(json);
-                users.clear();
-            }
+            String json = objectMapper.writeValueAsString(users);
+            resp.setCharacterEncoding("UTF-8");
+            resp.setContentType("application/json");
+            resp.getWriter().write(json);
+            users.clear();
         }
     }
 }

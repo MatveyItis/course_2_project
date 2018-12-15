@@ -43,7 +43,7 @@ public class UserFilter implements Filter {
                         case "JSESSIONID":
                             jsessionid = cookie;
                             break;
-                        case "uid":
+                        case "uuid":
                             uid = cookie;
                             break;
                     }
