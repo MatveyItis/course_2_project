@@ -37,11 +37,11 @@
             </div>
         </div>
     </div>
-    <div class="container col-md-9">
-        <div class="tab-content" id="nav-tabContent">
+    <div class="container col-md-9" id="content">
+        <div class="tab-content" id="nav-tabContent" style="padding: 5px;">
             <div class="tab-pane fade show active" id="list-profile" role="tabpanel"
                  aria-labelledby="list-profile-list">
-                <div class="container-fluid" style="background-color:  rgb(58, 63, 78); color: white">
+                <div class="container-fluid" style="background-color:  rgb(58, 63, 78);color: white;padding: 10px">
                     <div class="row">
                         <div class="col-md-4" style="padding: 10px">
                             <div class="container">
@@ -190,52 +190,92 @@
                 </div>
             </div>
             <div class="tab-pane fade" id="list-settings" role="tabpanel" aria-labelledby="list-settings-list">
-                <div class="container-fluid" style="background-color: rgb(53,58,73); border-radius: 15px">
+                <div class="container-fluid" style="background-color: rgb(53,58,73); border-radius: 15px;padding: 10px">
                     <div class="header" align="center">
                         <h3 style="color: white">Settings</h3>
                     </div>
                     <div class="container" id="settings-form">
                         <p>You can change your details or fill in if you missed.</p>
-                        <form>
+                        <form id="updateInfo">
                             <div class="form-row">
                                 <div class="form-group col-md-6">
-                                    <label for="inputEmail4">Email</label>
-                                    <input type="email" class="form-control" id="inputEmail4" placeholder="Email">
+                                    <label for="firstName">First name</label>
+                                    <input type="text" class="form-control" id="firstName"
+                                           placeholder="Change first name" value="${user.getFirstName()}">
                                 </div>
                                 <div class="form-group col-md-6">
-                                    <label for="inputPassword4">Password</label>
-                                    <input type="password" class="form-control" id="inputPassword4"
-                                           placeholder="Password">
-                                </div>
-                            </div>
-                            <div class="form-row">
-                                <div class="form-group col-md-8">
-                                    <label for="inputAddress">Address</label>
-                                    <input type="text" class="form-control" id="inputAddress"
-                                           placeholder="1234 Main St">
-                                </div>
-                                <div class="form-group col-md-4">
-                                    <label for="inputDate">Date of Birth</label>
-                                    <input type="date" class="form-control" id="inputDate">
+                                    <label for="lastName">Last name</label>
+                                    <input type="text" class="form-control" id="lastName"
+                                           placeholder="Change last name" value="${user.getLastName()}">
                                 </div>
                             </div>
                             <div class="form-row">
                                 <div class="form-group col-md-6">
-                                    <label for="inputCity">City</label>
-                                    <input type="text" class="form-control" id="inputCity">
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <label for="inputState">State</label>
-                                    <select id="inputState" class="form-control">
-                                        <option selected>Kazan</option>
-                                        <option>Moscow</option>
-                                        <option>Saint-Petersburg</option>
-                                    </select>
+                                    <label for="email">Email</label>
+                                    <input type="email" class="form-control" id="email"
+                                           placeholder="Change Email" value="${user.getEmail()}">
                                 </div>
                             </div>
-                            <button type="submit" class="btn btn-primary btn-light">Update</button>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="firstPassword">Password</label>
+                                    <input type="password" class="form-control" id="firstPassword"
+                                           placeholder="Password" minlength="6" maxlength="12">
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="secondPassword">Repeat password</label>
+                                    <input type="password" class="form-control" id="secondPassword"
+                                           placeholder="Repeat password" minlength="6" maxlength="12">
+                                </div>
+                            </div>
+                            <button type="button" onclick="sendUpdate()" class="btn btn-primary btn-light">Update</button>
                         </form>
-                        <a href="#">Delete your account</a>
+
+                        <button hidden id="successUpdate" type="button" class="btn btn-primary" data-toggle="modal"
+                                data-target="#exampleModalLong1">
+                        </button>
+                        <div class="modal fade" id="exampleModalLong1" tabindex="-1" role="dialog"
+                             aria-labelledby="exampleModalLongTitle" aria-hidden="true" style="color: black">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">x</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        Успешно
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-primary">OK</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button hidden id="failUpdate" type="button" class="btn btn-primary" data-toggle="modal"
+                                data-target="#exampleModalLong2">
+                        </button>
+                        <div class="modal fade" id="exampleModalLong2" tabindex="-1" role="dialog"
+                             aria-labelledby="exampleModalLongTitle" aria-hidden="true" style="color: black">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">x</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        Passwords is not similar, please enter one more time
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-primary">Repeat</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

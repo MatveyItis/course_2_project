@@ -7,6 +7,7 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import ru.itis.maletskov.repositories.*;
 import ru.itis.maletskov.services.*;
+
 import javax.sql.DataSource;
 
 @Configuration
@@ -68,7 +69,7 @@ public class JavaConfig {
 
     @Bean
     public SongService songService() {
-        return new SongServiceImpl(songRepository(),libraryRepository());
+        return new SongServiceImpl(songRepository(), libraryRepository());
     }
 
     @Bean

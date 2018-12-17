@@ -2,7 +2,9 @@ package ru.itis.maletskov.servlets;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.SneakyThrows;
-import ru.itis.maletskov.context.Contexts;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import ru.itis.maletskov.config.JavaConfig;
 import ru.itis.maletskov.models.User;
 import ru.itis.maletskov.services.UsersService;
 
@@ -20,7 +22,9 @@ public class SearchPeopleServlet extends HttpServlet {
     @SneakyThrows
     @Override
     public void init() {
-        usersService = Contexts.primitive().getComponent(UsersService.class);
+        ApplicationContext context = new AnnotationConfigApplicationContext(JavaConfig.class);
+        usersService = context.getBean(UsersService.class);
+        /*usersService = Contexts.primitive().getComponent(UsersService.class);*/
         objectMapper = new ObjectMapper();
     }
 

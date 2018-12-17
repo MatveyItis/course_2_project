@@ -93,4 +93,9 @@ public class LibraryRepositoryJdbcTemplateImpl implements LibraryRepository {
     public Optional<List<Library>> findAll() {
         return Optional.of(jdbcTemplate.query(SQL_SELECT_LIBRARIES, ContextRowMapper.libraryRowMapper));
     }
+
+    @Override
+    public void update(Library model) {
+
+    }
 }

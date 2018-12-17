@@ -1,7 +1,9 @@
 package ru.itis.maletskov.servlets;
 
 import lombok.SneakyThrows;
-import ru.itis.maletskov.context.Contexts;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import ru.itis.maletskov.config.JavaConfig;
 import ru.itis.maletskov.models.User;
 import ru.itis.maletskov.services.UsersService;
 
@@ -19,14 +21,15 @@ public class LogOutServlet extends HttpServlet {
     @SneakyThrows
     @Override
     public void init(ServletConfig config) {
-        usersService = Contexts.primitive().getComponent(UsersService.class);
+        /*usersService = Contexts.primitive().getComponent(UsersService.class);*/
+        ApplicationContext context = new AnnotationConfigApplicationContext(JavaConfig.class);
+        usersService = context.getBean(UsersService.class);
     }
 
     @SneakyThrows
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) {
         boolean isHavingUid = false;
-
         if (req.getCookies() != null) {
             for (Cookie cookie : req.getCookies()) {
                 if (cookie.getName().equals("uuid")) {

@@ -109,4 +109,25 @@ public class UsersServiceImpl implements UsersService {
             return new ArrayList<>();
         }
     }
+
+    @Override
+    public boolean updateInfo(UserForm userForm, Integer clientId) {
+        if (!userForm.getPasswordFirst().equals(userForm.getPasswordSecond()))
+            return false;
+        if (userForm.getPasswordFirst().length() < 6 || userForm.getPasswordFirst().length() > 12)
+            return false;
+        if (userForm.getPasswordSecond().length() < 6 || userForm.getPasswordSecond().length() > 12)
+            return false;
+        System.out.println("до упд дошел");
+        PasswordEncoder encoder = new BCryptPasswordEncoder();
+        User user = User.builder()
+                .clientId(clientId)
+                .firstName(userForm.getFirstName())
+                .lastName(userForm.getLastName())
+                .email(userForm.getEmail())
+                .hashPassword(encoder.encode(userForm.getPasswordFirst()))
+                .build();
+        usersRepository.update(user);
+        return true;
+    }
 }

@@ -39,4 +39,9 @@ public class ArtistRepositoryJdbcTemplateImpl implements ArtistRepository {
     public Optional<List<Artist>> findAll() {
         return Optional.of(jdbcTemplate.query(SQL_SELECT_ALL_ARTISTS, ContextRowMapper.artistRowMapper));
     }
+
+    @Override
+    public void update(Artist model) {
+
+    }
 }

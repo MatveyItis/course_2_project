@@ -27,7 +27,7 @@
         </ul>
         <#if authorized??>
             <form class="form-inline my-2 my-lg-0" action="logout" style="padding-right: 10px">
-                <button class="btn btn-dark">Log out</button>
+                <button class="btn btn-light">Log out</button>
             </form>
         <#else>
         </#if>

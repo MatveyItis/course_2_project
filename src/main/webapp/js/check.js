@@ -16,5 +16,42 @@ document.addEventListener("DOMContentLoaded", function () {
             document.forms.namedItem("reg").submit();
         }
         return false;
-    }
+    };
+
+    /*document.getElementById('updateInfo').onsubmit = function (e) {
+        sendUpdate(e);
+    };*/
 });
+
+function sendUpdate() {
+    //e.preventDefault();
+    fName = document.getElementById('firstName').value;
+    lName = document.getElementById('lastName').value;
+    email = document.getElementById('email').value;
+    firstPassword = document.getElementById('firstPassword').value;
+    secondPassword = document.getElementById('secondPassword').value;
+    if (firstPassword !== secondPassword) {
+        document.getElementById('failUpdate').click();
+    }
+    $.ajax({
+            type: 'post',
+            url: '/updateUserInfo',
+            data: {
+                firstName: fName,
+                lastName: lName,
+                email: email,
+                firstPassword: firstPassword,
+                secondPassword: secondPassword
+            }
+        }
+    ).done(function (arr) {
+        console.log(arr);
+        if (arr === true) {
+            document.getElementById('successUpdate').click();
+        } else if (arr === false) {
+            document.getElementById('failUpdate').click();
+        }
+    }).fail(function () {
+        alert('fail');
+    })
+}

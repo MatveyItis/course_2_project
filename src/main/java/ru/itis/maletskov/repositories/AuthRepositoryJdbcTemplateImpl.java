@@ -68,4 +68,9 @@ public class AuthRepositoryJdbcTemplateImpl implements AuthRepository {
     public Optional<List<Auth>> findAll() {
         return Optional.empty();
     }
+
+    @Override
+    public void update(Auth model) {
+
+    }
 }

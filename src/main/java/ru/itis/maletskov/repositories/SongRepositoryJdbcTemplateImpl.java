@@ -79,6 +79,11 @@ public class SongRepositoryJdbcTemplateImpl implements SongRepository {
     }
 
     @Override
+    public void update(Song model) {
+
+    }
+
+    @Override
     public Optional<List<Song>> searchByName(String songName) {
         return Optional.empty();
     }

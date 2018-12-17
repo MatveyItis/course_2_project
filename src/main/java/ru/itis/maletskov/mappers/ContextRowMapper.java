@@ -6,8 +6,12 @@ import ru.itis.maletskov.models.*;
 import java.util.*;
 
 public class ContextRowMapper {
-    public static Map<Library, List<Song>> libraryWithSongsMap = new HashMap<>();
+    public static Map<Library, List<Song>> libraryWithSongsMap;
     public static Library theOnlyLibrary;
+
+    static {
+        libraryWithSongsMap = new HashMap<>();
+    }
 
     public static final RowMapper<Artist> artistRowMapper = (resultSet, i) -> Artist.builder()
             .artistId(resultSet.getInt("artist_id"))

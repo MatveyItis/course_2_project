@@ -45,5 +45,9 @@ public class AlbumRepositoryJdbcTemplateImpl implements AlbumRepository {
     @Override
     public Optional<List<Album>> findAll() {
         return Optional.empty();
+    }@Override
+
+    public void update(Album model) {
+
     }
 }

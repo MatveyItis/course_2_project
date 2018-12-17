@@ -29,7 +29,7 @@
                     <div class="form-group">
                         <label for='password'>Password</label>
                         <input type='password' class="form-control" name='password' placeholder='Password'
-                               id='password' minlength="6" required>
+                               id='password' minlength="6"  maxlength="12" required>
                     </div>
                     <div class="form-group">
                         <label for="remember">Remember me</label>
@@ -86,13 +86,13 @@
                         <label for="passwordFirst">Password</label>
                         <input type="password" class="form-control" name="passwordFirst"
                                placeholder="Enter password"
-                               id="passwordFirst" required>
+                               id="passwordFirst" minlength="6" maxlength="12" required>
                     </div>
                     <div class="form-group">
                         <label for="passwordSecond">Password</label>
                         <input type="password" class="form-control" name="passwordSecond"
                                placeholder="Repeat password"
-                               id="passwordSecond" required>
+                               id="passwordSecond" minlength="6" maxlength="12" required>
                     </div>
                     <div style="margin: 25px">
                         <button type="submit" class="btn btn-dark" id="submit">Sign Up</button>

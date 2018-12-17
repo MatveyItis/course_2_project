@@ -20,7 +20,14 @@ public class UsersRepositoryJdbcTemplateImpl implements UsersRepository {
     private JdbcTemplate jdbcTemplate;
 
     //language=SQL
-    private final String SQL_SEARCH_BY_LIKE = "select * from client where lower(first_name || last_name) like lower(?)";
+    private final String SQL_SEARCH_BY_LIKE = "select * from client " +
+            "where lower(first_name || last_name) like lower(?) " +
+            "or lower(last_name || first_name) like lower(?)";
+
+    //language=SQL
+    private final String SQL_UPDATE_USER = "update client " +
+            "set (first_name, last_name, email, hash_password) = (?, ?, ?, ?) " +
+            "where client_id = ?";
 
     //language=SQL
     private final String SQL_INSERT = "insert into client(first_name, last_name, email, hash_password) " +
@@ -33,6 +40,9 @@ public class UsersRepositoryJdbcTemplateImpl implements UsersRepository {
     private final String SQL_SELECT_USER_BY_EMAIL = "select * from client " +
             "join library l on client.client_id = l.client_id " +
             "where client.email = ?";
+
+    //language=SQL
+    private final String SQL_SELECT_USER_WITH_SONGS = "";
 
     //language=SQL
     private final String SQL_SELECT_USER = "select * from client " +
@@ -56,9 +66,9 @@ public class UsersRepositoryJdbcTemplateImpl implements UsersRepository {
     @Override
     public Optional<List<User>> searchPeopleByName(String name) {
         try {
-            List<User> userList = jdbcTemplate.query(SQL_SEARCH_BY_LIKE, ContextRowMapper.searchingUserRowmapper, name + '%');
+            List<User> userList = jdbcTemplate.query(SQL_SEARCH_BY_LIKE, ContextRowMapper.searchingUserRowmapper, name + '%', name + '%');
             return Optional.of(userList);
-        } catch (IncorrectResultSizeDataAccessException | IncorrectResultSetColumnCountException ex)  {
+        } catch (IncorrectResultSizeDataAccessException | IncorrectResultSetColumnCountException ex) {
             return Optional.empty();
         }
     }
@@ -66,8 +76,7 @@ public class UsersRepositoryJdbcTemplateImpl implements UsersRepository {
     @Override
     public Optional<User> findOne(Integer id) {
         try {
-            User user = jdbcTemplate.queryForObject(SQL_SELECT_USER, ContextRowMapper.userRowMapper, id);
-            return Optional.of(user);
+            return Optional.of(jdbcTemplate.queryForObject(SQL_SELECT_USER, ContextRowMapper.userRowMapper, id));
         } catch (IncorrectResultSizeDataAccessException e) {
             return Optional.empty();
         }
@@ -99,5 +108,15 @@ public class UsersRepositoryJdbcTemplateImpl implements UsersRepository {
     @Override
     public Optional<List<User>> findAll() {
         return Optional.of(jdbcTemplate.query(SQL_SELECT_USERS, ContextRowMapper.userRowMapper));
+    }
+
+    @Override
+    public void update(User model) {
+        jdbcTemplate.update(SQL_UPDATE_USER,
+                model.getFirstName(),
+                model.getLastName(),
+                model.getEmail(),
+                model.getHashPassword(),
+                model.getClientId());
     }
 }
