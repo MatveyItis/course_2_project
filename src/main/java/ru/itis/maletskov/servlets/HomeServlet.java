@@ -2,7 +2,6 @@ package ru.itis.maletskov.servlets;
 
 import lombok.SneakyThrows;
 
-import javax.servlet.ServletConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -13,7 +12,7 @@ public class HomeServlet extends HttpServlet {
 
     @SneakyThrows
     @Override
-    public void init(ServletConfig config) {
+    public void init() {
 
     }
 

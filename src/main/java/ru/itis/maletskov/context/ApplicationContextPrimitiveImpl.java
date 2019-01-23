@@ -8,7 +8,10 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Field;
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Properties;
 
 public class ApplicationContextPrimitiveImpl implements ApplicationContext {
     private static ApplicationContextPrimitiveImpl context;
@@ -21,35 +24,12 @@ public class ApplicationContextPrimitiveImpl implements ApplicationContext {
     }
 
     private ApplicationContextPrimitiveImpl() {
-        components = new HashMap<>();
-        try (InputStream is = getClass().getClassLoader().getResourceAsStream(CONFIG)) {
-            Properties properties = new Properties();
-            if (is != null) {
-                properties.load(is);
-            } else {
-                throw new FileNotFoundException();
-            }
-            DriverManagerDataSource dataSource = new DriverManagerDataSource(
-                    properties.getProperty("url"),
-                    properties.getProperty("username"),
-                    properties.getProperty("password")
-            );
-            dataSource.setDriverClassName(properties.getProperty("driver.class.name"));
-            components.put(DataSource.class.getName(), dataSource);
-            components.put(JdbcTemplate.class.getName(), new JdbcTemplate(dataSource));
-            setComponents();
-            setDependencies();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        setComponents();
+        setDependencies();
     }
 
     public static ApplicationContextPrimitiveImpl getContext() {
-        if (context != null) {
-            return context;
-        } else {
-            return new ApplicationContextPrimitiveImpl();
-        }
+        return context;
     }
 
     @Override
@@ -65,6 +45,57 @@ public class ApplicationContextPrimitiveImpl implements ApplicationContext {
     }
 
     private void setComponents() {
+        components = new HashMap<>();
+        setConfig();
+        setResources();
+    }
+
+    private void setDependencies() {
+        for (Map.Entry entry : components.entrySet()) {
+            Object obj = entry.getValue();
+            for (Field field : obj.getClass().getDeclaredFields()) {
+                try {
+                    if (!field.getClass().getTypeName().equals(String.class.getTypeName())) {
+                        Object dependency = getComponent(field.getType());
+                        if (dependency != null) {
+                            if (!field.isAccessible()) {
+                                field.setAccessible(true);
+                                field.set(obj, dependency);
+                                field.setAccessible(false);
+                            } else {
+                                field.set(obj, dependency);
+                            }
+                        }
+                    }
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    private void setConfig() {
+        try (InputStream is = getClass().getClassLoader().getResourceAsStream(CONFIG)) {
+            Properties properties = new Properties();
+            if (is != null) {
+                properties.load(is);
+            } else {
+                throw new FileNotFoundException();
+            }
+            DriverManagerDataSource dataSource = new DriverManagerDataSource(
+                    properties.getProperty("url"),
+                    properties.getProperty("username"),
+                    properties.getProperty("password")
+            );
+            dataSource.setDriverClassName(properties.getProperty("driver.class.name"));
+            components.put(DataSource.class.getName(), dataSource);
+            components.put(JdbcTemplate.class.getName(), new JdbcTemplate(dataSource));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void setResources() {
         try (InputStream is = getClass().getClassLoader().getResourceAsStream(RESOURCES)) {
             Properties properties = new Properties();
             if (is != null) {
@@ -80,30 +111,6 @@ public class ApplicationContextPrimitiveImpl implements ApplicationContext {
             }
         } catch (IOException | InstantiationException | IllegalAccessException e) {
             e.printStackTrace();
-        }
-    }
-
-    private void setDependencies() {
-        for (Map.Entry entry : components.entrySet()) {
-            Object obj = entry.getValue();
-            if (!obj.getClass().equals(JdbcTemplate.class)) {
-                for (Field field : obj.getClass().getDeclaredFields()) {
-                    try {
-                        if (!field.getClass().getName().equals(String.class.getName())) {
-                            Object dependency = getComponent(field.getType());
-                            if (!field.isAccessible()) {
-                                field.setAccessible(true);
-                                field.set(obj, dependency);
-                                field.setAccessible(false);
-                            } else {
-                                field.set(obj, dependency);
-                            }
-                        }
-                    } catch (IllegalAccessException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
         }
     }
 }

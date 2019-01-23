@@ -38,13 +38,11 @@ public class SearchPeopleServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) {
         String userName = req.getParameter("userName");
-        if (!userName.equals("")) {
-            List<User> users = usersService.searchPeople(userName);
-            String json = objectMapper.writeValueAsString(users);
-            resp.setCharacterEncoding("UTF-8");
-            resp.setContentType("application/json");
-            resp.getWriter().write(json);
-            users.clear();
-        }
+        List<User> users = usersService.searchPeople(userName);
+        String json = objectMapper.writeValueAsString(users);
+        resp.setCharacterEncoding("UTF-8");
+        resp.setContentType("application/json");
+        resp.getWriter().write(json);
+        users.clear();
     }
 }

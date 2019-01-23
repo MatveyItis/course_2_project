@@ -38,46 +38,28 @@ public class ActionsWithSongsServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) {
         HttpSession session = req.getSession();
         User user = (User) session.getAttribute("user");
-        if (user != null) {
-            List<Song> currentSongs = user.getLibrary().getSongs();
-            Integer songId = Integer.parseInt(req.getParameter("songId"));
-            System.out.println(songId);
-
-            session.setAttribute("addingSong", true);
-
-            if (songId != 0) {
-                songService.addSongToLibrary(songId, user.getLibrary().getLibraryId());
-            }
-            currentSongs.add(songService.getSongById(songId));
-            String json = objectMapper.writeValueAsString(currentSongs);
-
-            resp.setContentType("application/json");
-            resp.getWriter().write(json);
-        }
+        List<Song> currentSongs = user.getLibrary().getSongs();
+        Integer songId = Integer.parseInt(req.getParameter("songId"));
+        session.setAttribute("addingSong", true);
+        songService.addSongToLibrary(songId, user.getLibrary().getLibraryId());
+        currentSongs.add(songService.getSongById(songId));
+        String json = objectMapper.writeValueAsString(currentSongs);
+        resp.setContentType("application/json");
+        resp.getWriter().write(json);
     }
 
     @SneakyThrows
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) {
-        System.out.println("Я в делите, парни");
         HttpSession session = req.getSession();
         User user = (User) session.getAttribute("user");
-        if (user != null) {
-            List<Song> currentSongs = user.getLibrary().getSongs();
-
-            Integer songId = Integer.parseInt(req.getParameter("songId"));
-            System.out.println(songId);
-
-            session.setAttribute("removingSong", true);
-
-            if (songId != 0) {
-                songService.removeSongFromLibrary(songId, user.getLibrary().getLibraryId());
-            }
-            currentSongs.remove(songService.getSongById(songId));
-            String json = objectMapper.writeValueAsString(currentSongs);
-
-            resp.setContentType("application/json");
-            resp.getWriter().write(json);
-        }
+        Integer songId = Integer.parseInt(req.getParameter("songId"));
+        List<Song> currentSongs = user.getLibrary().getSongs();
+        songService.removeSongFromLibrary(songId, user.getLibrary().getLibraryId());
+        currentSongs.remove(songService.getSongById(songId));
+        session.setAttribute("removingSong", true);
+        String json = objectMapper.writeValueAsString(currentSongs);
+        resp.setContentType("application/json");
+        resp.getWriter().write(json);
     }
 }

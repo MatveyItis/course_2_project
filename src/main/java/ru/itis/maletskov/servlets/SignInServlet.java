@@ -1,9 +1,8 @@
 package ru.itis.maletskov.servlets;
 
 import lombok.SneakyThrows;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import ru.itis.maletskov.config.JavaConfig;
+import ru.itis.maletskov.context.ApplicationContext;
+import ru.itis.maletskov.context.Contexts;
 import ru.itis.maletskov.forms.AuthForm;
 import ru.itis.maletskov.forms.LoginForm;
 import ru.itis.maletskov.models.User;
@@ -20,10 +19,10 @@ public class SignInServlet extends HttpServlet {
     @Override
     @SneakyThrows
     public void init() {
-        /*ApplicationContext context = Contexts.primitive();
-        usersService = context.getComponent(UsersService.class);*/
-        ApplicationContext context = new AnnotationConfigApplicationContext(JavaConfig.class);
-        usersService = context.getBean(UsersService.class);
+        ApplicationContext context = Contexts.primitive();
+        usersService = context.getComponent(UsersService.class);
+        /*ApplicationContext context = new AnnotationConfigApplicationContext(JavaConfig.class);
+        usersService = context.getBean(UsersService.class);*/
     }
 
     @SneakyThrows
@@ -59,6 +58,7 @@ public class SignInServlet extends HttpServlet {
             }
             resp.sendRedirect(req.getServletContext().getContextPath() + "/profile");
         } else {
+            resp.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             resp.sendRedirect(req.getServletContext().getContextPath() + "/signUp");
         }
     }

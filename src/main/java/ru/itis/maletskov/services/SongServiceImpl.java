@@ -14,7 +14,8 @@ public class SongServiceImpl implements SongService {
     private SongRepository songRepository;
     private LibraryRepository libraryRepository;
 
-    public SongServiceImpl() {}
+    public SongServiceImpl() {
+    }
 
     public SongServiceImpl(SongRepository songRepository, LibraryRepository libraryRepository) {
         this.songRepository = songRepository;
@@ -43,12 +44,16 @@ public class SongServiceImpl implements SongService {
 
     @Override
     public void addSongToLibrary(Integer songId, Integer libraryId) {
-        libraryRepository.saveSongToLibrary(songId, libraryId);
+        if (songId != 0) {
+            libraryRepository.saveSongToLibrary(songId, libraryId);
+        }
     }
 
     @Override
     public void removeSongFromLibrary(Integer songId, Integer libraryId) {
-        libraryRepository.removeSongFromLibrary(songId, libraryId);
+        if (songId != 0) {
+            libraryRepository.removeSongFromLibrary(songId, libraryId);
+        }
     }
 
     @Override

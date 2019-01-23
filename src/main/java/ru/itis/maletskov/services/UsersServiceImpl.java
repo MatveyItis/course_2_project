@@ -18,7 +18,8 @@ public class UsersServiceImpl implements UsersService {
     private UsersRepository usersRepository;
     private AuthRepository authRepository;
 
-    public UsersServiceImpl() {}
+    public UsersServiceImpl() {
+    }
 
     public UsersServiceImpl(UsersRepository usersRepository, AuthRepository authRepository) {
         this.usersRepository = usersRepository;
@@ -99,6 +100,9 @@ public class UsersServiceImpl implements UsersService {
 
     @Override
     public List<User> searchPeople(String userName) {
+        if (userName.equals("")) {
+            return new ArrayList<>();
+        }
         if (!userName.contains(" ")) {
             return usersRepository.searchPeopleByName(userName).orElse(new ArrayList<>());
         }

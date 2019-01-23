@@ -19,5 +19,6 @@ public class LocaleListener implements ServletContextListener {
 
     @Override
     public void contextDestroyed(ServletContextEvent servletContextEvent) {
+
     }
 }

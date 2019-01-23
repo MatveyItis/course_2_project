@@ -2,6 +2,7 @@ package ru.itis.maletskov.repositories;
 
 import lombok.NoArgsConstructor;
 import lombok.SneakyThrows;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.jdbc.IncorrectResultSetColumnCountException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -60,7 +61,11 @@ public class UsersRepositoryJdbcTemplateImpl implements UsersRepository {
     @SneakyThrows
     @Override
     public Optional<User> findOneByEmail(String email) {
-        return Optional.of(jdbcTemplate.queryForObject(SQL_SELECT_USER_BY_EMAIL, ContextRowMapper.userRowMapper, email));
+        try {
+            return Optional.of(jdbcTemplate.queryForObject(SQL_SELECT_USER_BY_EMAIL, ContextRowMapper.userRowMapper, email));
+        } catch (EmptyResultDataAccessException e) {
+            return Optional.empty();
+        }
     }
 
     @Override

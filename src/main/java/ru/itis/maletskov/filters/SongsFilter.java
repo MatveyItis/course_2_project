@@ -27,6 +27,7 @@ public class SongsFilter implements Filter {
         artistService = Contexts.primitive().getComponent(ArtistService.class);
     }
 
+    //переписать нафиг этот хардкод
     @SneakyThrows
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) {

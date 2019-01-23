@@ -12,6 +12,9 @@
     <listener>
         <listener-class>ru.itis.maletskov.listeners.LocaleListener</listener-class>
     </listener>
+    <listener>
+        <listener-class>ru.itis.maletskov.listeners.ComponentsListener</listener-class>
+    </listener>
 
     <servlet>
         <servlet-name>freemarker</servlet-name>
@@ -56,6 +59,7 @@
         <servlet-name>freemarker</servlet-name>
         <url-pattern>*.ftl</url-pattern>
     </servlet-mapping>
+
 
     <security-constraint>
         <web-resource-collection>
