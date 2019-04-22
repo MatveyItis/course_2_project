@@ -1,8 +1,6 @@
 package ru.itis.maletskov.filters;
 
 import lombok.SneakyThrows;
-import ru.itis.maletskov.context.Contexts;
-import ru.itis.maletskov.models.User;
 import ru.itis.maletskov.services.UsersService;
 
 import javax.servlet.*;
@@ -20,7 +18,6 @@ public class UserFilter implements Filter {
     @SneakyThrows
     @Override
     public void init(FilterConfig filterConfig) {
-        usersService = Contexts.primitive().getComponent(UsersService.class);
         isAuthorized = false;
     }
 
@@ -48,27 +45,10 @@ public class UserFilter implements Filter {
                             break;
                     }
                 }
-                if (jsessionid != null && uid != null) {
-                    Integer userId = usersService.getUserIdByCookieValue(uid.getValue());
-                    if (userId != 0) {
-                        jsessionid.setValue(uid.getValue());
-                        User user = usersService.findOneById(userId);
-                        if (user != null) {
-                            session.setAttribute("user", user);
-                            session.setAttribute("authorized", "true");
-                            if (user.getEmail().equals("maletskovitis@mail.ru")) {
-                                session.setAttribute("admin", true);
-                            }
-                            isAuthorized = true;
-                        }
-                    } else {
-                        isAuthorized = false;
-                    }
-                    filterChain.doFilter(request, response);
-                }
+
             }
             if (!isAuthorized) {
-                request.getRequestDispatcher("/WEB-INF/ftl/signUp.ftl").forward(request, response);
+                request.getRequestDispatcher("/WEB-INF/ftl/registration.ftl").forward(request, response);
             }
         } else if (auth.equals("true")) {
             isAuthorized = true;

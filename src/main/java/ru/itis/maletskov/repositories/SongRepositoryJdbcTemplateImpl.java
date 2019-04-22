@@ -2,10 +2,11 @@ package ru.itis.maletskov.repositories;
 
 import lombok.NoArgsConstructor;
 import lombok.SneakyThrows;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
-import ru.itis.maletskov.mappers.ContextRowMapper;
+import org.springframework.stereotype.Repository;
 import ru.itis.maletskov.models.Song;
 
 import javax.sql.DataSource;
@@ -14,6 +15,7 @@ import java.util.List;
 import java.util.Optional;
 
 @NoArgsConstructor
+@Repository
 public class SongRepositoryJdbcTemplateImpl implements SongRepository {
     private JdbcTemplate jdbcTemplate;
 
@@ -41,6 +43,7 @@ public class SongRepositoryJdbcTemplateImpl implements SongRepository {
     //language=SQL
     private final String SQL_DELETE_SONG_BY_ID = "delete from song where song_id = ?";
 
+    @Autowired
     public SongRepositoryJdbcTemplateImpl(DataSource dataSource) {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
@@ -48,7 +51,8 @@ public class SongRepositoryJdbcTemplateImpl implements SongRepository {
     @SneakyThrows
     @Override
     public Optional<Song> findOne(Integer id) {
-        return Optional.of(jdbcTemplate.queryForObject(SQL_SELECT_SONG_BY_ID, ContextRowMapper.songRowMapper, id));
+        return Optional.empty();
+        //return Optional.of(jdbcTemplate.queryForObject(SQL_SELECT_SONG_BY_ID, ContextRowMapper.songRowMapper, id));
     }
 
     @SneakyThrows
@@ -59,11 +63,11 @@ public class SongRepositoryJdbcTemplateImpl implements SongRepository {
                 connection -> {
                     PreparedStatement statement = connection.prepareStatement(SQL_INSERT, new String[]{"song_id"});
                     statement.setString(1, model.getTitle());
-                    statement.setInt(2, model.getArtist().getArtistId());
+                    statement.setInt(2, model.getArtist().getId());
                     statement.setString(3, model.getSongSrc());
                     return statement;
                 }, keyHolder);
-        model.setSongId(keyHolder.getKey().intValue());
+        model.setId(keyHolder.getKey().intValue());
     }
 
     @SneakyThrows
@@ -75,7 +79,8 @@ public class SongRepositoryJdbcTemplateImpl implements SongRepository {
     @SneakyThrows
     @Override
     public Optional<List<Song>> findAll() {
-        return Optional.of(jdbcTemplate.query(SQL_SELECT_SONGS, ContextRowMapper.songRowMapper));
+        return Optional.empty();
+        //return Optional.of(jdbcTemplate.query(SQL_SELECT_SONGS, ContextRowMapper.songRowMapper));
     }
 
     @Override

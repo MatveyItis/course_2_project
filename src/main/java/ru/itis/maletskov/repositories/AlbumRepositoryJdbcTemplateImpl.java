@@ -1,7 +1,9 @@
 package ru.itis.maletskov.repositories;
 
 import lombok.NoArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Repository;
 import ru.itis.maletskov.models.Album;
 
 import javax.sql.DataSource;
@@ -9,6 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 @NoArgsConstructor
+@Repository
 public class AlbumRepositoryJdbcTemplateImpl implements AlbumRepository {
     private JdbcTemplate jdbcTemplate;
 
@@ -23,6 +26,7 @@ public class AlbumRepositoryJdbcTemplateImpl implements AlbumRepository {
             "join artist a2 on album.artist_id = a2.artist_id " +
             "where album.album_id = ?";
 
+    @Autowired
     public AlbumRepositoryJdbcTemplateImpl(DataSource dataSource) {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
     }

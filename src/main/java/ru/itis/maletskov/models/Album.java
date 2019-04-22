@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
 import java.util.List;
 
 @Data
@@ -12,10 +13,10 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 public class Album {
-    private Integer albumId;
-    private Artist artist;
-    private String albumTitle;
-    private Integer albumYear;
+    private Integer id;
+    private Artist owner;
+    private String title;
+    private Date year;
     private String albumCoverSrc;
-    private List<Song> albumSongs;
+    private List<Song> songs;
 }

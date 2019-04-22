@@ -5,10 +5,9 @@ import lombok.*;
 @Data
 @Builder
 public class User {
-    private Integer clientId;
+    private Integer id;
     private String firstName;
     private String lastName;
     private String email;
-    private String hashPassword;
-    private Library library;
+    private String password;
 }

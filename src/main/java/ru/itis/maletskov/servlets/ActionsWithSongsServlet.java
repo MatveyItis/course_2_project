@@ -2,28 +2,19 @@ package ru.itis.maletskov.servlets;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.SneakyThrows;
-import ru.itis.maletskov.context.Contexts;
-import ru.itis.maletskov.models.Song;
-import ru.itis.maletskov.models.User;
-import ru.itis.maletskov.services.SongService;
 
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import java.util.List;
 
-@WebServlet("/library")
+//@WebServlet("/library")
 public class ActionsWithSongsServlet extends HttpServlet {
-    private SongService songService;
     private ObjectMapper objectMapper;
 
     @SneakyThrows
     @Override
     public void init() {
         //songService = (SongService) context.getAttribute("songService");
-        songService = Contexts.primitive().getComponent(SongService.class);
         objectMapper = new ObjectMapper();
     }
 
@@ -33,15 +24,15 @@ public class ActionsWithSongsServlet extends HttpServlet {
         req.getRequestDispatcher("/WEB-INF/ftl/library.ftl").forward(req, resp);
     }
 
-    @SneakyThrows
+    /*@SneakyThrows
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) {
         HttpSession session = req.getSession();
         User user = (User) session.getAttribute("user");
-        List<Song> currentSongs = user.getLibrary().getSongs();
-        Integer songId = Integer.parseInt(req.getParameter("songId"));
+        List<Song> currentSongs = user.getLibrary().getUploadedSongs();
+        Integer songId = Integer.parseInt(req.getParameter("id"));
         session.setAttribute("addingSong", true);
-        songService.addSongToLibrary(songId, user.getLibrary().getLibraryId());
+        songService.addSongToLibrary(songId, user.getLibrary().getId());
         currentSongs.add(songService.getSongById(songId));
         String json = objectMapper.writeValueAsString(currentSongs);
         resp.setContentType("application/json");
@@ -53,13 +44,13 @@ public class ActionsWithSongsServlet extends HttpServlet {
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) {
         HttpSession session = req.getSession();
         User user = (User) session.getAttribute("user");
-        Integer songId = Integer.parseInt(req.getParameter("songId"));
-        List<Song> currentSongs = user.getLibrary().getSongs();
-        songService.removeSongFromLibrary(songId, user.getLibrary().getLibraryId());
+        Integer songId = Integer.parseInt(req.getParameter("id"));
+        List<Song> currentSongs = user.getLibrary().getUploadedSongs();
+        songService.removeSongFromLibrary(songId, user.getLibrary().getId());
         currentSongs.remove(songService.getSongById(songId));
         session.setAttribute("removingSong", true);
         String json = objectMapper.writeValueAsString(currentSongs);
         resp.setContentType("application/json");
         resp.getWriter().write(json);
-    }
+    }*/
 }

@@ -1,29 +1,27 @@
 package ru.itis.maletskov.services;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import ru.itis.maletskov.forms.AuthForm;
-import ru.itis.maletskov.forms.LoginForm;
-import ru.itis.maletskov.forms.UserForm;
-import ru.itis.maletskov.models.Auth;
 import ru.itis.maletskov.models.User;
-import ru.itis.maletskov.repositories.AuthRepository;
+import ru.itis.maletskov.models.forms.LoginForm;
+import ru.itis.maletskov.models.forms.UserForm;
 import ru.itis.maletskov.repositories.UsersRepository;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+//@Service
 public class UsersServiceImpl implements UsersService {
     private UsersRepository usersRepository;
-    private AuthRepository authRepository;
 
     public UsersServiceImpl() {
     }
 
-    public UsersServiceImpl(UsersRepository usersRepository, AuthRepository authRepository) {
+    @Autowired
+    public UsersServiceImpl(UsersRepository usersRepository) {
         this.usersRepository = usersRepository;
-        this.authRepository = authRepository;
     }
 
     @Override
@@ -37,7 +35,7 @@ public class UsersServiceImpl implements UsersService {
             return false;
         }
         PasswordEncoder encoder = new BCryptPasswordEncoder();
-        user.setHashPassword(encoder.encode(userForm.getPasswordFirst()));
+        user.setPassword(encoder.encode(userForm.getPasswordFirst()));
         if ((user.getFirstName().length() >= 2) &&
                 (user.getLastName().length() >= 2) &&
                 (userForm.getPasswordFirst().length() >= 6) &&
@@ -55,34 +53,9 @@ public class UsersServiceImpl implements UsersService {
         if (userOptional.isPresent()) {
             User user = userOptional.get();
             PasswordEncoder encoder = new BCryptPasswordEncoder();
-            return encoder.matches(loginForm.getPassword(), user.getHashPassword());
+            return encoder.matches(loginForm.getPassword(), user.getPassword());
         } else {
             return false;
-        }
-    }
-
-    @Override
-    public void logOut(User user) {
-        authRepository.delete(user.getClientId());
-    }
-
-    @Override
-    public void auth(AuthForm authForm) {
-        Auth auth = Auth.builder()
-                .uuid(authForm.getUuid())
-                .clientId(authForm.getClientId())
-                .build();
-        authRepository.save(auth);
-    }
-
-    @Override
-    public Integer getUserIdByCookieValue(String cookieValue) {
-        Optional<Auth> authOptional = authRepository.findAuthByCookieValue(cookieValue);
-        if (authOptional.isPresent()) {
-            Auth auth = authOptional.get();
-            return auth.getClientId();
-        } else {
-            return 0;
         }
     }
 
@@ -122,14 +95,13 @@ public class UsersServiceImpl implements UsersService {
             return false;
         if (userForm.getPasswordSecond().length() < 6 || userForm.getPasswordSecond().length() > 12)
             return false;
-        System.out.println("до упд дошел");
         PasswordEncoder encoder = new BCryptPasswordEncoder();
         User user = User.builder()
-                .clientId(clientId)
+                .id(clientId)
                 .firstName(userForm.getFirstName())
                 .lastName(userForm.getLastName())
                 .email(userForm.getEmail())
-                .hashPassword(encoder.encode(userForm.getPasswordFirst()))
+                .password(encoder.encode(userForm.getPasswordFirst()))
                 .build();
         usersRepository.update(user);
         return true;

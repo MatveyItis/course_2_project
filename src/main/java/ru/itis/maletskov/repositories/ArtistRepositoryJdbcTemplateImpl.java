@@ -1,8 +1,9 @@
 package ru.itis.maletskov.repositories;
 
 import lombok.NoArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
-import ru.itis.maletskov.mappers.ContextRowMapper;
+import org.springframework.stereotype.Repository;
 import ru.itis.maletskov.models.Artist;
 
 import javax.sql.DataSource;
@@ -10,12 +11,14 @@ import java.util.List;
 import java.util.Optional;
 
 @NoArgsConstructor
+@Repository
 public class ArtistRepositoryJdbcTemplateImpl implements ArtistRepository {
     private JdbcTemplate jdbcTemplate;
 
     //language=SQL
     private final String SQL_SELECT_ALL_ARTISTS = "select * from artist";
 
+    @Autowired
     public ArtistRepositoryJdbcTemplateImpl(DataSource dataSource) {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
@@ -37,7 +40,7 @@ public class ArtistRepositoryJdbcTemplateImpl implements ArtistRepository {
 
     @Override
     public Optional<List<Artist>> findAll() {
-        return Optional.of(jdbcTemplate.query(SQL_SELECT_ALL_ARTISTS, ContextRowMapper.artistRowMapper));
+        return Optional.empty();
     }
 
     @Override

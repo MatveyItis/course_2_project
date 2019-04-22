@@ -2,28 +2,21 @@ package ru.itis.maletskov.servlets;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.SneakyThrows;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import ru.itis.maletskov.config.JavaConfig;
-import ru.itis.maletskov.forms.UserForm;
 import ru.itis.maletskov.models.User;
+import ru.itis.maletskov.models.forms.UserForm;
 import ru.itis.maletskov.services.UsersService;
 
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet("/updateUserInfo")
+//@WebServlet("/updateUserInfo")
 public class UpdateUserServlet extends HttpServlet {
     private UsersService usersService;
     private ObjectMapper objectMapper;
 
     @Override
     public void init() {
-        ApplicationContext context = new AnnotationConfigApplicationContext(JavaConfig.class);
-        usersService = context.getBean(UsersService.class);
-        System.out.println("usersService = " + usersService);
         objectMapper = new ObjectMapper();
     }
 
@@ -49,7 +42,7 @@ public class UpdateUserServlet extends HttpServlet {
                 .passwordFirst(firstPassword)
                 .passwordSecond(secondPassword)
                 .build();
-        boolean updated = usersService.updateInfo(userForm, user.getClientId());
+        boolean updated = usersService.updateInfo(userForm, user.getId());
         String json = objectMapper.writeValueAsString(updated);
         resp.setCharacterEncoding("UTF-8");
         resp.setContentType("application/json");

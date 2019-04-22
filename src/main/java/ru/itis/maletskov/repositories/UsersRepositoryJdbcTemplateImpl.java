@@ -1,14 +1,15 @@
 package ru.itis.maletskov.repositories;
 
 import lombok.NoArgsConstructor;
-import lombok.SneakyThrows;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.dao.IncorrectResultSizeDataAccessException;
+import org.springframework.dao.IncorrectUpdateSemanticsDataAccessException;
 import org.springframework.jdbc.IncorrectResultSetColumnCountException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
-import ru.itis.maletskov.mappers.ContextRowMapper;
+import org.springframework.stereotype.Repository;
 import ru.itis.maletskov.models.User;
 
 import javax.sql.DataSource;
@@ -17,6 +18,7 @@ import java.util.List;
 import java.util.Optional;
 
 @NoArgsConstructor
+@Repository
 public class UsersRepositoryJdbcTemplateImpl implements UsersRepository {
     private JdbcTemplate jdbcTemplate;
 
@@ -54,15 +56,16 @@ public class UsersRepositoryJdbcTemplateImpl implements UsersRepository {
     private final String SQL_SELECT_USERS = "select * from client " +
             "join library l on client.client_id = l.client_id";
 
+    @Autowired
     public UsersRepositoryJdbcTemplateImpl(DataSource dataSource) {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
-    @SneakyThrows
     @Override
     public Optional<User> findOneByEmail(String email) {
         try {
-            return Optional.of(jdbcTemplate.queryForObject(SQL_SELECT_USER_BY_EMAIL, ContextRowMapper.userRowMapper, email));
+            return Optional.empty();
+            //return Optional.of(jdbcTemplate.queryForObject(SQL_SELECT_USER_BY_EMAIL, ContextRowMapper.userRowMapper, email));
         } catch (EmptyResultDataAccessException e) {
             return Optional.empty();
         }
@@ -71,8 +74,8 @@ public class UsersRepositoryJdbcTemplateImpl implements UsersRepository {
     @Override
     public Optional<List<User>> searchPeopleByName(String name) {
         try {
-            List<User> userList = jdbcTemplate.query(SQL_SEARCH_BY_LIKE, ContextRowMapper.searchingUserRowmapper, name + '%', name + '%');
-            return Optional.of(userList);
+            //List<User> userList = jdbcTemplate.query(SQL_SEARCH_BY_LIKE, ContextRowMapper.searchingUserRowmapper, name + '%', name + '%');
+            return Optional.empty();
         } catch (IncorrectResultSizeDataAccessException | IncorrectResultSetColumnCountException ex) {
             return Optional.empty();
         }
@@ -81,47 +84,62 @@ public class UsersRepositoryJdbcTemplateImpl implements UsersRepository {
     @Override
     public Optional<User> findOne(Integer id) {
         try {
-            return Optional.of(jdbcTemplate.queryForObject(SQL_SELECT_USER, ContextRowMapper.userRowMapper, id));
+            return Optional.empty();
+            //return Optional.of(jdbcTemplate.queryForObject(SQL_SELECT_USER, ContextRowMapper.userRowMapper, id));
         } catch (IncorrectResultSizeDataAccessException e) {
             return Optional.empty();
         }
     }
 
-    @SneakyThrows
     @Override
     public void save(User model) {
-        KeyHolder keyHolder = new GeneratedKeyHolder();
-        jdbcTemplate.update(
-                connection -> {
-                    PreparedStatement statement = connection.prepareStatement(SQL_INSERT, new String[]{"client_id"});
-                    statement.setString(1, model.getFirstName());
-                    statement.setString(2, model.getLastName());
-                    statement.setString(3, model.getEmail());
-                    statement.setString(4, model.getHashPassword());
-                    return statement;
-                }, keyHolder);
-        model.setClientId(keyHolder.getKey().intValue());
+        try {
+            KeyHolder keyHolder = new GeneratedKeyHolder();
+            jdbcTemplate.update(
+                    connection -> {
+                        PreparedStatement statement = connection.prepareStatement(SQL_INSERT, new String[]{"client_id"});
+                        statement.setString(1, model.getFirstName());
+                        statement.setString(2, model.getLastName());
+                        statement.setString(3, model.getEmail());
+                        statement.setString(4, model.getPassword());
+                        return statement;
+                    }, keyHolder);
+            model.setId(keyHolder.getKey().intValue());
+        } catch (IncorrectUpdateSemanticsDataAccessException e) {
+            throw new IncorrectUpdateSemanticsDataAccessException(e.getMessage());
+        }
     }
 
-    @SneakyThrows
     @Override
     public void delete(Integer id) {
-        jdbcTemplate.update(SQL_DELETE, id);
+        try {
+            jdbcTemplate.update(SQL_DELETE, id);
+        } catch (IncorrectUpdateSemanticsDataAccessException e) {
+            throw new IncorrectUpdateSemanticsDataAccessException(e.getMessage());
+        }
     }
 
-    @SneakyThrows
     @Override
     public Optional<List<User>> findAll() {
-        return Optional.of(jdbcTemplate.query(SQL_SELECT_USERS, ContextRowMapper.userRowMapper));
+        try {
+            return Optional.empty();
+            //return Optional.of(jdbcTemplate.query(SQL_SELECT_USERS, ContextRowMapper.userRowMapper));
+        } catch (IncorrectResultSizeDataAccessException e) {
+            return Optional.empty();
+        }
     }
 
     @Override
     public void update(User model) {
-        jdbcTemplate.update(SQL_UPDATE_USER,
-                model.getFirstName(),
-                model.getLastName(),
-                model.getEmail(),
-                model.getHashPassword(),
-                model.getClientId());
+        try {
+            jdbcTemplate.update(SQL_UPDATE_USER,
+                    model.getFirstName(),
+                    model.getLastName(),
+                    model.getEmail(),
+                    model.getPassword(),
+                    model.getId());
+        } catch (IncorrectUpdateSemanticsDataAccessException e) {
+            throw new IncorrectUpdateSemanticsDataAccessException(e.getMessage());
+        }
     }
 }
