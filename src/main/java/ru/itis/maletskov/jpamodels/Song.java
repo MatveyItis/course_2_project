@@ -1,6 +1,7 @@
 package ru.itis.maletskov.jpamodels;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -8,6 +9,7 @@ import java.io.Serializable;
 @Data
 @Entity
 @Table(name = "songs")
+@EqualsAndHashCode(exclude = {"author"})
 public class Song implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

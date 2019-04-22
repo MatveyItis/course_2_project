@@ -1,13 +1,13 @@
 <#include "security.ftl">
 
-<div class="container">
+<div class="container shadow bg-white rounded">
     <h5 class="d-flex justify-content-center">Enjoy songs from all young singers!</h5>
-    <div class="card-columns" id="song-list">
+    <div class="card-columns" id="song-list" data-count="${songs?size}">
         <#list songs as song>
             <div class="card my-3" data-id="${song.id}">
                 <#if song.songImg??>
-                    <img alt="" src="/img/${song.songImg.fileName}" style="height: 300px; width: 100%"
-                         class="card-img-top"/>
+                    <img role="button" alt="" src="/img/${song.songImg.fileName}" style="height: 240px; width: 100%"
+                         class="card-img-top" onclick="playMusic(${song_index})"/>
                 </#if>
                 <div class="m-2">
                     <span>${song.title}</span>
@@ -35,6 +35,10 @@
                     </div>
                 </div>
             </div>
+            <audio hidden id="song_id_${song_index}" data-author="${song.author.username}" data-title="${song.title}"
+                   onended="playNextTrack()">
+                <source src="/audio/${song.audioFileName}">
+            </audio>
         <#else>
             No songs
         </#list>

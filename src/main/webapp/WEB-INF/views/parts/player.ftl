@@ -1,13 +1,17 @@
 <#macro player>
-    <h6 id="player-track-name" align="center">Oxxxymiron - Ultima Thule</h6>
-    <div class="container d-flex justify-content-between align-items-center">
-        <button type="button" class="btn btn-light" id="prev" onclick="playPrevTrack()"><img
-                src='/images/player/prev.png' width="24" height="24">
-        </button>
-        <button type="button" class="btn btn-light" id="play-pause" onclick="playTrack()"><img
-                src='/images/player/iconmonstr-media-control-48-240.png' width="24" height="24"></button>
-        <button type="button" class="btn btn-light" id="next" onclick="playNextTrack()"><img
-                src='/images/player/next.png' height="24" width="24">
-        </button>
-    </div>
+    <nav class="navbar fixed-bottom navbar-light bg-light">
+        <div class="justify-content-between m-1">
+            <a role="button" onclick="playPrevTrack()" class="pr-4"><i class="fas fa-backward"></i></a>
+            <a role="button" id="played" onclick="playMusic(currentSong)" class="pr-2 pl-2"><i class="fas fa-play"></i></a>
+            <a role="button" onclick="playNextTrack()" class="pl-4"><i class="fas fa-forward"></i></a>
+        </div>
+        <div class="col-8 col-sm-5 col-md-8">
+            <input type="range" class="custom-range" id="audio_time_range" min="0" max="200" value="0"
+                   onchange="setAudioTime(document.getElementById('audio_time_range').value)">
+        </div>
+        <div>
+            <small id="song_title">No actions</small>
+        </div>
+
+    </nav>
 </#macro>

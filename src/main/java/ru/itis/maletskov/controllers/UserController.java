@@ -91,6 +91,22 @@ public class UserController {
                 model.addAttribute("user", pathUser);
             }
         }
+        model.addAttribute("userChannel", pathUser);
+        model.addAttribute("isSubscriber", pathUser.getSubscribers().contains(user));
         return "user_profile";
+    }
+
+    @GetMapping("/subscribe/{user}")
+    public String subscribe(@AuthenticationPrincipal User currentUser,
+                            @PathVariable User user) {
+        userService.subscribe(currentUser, user);
+        return "redirect:/user_profile/" + user.getId();
+    }
+
+    @GetMapping("/unsubscribe/{user}")
+    public String unsubscribe(@AuthenticationPrincipal User currentUser,
+                              @PathVariable User user) {
+        userService.unsubscribe(currentUser, user);
+        return "redirect:/user_profile/" + user.getId();
     }
 }

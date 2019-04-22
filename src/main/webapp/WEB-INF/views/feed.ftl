@@ -1,8 +1,9 @@
 <#import "parts/common.ftl" as c>
 <#import "parts/navbar.ftl" as n>
+<#import "parts/player.ftl" as p>
 <@c.template "Feed">
     <@n.navbar/>
-    <div class="container d-flex justify-content-between ut pt-3">
+    <div class="container shadow bg-white rounded d-flex justify-content-between ut p-3">
         <div class="ut">
             <div class="form-group">
                 <form method="get" action="${context.getContextPath()}/search_song/filter" class="form-inline">
@@ -16,10 +17,13 @@
                 </form>
             </div>
         </div>
+
         <div class="ut">
             <#include "parts/songEdit.ftl" />
         </div>
     </div>
 
     <#include "parts/songList.ftl" />
+
+    <@p.player/>
 </@c.template>

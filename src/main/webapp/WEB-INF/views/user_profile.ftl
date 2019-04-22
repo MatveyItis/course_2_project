@@ -6,12 +6,20 @@
         <div class="pt-5" align="center">
             <#if isCurrentUser>
                 <div class="row col-5 justify-content-end">
-                    <a href="#editModal" data-toggle="modal" data-target="#editModal" style="margin-bottom:2px">
-                        <i class="fas fa-user-edit"></i></a>
+                    <a href="#editModal" data-toggle="modal" data-target="#editModal">
+                        <#--<i class="fas fa-user-edit"></i>-->
+                        <span class="badge badge-light">Edit</span>
+                    </a>
                 </div>
             <#else>
                 <div class="row col-5 justify-content-end">
-                    <a href="#" style="text-decoration: none"><span class="badge badge-success">Subscribe</span></a>
+                    <#if isSubscriber>
+                        <a href="${context.getContextPath()}/unsubscribe/${userChannel.id}">
+                            <span class="badge badge-danger">Unsubscribe</span></a>
+                    <#else>
+                        <a href="${context.getContextPath()}/subscribe/${userChannel.id}"
+                           style="text-decoration: none"><span class="badge badge-success">Subscribe</span></a>
+                    </#if>
                 </div>
             </#if>
             <a href="#myModal" data-toggle="modal" data-target="#myModal">
@@ -23,13 +31,13 @@
                 <div class="card col-sm-5 m-1 shadow-sm bg-white rounded">
                     <div class="card-body">
                         <h6>Subscribers:</h6>
-                        <a href="#" style="text-decoration: none"><span>46</span></a>
+                        <a href="#" style="text-decoration: none"><span>${user.subscribers?size}</span></a>
                     </div>
                 </div>
                 <div class="card col-sm-5 m-1 shadow-sm bg-white rounded">
                     <div class="card-body">
                         <h6>Subscriptions:</h6>
-                        <a href="#" style="text-decoration: none"><span>46</span></a>
+                        <a href="#" style="text-decoration: none"><span>${user.subscriptions?size}</span></a>
                     </div>
                 </div>
                 <div class="card col-sm-5 m-1 shadow-sm bg-white rounded">
