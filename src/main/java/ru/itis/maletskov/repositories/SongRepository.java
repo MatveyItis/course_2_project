@@ -1,6 +1,6 @@
 package ru.itis.maletskov.repositories;
 
-import ru.itis.maletskov.models.Song;
+import ru.itis.maletskov.jpamodels.Song;
 
 import java.util.List;
 import java.util.Optional;

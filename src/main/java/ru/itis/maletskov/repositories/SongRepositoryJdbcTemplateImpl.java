@@ -4,13 +4,11 @@ import lombok.NoArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.support.GeneratedKeyHolder;
-import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
-import ru.itis.maletskov.models.Song;
+import ru.itis.maletskov.jpamodels.Song;
 
 import javax.sql.DataSource;
-import java.sql.PreparedStatement;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -50,7 +48,7 @@ public class SongRepositoryJdbcTemplateImpl implements SongRepository {
 
     @SneakyThrows
     @Override
-    public Optional<Song> findOne(Integer id) {
+    public Optional<Song> findOne(Long id) {
         return Optional.empty();
         //return Optional.of(jdbcTemplate.queryForObject(SQL_SELECT_SONG_BY_ID, ContextRowMapper.songRowMapper, id));
     }
@@ -58,7 +56,7 @@ public class SongRepositoryJdbcTemplateImpl implements SongRepository {
     @SneakyThrows
     @Override
     public void save(Song model) {
-        KeyHolder keyHolder = new GeneratedKeyHolder();
+        /*KeyHolder keyHolder = new GeneratedKeyHolder();
         jdbcTemplate.update(
                 connection -> {
                     PreparedStatement statement = connection.prepareStatement(SQL_INSERT, new String[]{"song_id"});
@@ -67,19 +65,19 @@ public class SongRepositoryJdbcTemplateImpl implements SongRepository {
                     statement.setString(3, model.getSongSrc());
                     return statement;
                 }, keyHolder);
-        model.setId(keyHolder.getKey().intValue());
+        model.setId(keyHolder.getKey().intValue());*/
     }
 
     @SneakyThrows
     @Override
-    public void delete(Integer id) {
+    public void delete(Long id) {
         jdbcTemplate.update(SQL_DELETE_SONG_BY_ID, id);
     }
 
     @SneakyThrows
     @Override
-    public Optional<List<Song>> findAll() {
-        return Optional.empty();
+    public List<Song> findAll() {
+        return new ArrayList<>();
         //return Optional.of(jdbcTemplate.query(SQL_SELECT_SONGS, ContextRowMapper.songRowMapper));
     }
 

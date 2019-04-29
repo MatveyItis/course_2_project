@@ -10,10 +10,11 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
-import ru.itis.maletskov.models.User;
+import ru.itis.maletskov.jpamodels.User;
 
 import javax.sql.DataSource;
 import java.sql.PreparedStatement;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -82,7 +83,7 @@ public class UsersRepositoryJdbcTemplateImpl implements UsersRepository {
     }
 
     @Override
-    public Optional<User> findOne(Integer id) {
+    public Optional<User> findOne(Long id) {
         try {
             return Optional.empty();
             //return Optional.of(jdbcTemplate.queryForObject(SQL_SELECT_USER, ContextRowMapper.userRowMapper, id));
@@ -104,14 +105,14 @@ public class UsersRepositoryJdbcTemplateImpl implements UsersRepository {
                         statement.setString(4, model.getPassword());
                         return statement;
                     }, keyHolder);
-            model.setId(keyHolder.getKey().intValue());
+            model.setId(keyHolder.getKey().longValue());
         } catch (IncorrectUpdateSemanticsDataAccessException e) {
             throw new IncorrectUpdateSemanticsDataAccessException(e.getMessage());
         }
     }
 
     @Override
-    public void delete(Integer id) {
+    public void delete(Long id) {
         try {
             jdbcTemplate.update(SQL_DELETE, id);
         } catch (IncorrectUpdateSemanticsDataAccessException e) {
@@ -120,13 +121,8 @@ public class UsersRepositoryJdbcTemplateImpl implements UsersRepository {
     }
 
     @Override
-    public Optional<List<User>> findAll() {
-        try {
-            return Optional.empty();
-            //return Optional.of(jdbcTemplate.query(SQL_SELECT_USERS, ContextRowMapper.userRowMapper));
-        } catch (IncorrectResultSizeDataAccessException e) {
-            return Optional.empty();
-        }
+    public List<User> findAll() {
+        return new ArrayList<>();
     }
 
     @Override

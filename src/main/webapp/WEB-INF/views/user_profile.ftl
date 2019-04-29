@@ -30,25 +30,25 @@
             <div class="row col-sm-6 justify-content-center p-2">
                 <div class="card col-sm-5 m-1 shadow-sm bg-white rounded">
                     <div class="card-body">
-                        <h6>Subscribers:</h6>
-                        <a href="#" style="text-decoration: none"><span>${user.subscribers?size}</span></a>
+                        <h6>Subscribers</h6>
+                        <a href="${context.getContextPath()}/user/subscribers/${user.id}" style="text-decoration: none"><span>${user.subscribers?size}</span></a>
                     </div>
                 </div>
                 <div class="card col-sm-5 m-1 shadow-sm bg-white rounded">
                     <div class="card-body">
-                        <h6>Subscriptions:</h6>
-                        <a href="#" style="text-decoration: none"><span>${user.subscriptions?size}</span></a>
+                        <h6>Subscriptions</h6>
+                        <a href="${context.getContextPath()}/user/subscriptions/${user.id}" style="text-decoration: none"><span>${user.subscriptions?size}</span></a>
                     </div>
                 </div>
                 <div class="card col-sm-5 m-1 shadow-sm bg-white rounded">
                     <div class="card-body">
-                        <h6>Songs:</h6>
-                        <a href="#" style="text-decoration: none"><span>Click</span></a>
+                        <h6>Songs</h6>
+                        <a href="#" class="s9"><span>Click</span></a>
                     </div>
                 </div>
                 <div class="card col-sm-5 m-1 shadow-sm bg-white rounded">
                     <div class="card-body">
-                        <h6>Favourites:</h6>
+                        <h6>Favourite</h6>
                         <a href="#" style="text-decoration: none"><span><i class="far fa-star"></i></span></a>
                     </div>
                 </div>

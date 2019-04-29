@@ -2,6 +2,7 @@
 
 var isPlaying = false;
 var currentSong = 0;
+var trackerStarted = false;
 
 function changeStatus() {
     if (isPlaying) {
@@ -17,15 +18,17 @@ function changeStatus() {
 
 function playMusic(e) {
     let aud = document.getElementById('song_id_' + e);
+    if (!trackerStarted) {
+        playing();
+        trackerStarted = true;
+    }
     if (!isPlaying && currentSong === 0) {
         aud.play();
-        playing();
         currentSong = e;
         isPlaying = true;
     } else if (!isPlaying && currentSong !== 0) {
         pauseMusic(currentSong);
         aud.play();
-        playing();
         currentSong = e;
         isPlaying = true;
     } else if (currentSong === e && isPlaying) {
@@ -33,13 +36,11 @@ function playMusic(e) {
     } else if (isPlaying) {
         stopMusic(currentSong);
         aud.play();
-        playing();
         currentSong = e;
         isPlaying = true;
     }
     changeMaxTimeForRange();
     changeStatus();
-    playing();
 }
 
 function pauseMusic(e) {
@@ -59,7 +60,7 @@ function stopMusic(e) {
     changeStatus();
 }
 
-function playTrack() {
+/*function playTrack() {
     if (isPlaying) {
         pauseMusic(currentSong);
         isPlaying = false;
@@ -71,9 +72,10 @@ function playTrack() {
         isPlaying = true;
     }
     changeStatus();
-}
+}*/
 
 function playNextTrack() {
+    document.getElementById('audio_time_range').value = 0;
     let songsCount = document.getElementById('song-list').dataset.count;
     if (isPlaying) {
         stopMusic(currentSong);
@@ -94,6 +96,7 @@ function playNextTrack() {
 }
 
 function playPrevTrack() {
+    document.getElementById('audio_time_range').value = 0;
     let songsCount = Number(document.getElementById('song-list').dataset.count);
     if (isPlaying) {
         stopMusic(currentSong);
@@ -124,19 +127,15 @@ function changeMaxTimeForRange() {
         document.getElementById('song_id_' + currentSong).duration;
 }
 
-function sleep(ms) {
-    ms += new Date().getTime();
-    while (new Date() < ms) {
-    }
-}
-
 function playing() {
     let maxTime = Number(document.getElementById('audio_time_range').max);
-    for (let i = 0; i < Number(document.getElementById('audio_time_range').value); i++) {
-        if (isPlaying && Number(document.getElementById('audio_time_range').value) < maxTime - 1) {
-            document.getElementById('audio_time_range').value =
-                Number(document.getElementById('audio_time_range').value) + 1;
+    setInterval(function () {
+        if ((Number(document.getElementById('audio_time_range').value) - 1) === maxTime ||
+            (Number(document.getElementById('audio_time_range').value) + 1) === maxTime) {
+            document.getElementById('audio_time_range').value = 0;
         }
-        sleep(1000)
-    }
+        if (isPlaying && Number(document.getElementById('audio_time_range').value) < maxTime - 1) {
+            document.getElementById('audio_time_range').stepUp();
+        }
+    }, 250);
 }

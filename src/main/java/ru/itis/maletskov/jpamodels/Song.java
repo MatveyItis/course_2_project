@@ -2,9 +2,12 @@ package ru.itis.maletskov.jpamodels;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 @Data
 @Entity
@@ -17,9 +20,11 @@ public class Song implements Serializable {
     private Long id;
 
     @Column(name = "title")
+    @NotBlank(message = "Title cannot be empty")
     private String title;
 
     @Column(name = "tag")
+    @NotBlank(message = "Tag cannot be empty")
     private String tag;
 
     @Column(name = "audio_filename")
@@ -32,4 +37,10 @@ public class Song implements Serializable {
     @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "user_id", nullable = false)
     private User author;
+
+    @ManyToMany
+    @JoinTable(name = "song_likes",
+            joinColumns = {@JoinColumn(name = "song_id")},
+            inverseJoinColumns = {@JoinColumn(name = "user_id")})
+    private Set<User> likes = new HashSet<>();
 }

@@ -16,8 +16,8 @@ import java.util.Set;
 @Table(name = "client", uniqueConstraints = {
         @UniqueConstraint(columnNames = "username")
 })
-@ToString(exclude = "uploadedSongs")
-@EqualsAndHashCode(exclude = {"uploadedSongs", "subscribers", "subscriptions"})
+@ToString(exclude = {"uploadedSongs", "subscribers", "subscriptions", "addedSongs"})
+@EqualsAndHashCode(exclude = {"uploadedSongs", "subscribers", "subscriptions", "addedSongs"})
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

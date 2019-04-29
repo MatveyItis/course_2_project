@@ -4,9 +4,10 @@ import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
-import ru.itis.maletskov.models.Album;
+import ru.itis.maletskov.jpamodels.Album;
 
 import javax.sql.DataSource;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,7 +33,7 @@ public class AlbumRepositoryJdbcTemplateImpl implements AlbumRepository {
     }
 
     @Override
-    public Optional<Album> findOne(Integer id) {
+    public Optional<Album> findOne(Long id) {
         return Optional.empty();
     }
 
@@ -42,15 +43,16 @@ public class AlbumRepositoryJdbcTemplateImpl implements AlbumRepository {
     }
 
     @Override
-    public void delete(Integer id) {
+    public void delete(Long id) {
 
     }
 
     @Override
-    public Optional<List<Album>> findAll() {
-        return Optional.empty();
-    }@Override
+    public List<Album> findAll() {
+        return new ArrayList<>();
+    }
 
+    @Override
     public void update(Album model) {
 
     }

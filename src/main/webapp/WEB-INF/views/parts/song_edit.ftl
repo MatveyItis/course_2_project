@@ -18,7 +18,7 @@
                     <form method="post" enctype="multipart/form-data" action="${context.getContextPath()}/add_song"
                           id="song_form">
                         <div class="form-group">
-                            <input type="text" class="form-control ${(textError??)?string('is-invalid', '')}"
+                            <input type="text" class="form-control ${(titleError??)?string('is-invalid', '')}"
                                    value="<#if song??>${song.title}<#else></#if>" name="title"
                                    placeholder="Enter a song title"/>
                             <#if titleError??>
@@ -28,7 +28,7 @@
                             </#if>
                         </div>
                         <div class="form-group">
-                            <input type="text" class="form-control"
+                            <input type="text" class="form-control ${(tagError??)?string('is-invalid', '')}"
                                    value="<#if song??>${song.tag}<#else></#if>" name="tag" placeholder="Tag"/>
                             <#if tagError??>
                                 <div class="invalid-feedback">
@@ -38,8 +38,14 @@
                         </div>
                         <div class="form-group">
                             <div class="custom-file">
-                                <input type="file" name="music_file" id="music_file" class="form-control"
+                                <input type="file" name="music_file ${(musicFileError??)?string('is-invalid', '')}"
+                                       id="music_file" class="form-control"
                                        accept="audio/*"/>
+                                <#if musicFileError??>
+                                    <div class="invalid-feedback">
+                                        ${musicFileError}
+                                    </div>
+                                </#if>
                                 <label class="custom-file-label" for="music_file">Choose song</label>
                             </div>
                         </div>
