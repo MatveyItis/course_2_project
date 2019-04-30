@@ -3,6 +3,20 @@
 <@c.template "Profile">
     <@n.navbar/>
     <div class="container">
+        <div class="row">
+            <div class="row pt-2 justify-content-end">
+                <div class="col-lg-3 col-xl-3 col-md-4 col-sm-6">
+                    <div id="custom-search-input">
+                        <div class="input-group col-md-12">
+                            <input type="text" class="form-control input-lg" placeholder="Search">
+                            <button class="btn btn-primary btn-lg">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="pt-5" align="center">
             <#if isCurrentUser>
                 <div class="row col-5 justify-content-end">
@@ -27,7 +41,7 @@
                      src="https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcRbezqZpEuwGSvitKy3wrwnth5kysKdRqBW54cAszm_wiutku3R"
                      width="250" height="250" style="border-radius: 50%" alt=""></a>
             <h3>${user.username}</h3>
-            <div class="row col-sm-6 justify-content-center p-2">
+            <div class="row col-lg-6 col-xl-5 col-md-6 col-sm-8 justify-content-center p-2">
                 <div class="card col-sm-5 m-1 shadow-sm bg-white rounded">
                     <div class="card-body">
                         <h6>Subscribers</h6>
@@ -37,13 +51,15 @@
                 <div class="card col-sm-5 m-1 shadow-sm bg-white rounded">
                     <div class="card-body">
                         <h6>Subscriptions</h6>
-                        <a href="${context.getContextPath()}/user/subscriptions/${user.id}" style="text-decoration: none"><span>${user.subscriptions?size}</span></a>
+                        <a href="${context.getContextPath()}/user/subscriptions/${user.id}"
+                           style="text-decoration: none"><span>${user.subscriptions?size}</span></a>
                     </div>
                 </div>
                 <div class="card col-sm-5 m-1 shadow-sm bg-white rounded">
                     <div class="card-body">
                         <h6>Songs</h6>
-                        <a href="#" class="s9"><span>Click</span></a>
+                        <a href="${context.getContextPath()}/user-songs/${user.id}"
+                           style="text-decoration: none;">Click</a>
                     </div>
                 </div>
                 <div class="card col-sm-5 m-1 shadow-sm bg-white rounded">

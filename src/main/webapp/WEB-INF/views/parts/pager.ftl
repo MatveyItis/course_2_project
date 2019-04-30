@@ -17,9 +17,9 @@
     <div class="container mt-3">
         <div class="row">
             <ul class="pagination justify-content-center">
-                <li class="page-item disabled">
-                    <a class="page-link" href="#" tabindex="-1">Страницы</a>
-                </li>
+                <#--                <li class="page-item disabled">
+                                    <a class="page-link" href="#" tabindex="-1">Страницы</a>
+                                </li>-->
                 <#list body as p>
                     <#if (p - 1) = page.getNumber()>
                         <li class="page-item active">

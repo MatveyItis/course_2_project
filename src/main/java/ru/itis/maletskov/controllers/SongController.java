@@ -33,7 +33,7 @@ import java.util.UUID;
 public class SongController {
     private final SongService songService;
 
-    @Value("${upload.song.audio.path}")
+    @Value("${upload.song.path}")
     private String audioUploadPath;
 
     @Value("${upload.img.path}")
@@ -112,6 +112,21 @@ public class SongController {
                 .forEach(redirectAttributes::addAttribute);
 
         return "redirect:" + components.getPath();
+    }
+
+    @GetMapping("/favourite/{user}")
+    public String favouriteUserSongs(@PathVariable User user,
+                                     Model model) {
+        Set<Song> songs = user.getAddedSongs();
+        if (!songs.isEmpty()) {
+            model.addAttribute("songs", songs);
+        }
+        return "favourite";
+    }
+
+    @GetMapping("/favourite")
+    public String favourite(@AuthenticationPrincipal User user) {
+        return "redirect:/favourite/" + user.getId();
     }
 
     private void saveAudioFile(Song song, MultipartFile file) throws IOException {

@@ -26,31 +26,7 @@
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css"
               integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr"
               crossorigin="anonymous"/>
-        <style>
-            a {
-                color: #0a061a;
-            }
-
-            s9.a {
-                text-decoration: none;
-                display: inline-block;
-                padding: 5px 10px;
-                letter-spacing: 1px;
-                margin: 0 10px;
-                font-size: 16px;
-                font-family: 'Fredoka One', cursive;
-                transition: .3s ease-in-out;
-            }
-
-            .s9 {
-                color: #B2BBC0;
-                text-shadow: 1px 0 #4D575D;
-            }
-
-            .s9:hover {
-                transform: rotate(-5deg);
-            }
-        </style>
+        <link rel="stylesheet" href="/assets/css/style.css"/>
         <#if title??>
             <title>${title}</title>
         <#else>
@@ -58,6 +34,7 @@
         </#if>
     </head>
     <body>
+
     <#nested>
 
     </body>
