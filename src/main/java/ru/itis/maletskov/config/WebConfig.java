@@ -14,12 +14,14 @@ import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver;
+import ru.itis.maletskov.converters.StringToSongConverter;
 import ru.itis.maletskov.converters.StringToUserConverter;
 
 import java.util.List;
 
 @Configuration
-@ComponentScan(basePackages = {"ru.itis.maletskov.controllers", "ru.itis.maletskov.converters"})
+@ComponentScan({"ru.itis.maletskov.controllers",
+        "ru.itis.maletskov.converters"})
 @EnableWebMvc
 @PropertySource({"classpath:application.properties"})
 @Import({WebSecurityConfig.class})
@@ -33,6 +35,9 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Autowired
     private StringToUserConverter stringToUserConverter;
+
+    @Autowired
+    private StringToSongConverter stringToSongConverter;
 
     @Bean
     public FreeMarkerViewResolver freemarkerViewResolver() {
@@ -61,6 +66,7 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addFormatters(FormatterRegistry registry) {
         registry.addConverter(stringToUserConverter);
+        registry.addConverter(stringToSongConverter);
     }
 
     @Override

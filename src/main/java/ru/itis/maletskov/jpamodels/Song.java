@@ -34,7 +34,7 @@ public class Song implements Serializable {
     @JoinColumn(name = "song_img", referencedColumnName = "id")
     private Img songImg;
 
-    @ManyToOne(cascade = CascadeType.MERGE)
+    @ManyToOne(cascade = CascadeType.DETACH)
     @JoinColumn(name = "user_id", nullable = false)
     private User author;
 

@@ -9,6 +9,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
 import ru.itis.maletskov.controllers.util.ControllerUtils;
+import ru.itis.maletskov.jpamodels.Song;
 import ru.itis.maletskov.jpamodels.User;
 import ru.itis.maletskov.services.UserService;
 
@@ -123,5 +124,19 @@ public class UserController {
             model.addAttribute("users", user.getSubscribers());
         }
         return "subscriptions";
+    }
+
+    @PostMapping("/user/{user}/add_song")
+    public String addSongToFavourite(@RequestParam("songId") Song song,
+                                     @PathVariable User user,
+                                     Model model) {
+        if (song != null && user != null) {
+            userService.addSongToFavourite(song, user);
+            return "redirect:/feed";
+        } else {
+            model.addAttribute("songIdError", song.getId());
+            model.addAttribute("addingError", "Error with adding song to favourite. Please try later.");
+            return "feed";
+        }
     }
 }

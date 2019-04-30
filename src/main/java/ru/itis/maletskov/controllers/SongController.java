@@ -21,6 +21,7 @@ import ru.itis.maletskov.jpamodels.Song;
 import ru.itis.maletskov.jpamodels.User;
 import ru.itis.maletskov.jpamodels.dto.SongDto;
 import ru.itis.maletskov.services.SongService;
+import ru.itis.maletskov.services.UserService;
 
 import javax.validation.Valid;
 import java.io.File;
@@ -32,6 +33,7 @@ import java.util.UUID;
 @Controller
 public class SongController {
     private final SongService songService;
+    private final UserService userService;
 
     @Value("${upload.song.path}")
     private String audioUploadPath;
@@ -40,8 +42,9 @@ public class SongController {
     private String imgUploadPath;
 
     @Autowired
-    public SongController(SongService songService) {
+    public SongController(SongService songService, UserService userService) {
         this.songService = songService;
+        this.userService = userService;
     }
 
     @GetMapping("/search_song/filter")
@@ -49,11 +52,13 @@ public class SongController {
                               Model model,
                               @AuthenticationPrincipal User user,
                               @PageableDefault(sort = {"id"}, direction = Sort.Direction.DESC) Pageable pageable) {
-        Page<SongDto> page = songService.songList(filter, pageable, user);
+        User usr = userService.findById(user.getId());
+        Page<SongDto> page = songService.songList(filter, pageable, usr);
         model.addAttribute("page", page);
         model.addAttribute("filter", filter);
         model.addAttribute("url", "/feed");
-        model.addAttribute("user", user);
+        model.addAttribute("user", usr);
+        model.addAttribute("addedSongs", usr.getAddedSongs());
         return "feed";
     }
 
@@ -61,8 +66,10 @@ public class SongController {
     public String feed(Model model,
                        @AuthenticationPrincipal User user,
                        @PageableDefault(sort = {"id"}, direction = Sort.Direction.DESC) Pageable pageable) {
-        Page<SongDto> page = songService.songList("", pageable, user);
-        model.addAttribute("user", user);
+        User usr = userService.findById(user.getId());
+        Page<SongDto> page = songService.songList("", pageable, usr);
+        model.addAttribute("user", usr);
+        model.addAttribute("addedSongs", usr.getAddedSongs());
         model.addAttribute("page", page);
         model.addAttribute("url", "/feed");
         return "feed";

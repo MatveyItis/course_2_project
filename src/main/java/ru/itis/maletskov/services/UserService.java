@@ -7,11 +7,13 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ru.itis.maletskov.jpamodels.Role;
+import ru.itis.maletskov.jpamodels.Song;
 import ru.itis.maletskov.jpamodels.User;
 import ru.itis.maletskov.jparepositories.UserRepository;
 
 import java.util.Collections;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class UserService implements UserDetailsService {
@@ -52,5 +54,16 @@ public class UserService implements UserDetailsService {
     public void unsubscribe(User currentUser, User user) {
         user.getSubscribers().remove(currentUser);
         userRepository.save(user);
+    }
+
+    public void addSongToFavourite(Song song, User user) {
+        Set<Song> addedSongs = user.getAddedSongs();
+        addedSongs.add(song);
+        user.setAddedSongs(addedSongs);
+        userRepository.save(user);
+    }
+
+    public User findById(Long id) {
+        return userRepository.findById(id).get();
     }
 }

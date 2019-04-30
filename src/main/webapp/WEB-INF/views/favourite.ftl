@@ -4,47 +4,55 @@
 
 <@c.template "Favourite">
     <@n.navbar/>
-    <div class="container pt-4">
+    <div class="container pt-4 pb-5">
         <#if songs??>
             <div class="row">
-                <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
-                    <#--<ol class="carousel-indicators">
-                        <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-                        <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-                        <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-                    </ol>-->
-                    <div class="carousel-inner">
-                        <#list songs as song>
-                            <#if song.songImg??>
-                                <div class="carousel-item <#if song_index == 0>active</#if>">
-                                    <img class="d-block w-100" src="/img/${song.songImg.fileName}" alt="">
-                                    <div class="carousel-caption d-none d-md-block">
-                                        <h5>${song.author.username}</h5>
-                                        <p>${song.title}</p>
+                <div class="container p-2 shadow bg-white rounded">
+                    <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                        <div class="carousel-inner" align="center">
+                            <#list songs as song>
+                                <#if song.songImg??>
+                                    <div class="carousel-item <#if song_index == 0>active</#if>">
+                                        <img class="d-block" src="/img/${song.songImg.fileName}" alt="" width="400"
+                                             height="400">
+                                        <div class="carousel-caption d-none d-md-block">
+                                            <h5>${song.author.username}</h5>
+                                            <p>${song.title}</p>
+                                        </div>
                                     </div>
-                                </div>
-                            </#if>
-                        </#list>
+                                </#if>
+                            </#list>
+                        </div>
+                        <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button"
+                           data-slide="prev">
+                            <span class="carousel-control-prev-icon bg-dark" aria-hidden="true"></span>
+                            <span class="sr-only">Previous</span>
+                        </a>
+                        <a class="carousel-control-next" href="#carouselExampleIndicators" role="button"
+                           data-slide="next">
+                            <span class="carousel-control-next-icon bg-dark" aria-hidden="true"></span>
+                            <span class="sr-only">Next</span>
+                        </a>
                     </div>
-                    <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="sr-only">Previous</span>
-                    </a>
-                    <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span class="sr-only">Next</span>
-                    </a>
                 </div>
             </div>
-            <div class="row">
+            <hr/>
+            <div class="row pt-3">
                 <p>Your favourite songs</p>
-                <div class="container">
+                <div class="container shadow">
                     <#list songs as song>
-                        <div class="row justify-content-between">
-                            <button onclick="playMusic(${song_index})" class="btn-outline"><i class="fas fa-play"></i>
+                        <div class="row justify-content-between p-2">
+                            <button onclick="playMusic(${song_index})" class="btn"><i class="fas fa-play"></i>
                             </button>
                             <span><i>${song.author.username}</i>&nbsp;-&nbsp;${song.title}</span>
-                            <audio hidden></audio>
+                            <audio hidden id="song_id_${song_index}" data-author="${song.author.username}"
+                                   data-title="${song.title}"
+                                   onended="playNextTrack()">
+                                <source src="/audio/${song.audioFileName}">
+                            </audio>
+                            <form action="${context.getContextPath()}/user/${user.id}/remove_song" method="post">
+                                <button class="btn" type="submit"><i class="fas fa-trash"></i></button>
+                            </form>
                         </div>
                     </#list>
                 </div>

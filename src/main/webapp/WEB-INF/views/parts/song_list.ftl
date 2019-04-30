@@ -24,7 +24,7 @@
                         <a class="col align-self-center" align="center" href="/songs/${song.id}/like"
                            style="text-decoration: none">
                             <#if song.meLiked>
-                                <i class="fas fa-heart"></i>
+                                <i class="fas fa-heart" style="color: #812326"></i>
                             <#else>
                                 <i class="far fa-heart"></i>
                             </#if>
@@ -36,6 +36,12 @@
                                 <i class="far fa-edit"></i>
                             </a>
                         </#if>
+                        <#if addedSongs?seq_contains(song)!>
+                            <form action="${context.getContextPath()}/user/${user.id}/add_song" method="post">
+                                <button class="btn" type="submit"><i class="fas fa-plus"></i></button>
+                                <input type="hidden" name="songId" value="${song.id}">
+                            </form>
+                        </#if>
                     </div>
                 </div>
             </div>
@@ -43,6 +49,11 @@
                    onended="playNextTrack()">
                 <source src="/audio/${song.audioFileName}">
             </audio>
+            <#if songIdError?? && addingError??>
+                <#if songIdError == song.id>
+                    <small style="color: red">${addingError}</small>
+                </#if>
+            </#if>
         <#else>
             No songs
         </#list>
