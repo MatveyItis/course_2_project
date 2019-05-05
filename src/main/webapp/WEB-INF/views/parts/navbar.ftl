@@ -10,7 +10,7 @@
                     <a class="navbar-brand" href="${context.getContextPath()}/home"><h4>WM</h4></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link s9" href="${context.getContextPath()}/user_profile">Profile</a>
+                    <a class="nav-link" href="${context.getContextPath()}/user_profile">Profile</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="${context.getContextPath()}/feed">Feed</a>
@@ -19,11 +19,20 @@
                     <a class="nav-link" href="${context.getContextPath()}/favourite">Favourite</a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link" href="${context.getContextPath()}/albums">Albums</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" href="${context.getContextPath()}/about">About us</a>
                 </li>
             </ul>
             <form class="form-inline my-2 my-lg-0" method="post" action="${context.getContextPath()}/logout">
-                <input type="submit" class="btn btn-outline-dark" value="<#if user??>Log out<#else>Log in</#if>">
+                <button type="submit" class="btn bg-light">
+                    <#if user??>
+                        <i class="fas fa-sign-out-alt"></i>
+                    <#else>
+                        <i class="fas fa-sign-in-alt"></i>
+                    </#if>
+                </button>
             </form>
         </div>
     </nav>

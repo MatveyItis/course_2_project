@@ -9,8 +9,8 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
 import ru.itis.maletskov.controllers.util.ControllerUtils;
-import ru.itis.maletskov.jpamodels.Song;
-import ru.itis.maletskov.jpamodels.User;
+import ru.itis.maletskov.models.Song;
+import ru.itis.maletskov.models.User;
 import ru.itis.maletskov.services.UserService;
 
 import java.util.Map;
@@ -126,8 +126,8 @@ public class UserController {
         return "subscriptions";
     }
 
-    @PostMapping("/user/{user}/add_song")
-    public String addSongToFavourite(@RequestParam("songId") Song song,
+    @GetMapping("/user/{user}/add_song")
+    public String addSongToFavourite(@RequestParam("song") Song song,
                                      @PathVariable User user,
                                      Model model) {
         if (song != null && user != null) {

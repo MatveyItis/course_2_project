@@ -1,4 +1,4 @@
-package ru.itis.maletskov.jpamodels;
+package ru.itis.maletskov.models;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -51,6 +51,9 @@ public class User implements UserDetails {
             inverseJoinColumns = @JoinColumn(name = "song_id")
     )
     private Set<Song> addedSongs = new HashSet<>();
+
+    @OneToMany(mappedBy = "owner", cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
+    private Set<Album> albums = new HashSet<>();
 
     @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
     @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))

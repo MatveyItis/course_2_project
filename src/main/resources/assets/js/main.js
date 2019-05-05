@@ -51,6 +51,7 @@ function pauseMusic(e) {
 }
 
 function stopMusic(e) {
+    document.getElementById('audio_time_range').value = 0;
     if (e !== null) {
         let aud = document.getElementById('song_id_' + e);
         aud.pause();
@@ -59,20 +60,6 @@ function stopMusic(e) {
     }
     changeStatus();
 }
-
-/*function playTrack() {
-    if (isPlaying) {
-        pauseMusic(currentSong);
-        isPlaying = false;
-    } else if (!isPlaying && currentSong === 0) {
-        playMusic(0);
-        isPlaying = true;
-    } else if (!isPlaying && currentSong !== 0) {
-        playMusic(currentSong);
-        isPlaying = true;
-    }
-    changeStatus();
-}*/
 
 function playNextTrack() {
     document.getElementById('audio_time_range').value = 0;
@@ -137,5 +124,47 @@ function playing() {
         if (isPlaying && Number(document.getElementById('audio_time_range').value) < maxTime - 1) {
             document.getElementById('audio_time_range').stepUp();
         }
-    }, 250);
+    }, 100);
 }
+
+function addInputForFile() {
+    let songs = document.getElementById('songs');
+    let count = Number(songs.getAttribute('data-count'));
+    let newSong = '<div class="row">\n' +
+        '<div class="form-group col-6">\n' +
+        '      <input type="text"\n' +
+        '       class="form-control"\n' +
+        '       value="" name="song_title_' + (count + 1) + '" id="song_title_' + (count + 1) + '" \n' +
+        '       placeholder="Enter a song title" required/>\n' +
+        '</div>\n' +
+        '<div class="form-group col-6">\n' +
+        '   <div class="custom-file">\n' +
+        '       <input type="file" name="audio_file_' + (count + 1) + '"\n' +
+        '        id="audio_file_' + (count + 1) + '"\n' +
+        '      class="form-control"\n' +
+        '          accept="audio/*"/>\n' +
+        '            <label class="custom-file-label" for="audio_file_' + (count + 1) + '">Choose song</label>\n' +
+        '        </div>\n' +
+        '    </div>\n' +
+        '</div>';
+    songs.setAttribute('data-count', count + 1);
+    songs.innerHTML = songs.innerHTML + newSong;
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+    let form = document.getElementById("album_form");
+
+    form.onsubmit = function (e) {
+        e.preventDefault();
+        let count = Number(songs.getAttribute('data-count'));
+        let songTitles = [];
+        let audioFiles = [];
+        let formData = new FormData();
+        for (let i = 1; i <= count; i++) {
+            songTitles[i] = document.getElementById('song_title_' + i).value;
+            audioFiles[i] = document.getElementById('audio_file_' + i).value;
+            formData.append();
+        }
+
+    };
+});

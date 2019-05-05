@@ -2,7 +2,7 @@ package ru.itis.maletskov.jparepositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import ru.itis.maletskov.jpamodels.User;
+import ru.itis.maletskov.models.User;
 
 import java.util.Optional;
 

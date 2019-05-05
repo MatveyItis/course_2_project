@@ -1,4 +1,4 @@
-package ru.itis.maletskov.jpamodels;
+package ru.itis.maletskov.models;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -37,6 +37,10 @@ public class Song implements Serializable {
     @ManyToOne(cascade = CascadeType.DETACH)
     @JoinColumn(name = "user_id", nullable = false)
     private User author;
+
+    @OneToOne
+    @JoinColumn(name = "album_id")
+    private Album album;
 
     @ManyToMany
     @JoinTable(name = "song_likes",

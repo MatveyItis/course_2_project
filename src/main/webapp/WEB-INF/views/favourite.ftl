@@ -39,7 +39,7 @@
             <hr/>
             <div class="row pt-3">
                 <p>Your favourite songs</p>
-                <div class="container shadow">
+                <div class="container shadow bg-white rounded">
                     <#list songs as song>
                         <div class="row justify-content-between p-2">
                             <button onclick="playMusic(${song_index})" class="btn"><i class="fas fa-play"></i>

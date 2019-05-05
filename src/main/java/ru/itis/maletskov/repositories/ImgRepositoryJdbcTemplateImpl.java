@@ -7,7 +7,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
-import ru.itis.maletskov.jpamodels.Img;
+import ru.itis.maletskov.models.Img;
 
 import javax.sql.DataSource;
 import java.sql.PreparedStatement;
@@ -53,7 +53,7 @@ public class ImgRepositoryJdbcTemplateImpl implements ImgRepository {
     }
 
     @Override
-    public void save(Img img) {
+    public Img save(Img img) {
         try {
             KeyHolder keyHolder = new GeneratedKeyHolder();
             jdbcTemplate.update(
@@ -64,6 +64,7 @@ public class ImgRepositoryJdbcTemplateImpl implements ImgRepository {
                         return statement;
                     }, keyHolder);
             img.setId(keyHolder.getKey().longValue());
+            return img;
         } catch (IncorrectUpdateSemanticsDataAccessException e) {
             throw new IncorrectUpdateSemanticsDataAccessException(e.getMessage());
         }

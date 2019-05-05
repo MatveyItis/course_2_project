@@ -4,18 +4,30 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import ru.itis.maletskov.jpamodels.Song;
-import ru.itis.maletskov.jpamodels.User;
-import ru.itis.maletskov.jpamodels.dto.SongDto;
+import org.springframework.web.multipart.MultipartFile;
+import ru.itis.maletskov.controllers.util.ControllerUtils;
 import ru.itis.maletskov.jparepositories.SongRepository;
+import ru.itis.maletskov.models.Album;
+import ru.itis.maletskov.models.Song;
+import ru.itis.maletskov.models.User;
+import ru.itis.maletskov.models.dto.SongDto;
+import ru.itis.maletskov.repositories.AlbumRepository;
+
+import java.io.IOException;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Service
 public class SongService {
     private final SongRepository songRepository;
+    private final AlbumRepository albumRepository;
 
     @Autowired
-    public SongService(SongRepository songRepository) {
+    public SongService(SongRepository songRepository,
+                       AlbumRepository albumRepository) {
         this.songRepository = songRepository;
+        this.albumRepository = albumRepository;
     }
 
 
@@ -33,5 +45,31 @@ public class SongService {
 
     public void saveSong(Song song) {
         songRepository.save(song);
+    }
+
+    public Album createAlbum(Album album,
+                             MultipartFile albumCover,
+                             MultipartFile[] audioFiles,
+                             String[] songTitles) throws IOException {
+        Set<Song> songs = new HashSet<>();
+        album.setImg(ControllerUtils.saveImageFile(albumCover));
+        if (audioFiles.length != songTitles.length) {
+            return null;
+        } else {
+            for (int i = 0; i < audioFiles.length; i++) {
+                Song song = new Song();
+                song.setAuthor(album.getOwner());
+                song.setTitle(songTitles[i]);
+                song.setSongImg(album.getImg());
+                ControllerUtils.saveAudioFile(song, audioFiles[i]);
+                songs.add(song);
+            }
+        }
+        album.setSongs(songs);
+        return albumRepository.save(album);
+    }
+
+    public List<Album> getAlbums() {
+        return albumRepository.findAll();
     }
 }

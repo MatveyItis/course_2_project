@@ -6,10 +6,10 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import ru.itis.maletskov.jpamodels.Role;
-import ru.itis.maletskov.jpamodels.Song;
-import ru.itis.maletskov.jpamodels.User;
 import ru.itis.maletskov.jparepositories.UserRepository;
+import ru.itis.maletskov.models.Role;
+import ru.itis.maletskov.models.Song;
+import ru.itis.maletskov.models.User;
 
 import java.util.Collections;
 import java.util.Optional;

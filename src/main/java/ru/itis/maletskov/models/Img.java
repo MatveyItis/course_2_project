@@ -1,4 +1,4 @@
-package ru.itis.maletskov.jpamodels;
+package ru.itis.maletskov.models;
 
 import lombok.Data;
 

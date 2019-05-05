@@ -1,16 +1,20 @@
-#custom-search-input{
+body {
+    background: url("http://365psd.ru/images/backgrounds/bg-light-4868.png");
+}
+
+#custom-search-input {
     padding: 3px;
     border: solid 1px #E4E4E4;
     border-radius: 6px;
     background-color: #fff;
 }
 
-#custom-search-input input{
+#custom-search-input input {
     border: 0;
     box-shadow: none;
 }
 
-#custom-search-input button{
+#custom-search-input button {
     margin: 2px 0 0 0;
     background: none;
     box-shadow: none;
@@ -20,13 +24,13 @@
     border-left: solid 1px #ccc;
 }
 
-#custom-search-input button:hover{
+#custom-search-input button:hover {
     border: 0;
     box-shadow: none;
     border-left: solid 1px #ccc;
 }
 
-#custom-search-input .glyphicon-search{
+#custom-search-input .glyphicon-search {
     font-size: 23px;
 }
 
@@ -61,4 +65,18 @@ button:active, button:focus {
 
 button::-moz-focus-inner {
     border: 0 !important;
+}
+
+.img100 {
+    min-width: 100%;
+    height: auto;
+}
+
+.box{
+    position: relative;
+    width: 50%;		/* desired width */
+}
+.box:before{
+    content: "";
+    display: block;
 }

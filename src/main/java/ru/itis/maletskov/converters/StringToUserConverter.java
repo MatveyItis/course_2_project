@@ -3,8 +3,8 @@ package ru.itis.maletskov.converters;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
-import ru.itis.maletskov.jpamodels.User;
 import ru.itis.maletskov.jparepositories.UserRepository;
+import ru.itis.maletskov.models.User;
 
 import java.util.Optional;
 

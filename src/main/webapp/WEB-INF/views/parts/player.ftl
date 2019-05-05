@@ -6,7 +6,7 @@
             <a role="button" onclick="playNextTrack()" class="pl-4"><i class="fas fa-forward"></i></a>
         </div>
         <div class="col-lg-8 col-sm-5 col-md-7">
-            <input type="range" class="custom-range" id="audio_time_range" min="0" max="200" step="0.25" value="0"
+            <input type="range" class="custom-range" id="audio_time_range" min="0" max="200" step="0.1" value="0"
                    onchange="setAudioTime(document.getElementById('audio_time_range').value)">
         </div>
         <div class="col-lg-2 col-sm-3 col-md-2">

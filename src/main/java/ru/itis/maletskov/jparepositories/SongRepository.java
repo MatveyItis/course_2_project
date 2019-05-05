@@ -6,13 +6,13 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
-import ru.itis.maletskov.jpamodels.Song;
-import ru.itis.maletskov.jpamodels.User;
-import ru.itis.maletskov.jpamodels.dto.SongDto;
+import ru.itis.maletskov.models.Song;
+import ru.itis.maletskov.models.User;
+import ru.itis.maletskov.models.dto.SongDto;
 
 @Repository
 public interface SongRepository extends JpaRepository<Song, Long> {
-    @Query("select new ru.itis.maletskov.jpamodels.dto.SongDto(" +
+    @Query("select new ru.itis.maletskov.models.dto.SongDto(" +
             "   s, " +
             "   count(sl), " +
             "   sum(case when sl = :user then 1 else 0 end) > 0" +
@@ -22,7 +22,7 @@ public interface SongRepository extends JpaRepository<Song, Long> {
             "group by s")
     Page<SongDto> findAll(Pageable pageable, @Param("user") User user);
 
-    @Query("select new ru.itis.maletskov.jpamodels.dto.SongDto(" +
+    @Query("select new ru.itis.maletskov.models.dto.SongDto(" +
             "   s, " +
             "   count(sl), " +
             "   sum(case when sl = :user then 1 else 0 end) > 0" +
@@ -33,7 +33,7 @@ public interface SongRepository extends JpaRepository<Song, Long> {
             "group by s")
     Page<SongDto> findByTag(@Param("tag") String tag, Pageable pageable, @Param("user") User user);
 
-    @Query("select new ru.itis.maletskov.jpamodels.dto.SongDto(" +
+    @Query("select new ru.itis.maletskov.models.dto.SongDto(" +
             "   s, " +
             "   count(sl), " +
             "   sum(case when sl = :user then 1 else 0 end) > 0" +

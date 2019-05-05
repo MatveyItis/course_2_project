@@ -10,7 +10,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
-import ru.itis.maletskov.jpamodels.User;
+import ru.itis.maletskov.models.User;
 
 import javax.sql.DataSource;
 import java.sql.PreparedStatement;
@@ -93,7 +93,7 @@ public class UsersRepositoryJdbcTemplateImpl implements UsersRepository {
     }
 
     @Override
-    public void save(User model) {
+    public User save(User model) {
         try {
             KeyHolder keyHolder = new GeneratedKeyHolder();
             jdbcTemplate.update(
@@ -106,6 +106,7 @@ public class UsersRepositoryJdbcTemplateImpl implements UsersRepository {
                         return statement;
                     }, keyHolder);
             model.setId(keyHolder.getKey().longValue());
+            return model;
         } catch (IncorrectUpdateSemanticsDataAccessException e) {
             throw new IncorrectUpdateSemanticsDataAccessException(e.getMessage());
         }

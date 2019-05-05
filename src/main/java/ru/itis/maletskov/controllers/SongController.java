@@ -1,7 +1,6 @@
 package ru.itis.maletskov.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -16,30 +15,21 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 import ru.itis.maletskov.controllers.util.ControllerUtils;
-import ru.itis.maletskov.jpamodels.Img;
-import ru.itis.maletskov.jpamodels.Song;
-import ru.itis.maletskov.jpamodels.User;
-import ru.itis.maletskov.jpamodels.dto.SongDto;
+import ru.itis.maletskov.models.Song;
+import ru.itis.maletskov.models.User;
+import ru.itis.maletskov.models.dto.SongDto;
 import ru.itis.maletskov.services.SongService;
 import ru.itis.maletskov.services.UserService;
 
 import javax.validation.Valid;
-import java.io.File;
 import java.io.IOException;
 import java.util.Map;
 import java.util.Set;
-import java.util.UUID;
 
 @Controller
 public class SongController {
     private final SongService songService;
     private final UserService userService;
-
-    @Value("${upload.song.path}")
-    private String audioUploadPath;
-
-    @Value("${upload.img.path}")
-    private String imgUploadPath;
 
     @Autowired
     public SongController(SongService songService, UserService userService) {
@@ -90,9 +80,9 @@ public class SongController {
                 model.addAttribute("musicFileError", "Please select audio file");
                 return "feed";
             }
-            saveAudioFile(song, musicFile);
+            ControllerUtils.saveAudioFile(song, musicFile);
             if (!imgFile.isEmpty()) {
-                saveSongImageFile(song, imgFile);
+                song.setSongImg(ControllerUtils.saveImageFile(imgFile));
             }
             songService.saveSong(song);
         }
@@ -134,33 +124,5 @@ public class SongController {
     @GetMapping("/favourite")
     public String favourite(@AuthenticationPrincipal User user) {
         return "redirect:/favourite/" + user.getId();
-    }
-
-    private void saveAudioFile(Song song, MultipartFile file) throws IOException {
-        if (file != null && !file.getOriginalFilename().isEmpty() && !file.isEmpty()) {
-            new File(audioUploadPath).mkdir();
-
-            String uuidFile = UUID.randomUUID().toString();
-            String resultFilename = uuidFile + file.getOriginalFilename();
-
-            file.transferTo(new File(audioUploadPath + "/" + resultFilename));
-
-            song.setAudioFileName(resultFilename);
-        }
-    }
-
-    private void saveSongImageFile(Song song, MultipartFile file) throws IOException {
-        if (file != null && !file.getOriginalFilename().isEmpty() && !file.isEmpty()) {
-            new File(imgUploadPath).mkdir();
-
-            String uuidFile = UUID.randomUUID().toString();
-            String resultFilename = uuidFile + file.getOriginalFilename();
-
-            file.transferTo(new File(imgUploadPath + "/" + resultFilename));
-
-            Img img = new Img();
-            img.setFileName(resultFilename);
-            song.setSongImg(img);
-        }
     }
 }

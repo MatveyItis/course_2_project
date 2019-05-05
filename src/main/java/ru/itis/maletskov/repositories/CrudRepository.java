@@ -6,7 +6,7 @@ import java.util.Optional;
 public interface CrudRepository<T> {
     Optional<T> findOne(Long id);
 
-    void save(T model);
+    T save(T model);
 
     void delete(Long id);
 

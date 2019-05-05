@@ -1,10 +1,10 @@
-package ru.itis.maletskov.jpamodels.dto;
+package ru.itis.maletskov.models.dto;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
-import ru.itis.maletskov.jpamodels.Song;
-import ru.itis.maletskov.jpamodels.User;
+import ru.itis.maletskov.models.Song;
+import ru.itis.maletskov.models.User;
 
 @Data
 @ToString(exclude = {"author"})

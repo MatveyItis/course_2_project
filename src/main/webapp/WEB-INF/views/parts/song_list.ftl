@@ -6,10 +6,10 @@
     <@pager.pager url page/>
     <div class="card-columns" id="song-list" data-count="${page.content?size}">
         <#list page.content as song>
-            <div class="card my-3" data-id="${song.id}">
+            <div class="card my-3 box" data-id="${song.id}">
                 <#if song.imgFileName??>
-                    <img role="button" alt="" src="/img/${song.imgFileName}" style="height: 240px; width: 100%"
-                         class="card-img-top" onclick="playMusic(${song_index})"/>
+                    <img role="button" alt="" src="/img/${song.imgFileName}"
+                         class="card-img-top img100" onclick="playMusic(${song_index})"/>
                 </#if>
                 <div class="m-2">
                     <span>${song.title}</span>
@@ -31,21 +31,19 @@
                             ${song.likes}
                         </a>
                         <#if song.author.id == currentUserId>
-                            <a class="col align-self-center d-flex justify-content-end"
+                            <a class="col align-self-center d-flex justify-content-end" style="text-decoration: none"
                                href="${context.getContextPath()}/user-songs/${song.author.id}?song=${song.id}">
                                 <i class="far fa-edit"></i>
                             </a>
                         </#if>
-                        <#if addedSongs?seq_contains(song)!>
-                            <form action="${context.getContextPath()}/user/${user.id}/add_song" method="post">
-                                <button class="btn" type="submit"><i class="fas fa-plus"></i></button>
-                                <input type="hidden" name="songId" value="${song.id}">
-                            </form>
-                        </#if>
+                        <a class="col align-self-center d-flex justify-content-end" style="text-decoration: none"
+                           href="${context.getContextPath()}/user/${user.id}/add_song/?song=${song.id}">
+                            <i class="fas fa-plus"></i>
+                        </a>
                     </div>
                 </div>
             </div>
-            <audio hidden id="song_id_${song_index}" data-author="${song.author.username}" data-title="${song.title}"
+            <audio preload="auto" hidden id="song_id_${song_index}" data-author="${song.author.username}" data-title="${song.title}"
                    onended="playNextTrack()">
                 <source src="/audio/${song.audioFileName}">
             </audio>

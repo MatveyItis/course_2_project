@@ -38,8 +38,8 @@
                         </div>
                         <div class="form-group">
                             <div class="custom-file">
-                                <input type="file" name="music_file ${(musicFileError??)?string('is-invalid', '')}"
-                                       id="music_file" class="form-control"
+                                <input type="file" name="music_file"
+                                       id="music_file" class="form-control ${(musicFileError??)?string('is-invalid', '')}"
                                        accept="audio/*"/>
                                 <#if musicFileError??>
                                     <div class="invalid-feedback">

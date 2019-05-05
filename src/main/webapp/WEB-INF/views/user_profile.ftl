@@ -3,7 +3,6 @@
 <@c.template "Profile">
     <@n.navbar/>
     <div class="container">
-        <div class="row">
             <div class="row pt-2 justify-content-end">
                 <div class="col-lg-3 col-xl-3 col-md-4 col-sm-6">
                     <div id="custom-search-input">
@@ -15,7 +14,6 @@
                         </div>
                     </div>
                 </div>
-            </div>
         </div>
         <div class="pt-5" align="center">
             <#if isCurrentUser>
