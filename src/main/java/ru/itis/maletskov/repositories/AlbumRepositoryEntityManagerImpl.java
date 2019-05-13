@@ -11,11 +11,11 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public class AlbumRepositoryEMImpl implements AlbumRepository {
+public class AlbumRepositoryEntityManagerImpl implements AlbumRepository {
     private EntityManager em;
 
     @Autowired
-    public AlbumRepositoryEMImpl(@Qualifier(value = "entityManagerFactory") EntityManagerFactory emf) {
+    public AlbumRepositoryEntityManagerImpl(@Qualifier(value = "entityManagerFactory") EntityManagerFactory emf) {
         em = emf.createEntityManager();
     }
 

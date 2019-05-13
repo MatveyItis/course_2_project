@@ -17,7 +17,7 @@ import java.util.Set;
         @UniqueConstraint(columnNames = "username")
 })
 @ToString(exclude = {"uploadedSongs", "subscribers", "subscriptions", "addedSongs"})
-@EqualsAndHashCode(exclude = {"uploadedSongs", "subscribers", "subscriptions", "addedSongs"})
+@EqualsAndHashCode(exclude = {"uploadedSongs", "subscribers", "subscriptions", "addedSongs", "albums"})
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -107,5 +107,9 @@ public class User implements UserDetails {
 
     public boolean isAdmin() {
         return roles.contains(Role.ADMIN);
+    }
+
+    public boolean isSinger() {
+        return roles.contains(Role.SINGER);
     }
 }

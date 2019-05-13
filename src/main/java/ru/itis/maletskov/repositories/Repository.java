@@ -3,7 +3,7 @@ package ru.itis.maletskov.repositories;
 import java.util.List;
 import java.util.Optional;
 
-public interface CrudRepository<T> {
+public interface Repository<T> {
     Optional<T> findOne(Long id);
 
     T save(T model);

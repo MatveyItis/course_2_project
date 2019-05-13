@@ -21,10 +21,11 @@
                         <a class="col align-self-center"
                            href="${context.getContextPath()}/user-songs/${song.author.id}"
                            style="text-decoration: none">${song.author.username}</a>
-                        <a class="col align-self-center" align="center" href="/songs/${song.id}/like"
+                        <a class="col align-self-center" align="center" role="button"
+                           name="${song.id}" href="${context.getContextPath()}/songs/${song.id}/like"
                            style="text-decoration: none">
                             <#if song.meLiked>
-                                <i class="fas fa-heart" style="color: #812326"></i>
+                                <i class="fas fa-heart" style="color: red"></i>
                             <#else>
                                 <i class="far fa-heart"></i>
                             </#if>
@@ -43,7 +44,8 @@
                     </div>
                 </div>
             </div>
-            <audio preload="auto" hidden id="song_id_${song_index}" data-author="${song.author.username}" data-title="${song.title}"
+            <audio preload="auto" hidden id="song_id_${song_index}" data-author="${song.author.username}"
+                   data-title="${song.title}"
                    onended="playNextTrack()">
                 <source src="/audio/${song.audioFileName}">
             </audio>

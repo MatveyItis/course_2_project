@@ -55,6 +55,12 @@
                         </div>
                     </#if>
                 </div>
+                <div class="form-group">
+                    <label for="singer">
+                        Are you singer?
+                    </label>
+                    <input type="checkbox" name="singer" id="singer">
+                </div>
                 <div style="margin: 25px">
                     <button type="submit" class="btn btn-dark" id="submit">Sign Up</button>
                 </div>

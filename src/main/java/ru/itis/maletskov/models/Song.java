@@ -2,7 +2,6 @@ package ru.itis.maletskov.models;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -20,11 +19,9 @@ public class Song implements Serializable {
     private Long id;
 
     @Column(name = "title")
-    @NotBlank(message = "Title cannot be empty")
     private String title;
 
     @Column(name = "tag")
-    @NotBlank(message = "Tag cannot be empty")
     private String tag;
 
     @Column(name = "audio_filename")

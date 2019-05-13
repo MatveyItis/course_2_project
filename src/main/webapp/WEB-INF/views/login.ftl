@@ -8,7 +8,7 @@
          align="center">
         <div class='container-fluid' align="center">
             <h2>Authentication</h2>
-            <form method="post" action="${context.getContextPath()}/login" id="login">
+            <form method="post" action="/login">
                 <div class="form-group">
                     <label for='username'>Username</label>
                     <input type='text' class="form-control" name='username' placeholder='Username' id='username'
@@ -23,7 +23,7 @@
                     <label for="remember">Remember me</label>
                     <input type="checkbox" id="remember" name="remember">
                 </div>
-                <button type="submit" class="btn btn-dark m-2" >Sign In</button>
+                <button type="submit" class="btn btn-dark m-2">Sign In</button>
                 <a href="${context.getContextPath()}/registration">Registration</a>
             </form>
             <div class="row" align="center" style="justify-content: center">

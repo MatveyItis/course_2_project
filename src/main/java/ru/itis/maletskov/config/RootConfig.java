@@ -18,7 +18,7 @@ import java.util.Properties;
 
 @Configuration
 @EnableTransactionManagement
-@ComponentScan({"ru.itis.maletskov.services", "ru.itis.maletskov.repositories"})
+@ComponentScan({"ru.itis.maletskov.services", "ru.itis.maletskov.repositories", "ru.itis.maletskov.util"})
 @EnableJpaRepositories("ru.itis.maletskov.jparepositories")
 @Import({WebSecurityConfig.class})
 @PropertySource({"classpath:application.properties"})

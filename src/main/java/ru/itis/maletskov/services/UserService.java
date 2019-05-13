@@ -26,13 +26,13 @@ public class UserService implements UserDetailsService {
         this.userRepository = userRepository;
     }
 
-    public boolean addUser(User user) {
+    public boolean addUser(User user, Boolean isSinger) {
         User userFromDb = userRepository.findByUsername(user.getUsername()).orElse(null);
         if (userFromDb != null) {
             return false;
         }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setRoles(Collections.singleton(Role.USER));
+        user.setRoles(isSinger ? Collections.singleton(Role.SINGER) : Collections.singleton(Role.USER));
         userRepository.save(user);
         return true;
     }

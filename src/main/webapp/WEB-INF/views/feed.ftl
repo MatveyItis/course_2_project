@@ -19,9 +19,11 @@
             </div>
         </div>
 
-        <div class="ut">
-            <#include "parts/song_edit.ftl" />
-        </div>
+        <#if user.isSinger()>
+            <div class="ut">
+                <#include "parts/song_edit.ftl" />
+            </div>
+        </#if>
     </div>
 
     <#include "parts/song_list.ftl" />

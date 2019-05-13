@@ -3,11 +3,11 @@ package ru.itis.maletskov.repositories;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.IncorrectUpdateSemanticsDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 import ru.itis.maletskov.models.Img;
+import ru.itis.maletskov.util.ContextRowMapper;
 
 import javax.sql.DataSource;
 import java.sql.PreparedStatement;
@@ -33,13 +33,6 @@ public class ImgRepositoryJdbcTemplateImpl implements ImgRepository {
     //language=SQL
     private final String SQL_SELECT_ALL = "select * from img";
 
-    private RowMapper<Img> imgRowMapper = (resultSet, i) -> {
-        Img img = new Img();
-        img.setId(resultSet.getLong("id"));
-        img.setName(resultSet.getString("name"));
-        img.setFileName(resultSet.getString("filename"));
-        return img;
-    };
 
     @Autowired
     public ImgRepositoryJdbcTemplateImpl(DataSource dataSource) {
@@ -48,7 +41,7 @@ public class ImgRepositoryJdbcTemplateImpl implements ImgRepository {
 
     @Override
     public Optional<Img> findOne(Long id) {
-        Img img = jdbcTemplate.queryForObject(SQL_SELECT_IMG_BY_ID, imgRowMapper, id);
+        Img img = jdbcTemplate.queryForObject(SQL_SELECT_IMG_BY_ID, ContextRowMapper.imgRowMapper, id);
         return img == null ? Optional.empty() : Optional.of(img);
     }
 
@@ -81,7 +74,7 @@ public class ImgRepositoryJdbcTemplateImpl implements ImgRepository {
 
     @Override
     public List<Img> findAll() {
-        return jdbcTemplate.query(SQL_SELECT_ALL, imgRowMapper);
+        return jdbcTemplate.query(SQL_SELECT_ALL, ContextRowMapper.imgRowMapper);
     }
 
     @Override

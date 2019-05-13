@@ -1,4 +1,4 @@
-package ru.itis.maletskov.controllers.util;
+package ru.itis.maletskov.util;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -16,12 +16,12 @@ import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 @Component
-public class ControllerUtils {
+public class ServiceUtils {
     @Value("${upload.song.path}")
-    private static String audioUploadPath;
+    private String audioUploadPath;
 
     @Value("${upload.img.path}")
-    private static String imgUploadPath;
+    private String imgUploadPath;
 
 
     public static Map<String, String> getErrors(BindingResult bindingResult) {
@@ -32,7 +32,7 @@ public class ControllerUtils {
         return bindingResult.getFieldErrors().stream().collect(collector);
     }
 
-    public static void saveAudioFile(Song song, MultipartFile file) throws IOException {
+    public void saveAudioFile(Song song, MultipartFile file) throws IOException {
         if (file != null && !file.getOriginalFilename().isEmpty() && !file.isEmpty()) {
             new File(audioUploadPath).mkdir();
 
@@ -45,7 +45,7 @@ public class ControllerUtils {
         }
     }
 
-    public static Img saveImageFile(MultipartFile file) throws IOException {
+    public Img saveImageFile(MultipartFile file) throws IOException {
         if (file != null && !file.getOriginalFilename().isEmpty() && !file.isEmpty()) {
             new File(imgUploadPath).mkdir();
 

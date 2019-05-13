@@ -8,10 +8,10 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
-import ru.itis.maletskov.controllers.util.ControllerUtils;
 import ru.itis.maletskov.models.Song;
 import ru.itis.maletskov.models.User;
 import ru.itis.maletskov.services.UserService;
+import ru.itis.maletskov.util.ServiceUtils;
 
 import java.util.Map;
 
@@ -44,6 +44,7 @@ public class UserController {
 
     @PostMapping("/registration")
     public String registerUser(@Validated @ModelAttribute("user") User user,
+                               @RequestParam("singer") Boolean isSinger,
                                @RequestParam("password2") String password2,
                                Model model,
                                BindingResult bindingResult) {
@@ -57,11 +58,11 @@ public class UserController {
             model.addAttribute("passwordError", "Passwords are different");
         }
         if (isConfirmEmpty || bindingResult.hasErrors() || passwordsError) {
-            Map<String, String> errorsMap = ControllerUtils.getErrors(bindingResult);
+            Map<String, String> errorsMap = ServiceUtils.getErrors(bindingResult);
             model.mergeAttributes(errorsMap);
             return "registration";
         }
-        if (!userService.addUser(user)) {
+        if (!userService.addUser(user, isSinger)) {
             model.addAttribute("usernameError", "User exists!");
             return "registration";
         }

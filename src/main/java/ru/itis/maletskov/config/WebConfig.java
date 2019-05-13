@@ -88,29 +88,6 @@ public class WebConfig implements WebMvcConfigurer {
         WebMvcConfigurer.super.addArgumentResolvers(argumentResolvers);
     }
 
-//    @Override
-//    public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
-//        converters.add(byteArrayHttpMessageConverter());
-//        converters.add(new MappingJackson2HttpMessageConverter());
-//    }
-//
-//    @Bean
-//    public ByteArrayHttpMessageConverter byteArrayHttpMessageConverter() {
-//        ByteArrayHttpMessageConverter arrayHttpMessageConverter = new ByteArrayHttpMessageConverter();
-//        arrayHttpMessageConverter.setSupportedMediaTypes(getSupportedMediaTypes());
-//        return arrayHttpMessageConverter;
-//    }
-//
-//    private List<MediaType> getSupportedMediaTypes() {
-//        List<MediaType> list = new ArrayList<>();
-//        list.add(MediaType.IMAGE_JPEG);
-//        list.add(MediaType.IMAGE_PNG);
-//        list.add(MediaType.APPLICATION_OCTET_STREAM);
-//        list.add(MediaType.APPLICATION_JSON);
-//        list.add(MediaType.MULTIPART_FORM_DATA);
-//        return list;
-//    }
-
     @Bean
     public CommonsMultipartResolver multipartResolver() {
         CommonsMultipartResolver resolver = new CommonsMultipartResolver();
