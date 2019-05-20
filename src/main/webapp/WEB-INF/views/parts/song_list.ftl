@@ -15,6 +15,7 @@
                     <span>${song.title}</span>
                     <br>
                     <i>#${song.tag}</i>
+                    <a href="${context.getContextPath()}/delete_song/${song.id}"><span>&times;</span></a>
                 </div>
                 <div class="card-footer text-muted container">
                     <div class="row">
@@ -32,9 +33,13 @@
                             ${song.likes}
                         </a>
                         <#if song.author.id == currentUserId>
+                        <#--<a class="col align-self-center d-flex justify-content-end" style="text-decoration: none"
+                           href="${context.getContextPath()}/user-songs/${song.author.id}?song=${song.id}">
+                            <i class="far fa-edit"></i>
+                        </a>-->
                             <a class="col align-self-center d-flex justify-content-end" style="text-decoration: none"
-                               href="${context.getContextPath()}/user-songs/${song.author.id}?song=${song.id}">
-                                <i class="far fa-edit"></i>
+                               href="${context.getContextPath()}/delete_song/${song.id}">
+                                <i class="fas fa-trash"></i>
                             </a>
                         </#if>
                         <a class="col align-self-center d-flex justify-content-end" style="text-decoration: none"

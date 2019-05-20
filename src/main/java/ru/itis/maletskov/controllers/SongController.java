@@ -131,6 +131,14 @@ public class SongController {
         }
     }
 */
+    @GetMapping("/delete_song/{id}")
+    public String deleteSong(@PathVariable("id") Song song,
+                             @AuthenticationPrincipal User user,
+                             Model model) {
+        songService.deleteSong(song, user);
+        return "redirect:/feed";
+    }
+
     @GetMapping("/favourite/{user}")
     public String favouriteUserSongs(@PathVariable User user,
                                      Model model) {

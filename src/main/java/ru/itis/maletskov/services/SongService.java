@@ -45,6 +45,12 @@ public class SongService {
         return songRepository.findByUser(pageable, author, currentUser);
     }
 
+    public void deleteSong(Song song, User user) {
+        if (song.getAuthor().getId().equals(user.getId())) {
+            songRepository.deleteById(song.getId());
+        }
+    }
+
     public void saveSong(Song song) {
         songRepository.save(song);
     }
