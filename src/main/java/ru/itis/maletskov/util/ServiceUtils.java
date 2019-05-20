@@ -35,12 +35,9 @@ public class ServiceUtils {
     public void saveAudioFile(Song song, MultipartFile file) throws IOException {
         if (file != null && !file.getOriginalFilename().isEmpty() && !file.isEmpty()) {
             new File(audioUploadPath).mkdir();
-
             String uuidFile = UUID.randomUUID().toString();
             String resultFilename = uuidFile + file.getOriginalFilename();
-
             file.transferTo(new File(audioUploadPath + "/" + resultFilename));
-
             song.setAudioFileName(resultFilename);
         }
     }
@@ -48,12 +45,9 @@ public class ServiceUtils {
     public Img saveImageFile(MultipartFile file) throws IOException {
         if (file != null && !file.getOriginalFilename().isEmpty() && !file.isEmpty()) {
             new File(imgUploadPath).mkdir();
-
             String uuidFile = UUID.randomUUID().toString();
             String resultFilename = uuidFile + file.getOriginalFilename();
-
             file.transferTo(new File(imgUploadPath + "/" + resultFilename));
-
             Img img = new Img();
             img.setFileName(resultFilename);
             return img;

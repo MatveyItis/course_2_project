@@ -48,7 +48,6 @@ public class AlbumController {
         album.setTitle(title);
         album.setDate(new Date());
         songService.createAlbum(album, albumCover, audioFiles, songTitles);
-
         return "redirect:/albums";
     }
 }

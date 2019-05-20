@@ -3,17 +3,17 @@
 <@c.template "Profile">
     <@n.navbar/>
     <div class="container">
-            <div class="row pt-2 justify-content-end">
-                <div class="col-lg-3 col-xl-3 col-md-4 col-sm-6">
-                    <div id="custom-search-input">
-                        <div class="input-group col-md-12">
-                            <input type="text" class="form-control input-lg" placeholder="Search">
-                            <button class="btn btn-primary btn-lg">
-                                <i class="fas fa-search"></i>
-                            </button>
-                        </div>
+        <div class="row pt-2 justify-content-end">
+            <div class="col-lg-3 col-xl-3 col-md-4 col-sm-6">
+                <div id="custom-search-input">
+                    <div class="input-group col-md-12">
+                        <input type="text" class="form-control input-lg" placeholder="Search">
+                        <button class="btn btn-primary btn-lg">
+                            <i class="fas fa-search"></i>
+                        </button>
                     </div>
                 </div>
+            </div>
         </div>
         <div class="pt-5" align="center">
             <#if isCurrentUser>
@@ -36,7 +36,7 @@
             </#if>
             <a href="#myModal" data-toggle="modal" data-target="#myModal">
                 <img class="shadow-lg p-2 bg-white"
-                     src="https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcRbezqZpEuwGSvitKy3wrwnth5kysKdRqBW54cAszm_wiutku3R"
+                     src="<#if user.img??>/img/${user.img.fileName}<#else >https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcRbezqZpEuwGSvitKy3wrwnth5kysKdRqBW54cAszm_wiutku3R</#if>"
                      width="250" height="250" style="border-radius: 50%" alt=""></a>
             <h3>${user.username}</h3>
             <div class="row col-lg-6 col-xl-5 col-md-6 col-sm-8 justify-content-center p-2">
@@ -80,7 +80,7 @@
                         </button>
                     </div>
                     <div class="modal-body" align="center">
-                        <img src="https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcRbezqZpEuwGSvitKy3wrwnth5kysKdRqBW54cAszm_wiutku3R"
+                        <img src="<#if user.img??>/img/${user.img.fileName}<#else >https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcRbezqZpEuwGSvitKy3wrwnth5kysKdRqBW54cAszm_wiutku3R</#if>"
                              width="200" height="200" style="border-radius: 50%"></a>
                         <h3 class="media-heading">${user.username}
                             <small>Russia</small>
@@ -92,7 +92,7 @@
                         <span>Rock</span>
                         <hr>
                         <p class="text-left"><strong>Bio: </strong><br>
-                            <#--${user.aboutMe}-->
+                            The best developer, that you have ever seen! ))
                         </p>
                         <br>
                     </div>

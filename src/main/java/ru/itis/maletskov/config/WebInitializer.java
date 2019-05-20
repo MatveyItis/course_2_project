@@ -5,7 +5,6 @@ import org.springframework.web.context.support.AnnotationConfigWebApplicationCon
 import org.springframework.web.servlet.support.AbstractDispatcherServletInitializer;
 
 public class WebInitializer extends AbstractDispatcherServletInitializer {
-
     @Override
     protected WebApplicationContext createServletApplicationContext() {
         AnnotationConfigWebApplicationContext context = new AnnotationConfigWebApplicationContext();

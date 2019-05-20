@@ -33,7 +33,6 @@ public class ImgRepositoryJdbcTemplateImpl implements ImgRepository {
     //language=SQL
     private final String SQL_SELECT_ALL = "select * from img";
 
-
     @Autowired
     public ImgRepositoryJdbcTemplateImpl(DataSource dataSource) {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
@@ -51,7 +50,8 @@ public class ImgRepositoryJdbcTemplateImpl implements ImgRepository {
             KeyHolder keyHolder = new GeneratedKeyHolder();
             jdbcTemplate.update(
                     connection -> {
-                        PreparedStatement statement = connection.prepareStatement(SQL_INSERT, new String[]{"id"});
+                        PreparedStatement statement =
+                                connection.prepareStatement(SQL_INSERT, new String[]{"id"});
                         statement.setString(1, img.getFileName());
                         statement.setString(2, img.getName());
                         return statement;

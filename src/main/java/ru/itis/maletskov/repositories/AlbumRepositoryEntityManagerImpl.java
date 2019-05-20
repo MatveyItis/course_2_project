@@ -28,9 +28,6 @@ public class AlbumRepositoryEntityManagerImpl implements AlbumRepository {
     public Optional<Album> findOne(Long id) {
         Album album = em.find(Album.class, id);
         return Optional.ofNullable(album);
-        /*Session session = this.sessionFactory.openSession();
-        User u = session.get(User.class, id);
-        return Optional.ofNullable(u);*/
     }
 
     @Override
@@ -39,20 +36,15 @@ public class AlbumRepositoryEntityManagerImpl implements AlbumRepository {
         em.persist(model);
         em.getTransaction().commit();
         return model;
-        /*Session session = this.sessionFactory.openSession();
-        Transaction tx = session.beginTransaction();
-        session.persist(model);
-        tx.commit();
-        session.close();*/
     }
 
     @Override
     public void delete(Long id) {
-
+        em.remove(em.find(Album.class, id));
     }
 
     @Override
     public void update(Album model) {
-
+        em.refresh(model);
     }
 }

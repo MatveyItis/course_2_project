@@ -20,8 +20,7 @@ import ru.itis.maletskov.converters.StringToUserConverter;
 import java.util.List;
 
 @Configuration
-@ComponentScan({"ru.itis.maletskov.controllers",
-        "ru.itis.maletskov.converters"})
+@ComponentScan({"ru.itis.maletskov.controllers", "ru.itis.maletskov.converters"})
 @EnableWebMvc
 @PropertySource({"classpath:application.properties"})
 @Import({WebSecurityConfig.class})

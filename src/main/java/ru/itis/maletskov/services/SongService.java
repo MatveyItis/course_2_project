@@ -33,7 +33,6 @@ public class SongService {
         this.serviceUtils = serviceUtils;
     }
 
-
     public Page<SongDto> songList(String filter, Pageable pageable, User user) {
         if (filter != null && !filter.isEmpty()) {
             return songRepository.findByTag(filter, pageable, user);
