@@ -1,66 +1,31 @@
 package ru.itis.maletskov.config;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.*;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
-import org.springframework.data.web.config.EnableSpringDataWebSupport;
 import org.springframework.format.FormatterRegistry;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
-import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
-import org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver;
-import ru.itis.maletskov.converters.StringToSongConverter;
-import ru.itis.maletskov.converters.StringToUserConverter;
+import ru.itis.maletskov.converter.StringToSongConverter;
+import ru.itis.maletskov.converter.StringToUserConverter;
 
 import java.util.List;
 
 @Configuration
-@ComponentScan({"ru.itis.maletskov.controllers", "ru.itis.maletskov.converters"})
-@EnableWebMvc
-@PropertySource({"classpath:application.properties"})
-@Import({WebSecurityConfig.class})
-@EnableSpringDataWebSupport
+@RequiredArgsConstructor
 public class WebConfig implements WebMvcConfigurer {
+    private final StringToUserConverter stringToUserConverter;
+    private final StringToSongConverter stringToSongConverter;
+
     @Value("${upload.song.path}")
     private String audioUploadPath;
 
     @Value("${upload.img.path}")
     private String imgUploadPath;
-
-    @Autowired
-    private StringToUserConverter stringToUserConverter;
-
-    @Autowired
-    private StringToSongConverter stringToSongConverter;
-
-    @Bean
-    public FreeMarkerViewResolver freemarkerViewResolver() {
-        FreeMarkerViewResolver resolver = new FreeMarkerViewResolver();
-        resolver.setCache(true);
-        resolver.setPrefix("");
-        resolver.setSuffix(".ftl");
-        resolver.setRequestContextAttribute("context");
-        resolver.setContentType("text/html; charset=UTF-8");
-        return resolver;
-    }
-
-    @Bean
-    public FreeMarkerConfigurer freemarkerConfig() {
-        FreeMarkerConfigurer freeMarkerConfigurer = new FreeMarkerConfigurer();
-        freeMarkerConfigurer.setTemplateLoaderPath("/WEB-INF/views/");
-        freeMarkerConfigurer.setDefaultEncoding("UTF-8");
-        return freeMarkerConfigurer;
-    }
-
-    public void addViewControllers(ViewControllerRegistry registry) {
-        registry.addViewController("/login")
-                .setViewName("login");
-    }
 
     @Override
     public void addFormatters(FormatterRegistry registry) {
@@ -74,8 +39,8 @@ public class WebConfig implements WebMvcConfigurer {
                 .addResourceLocations("file://" + audioUploadPath + "/");
         registry.addResourceHandler("/img/**")
                 .addResourceLocations("file://" + imgUploadPath + "/");
-        registry.addResourceHandler("/assets/**").
-                addResourceLocations("classpath:/assets/");
+        registry.addResourceHandler("/static/**").
+                addResourceLocations("classpath:/static/");
     }
 
     @Override

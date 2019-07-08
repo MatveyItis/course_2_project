@@ -5,8 +5,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.multipart.MultipartFile;
-import ru.itis.maletskov.models.Img;
-import ru.itis.maletskov.models.Song;
+import ru.itis.maletskov.model.Img;
+import ru.itis.maletskov.model.Song;
 
 import java.io.File;
 import java.io.IOException;
