@@ -4,7 +4,7 @@
 <@c.template "User songs">
     <@navbar.navbar/>
 
-    <div align="center" class="container justify-content-center mt-5">
+    <div align="center" class="container justify-content-center" style="padding-top: 120px">
         <img src="/static/img/data.png" alt="development">
         <br>
         <h4>Данная страница находится в разработке</h4>

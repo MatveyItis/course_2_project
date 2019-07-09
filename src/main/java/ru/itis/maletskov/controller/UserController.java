@@ -7,12 +7,15 @@ import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
+import ru.itis.maletskov.form.UserForm;
 import ru.itis.maletskov.model.Song;
 import ru.itis.maletskov.model.User;
 import ru.itis.maletskov.service.UserService;
 import ru.itis.maletskov.util.ServiceUtils;
+import ru.itis.maletskov.util.validator.UserFormValidator;
 
 import java.util.Map;
 
@@ -20,6 +23,12 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class UserController {
     private final UserService userService;
+    private final UserFormValidator userFormValidator;
+
+    @InitBinder("userForm")
+    public void initUserFormBinder(WebDataBinder binder) {
+        binder.addValidators(userFormValidator);
+    }
 
     @GetMapping("/registration")
     public String registrationPage(@AuthenticationPrincipal User authUser,
@@ -41,7 +50,7 @@ public class UserController {
     }
 
     @PostMapping("/registration")
-    public String registerUser(@Validated @ModelAttribute("user") User user,
+    public String registerUser(@ModelAttribute("user") User user,
                                @RequestParam("singer") Boolean isSinger,
                                @RequestParam("password2") String password2,
                                Model model,
@@ -95,6 +104,25 @@ public class UserController {
             model.addAttribute("isSubscriber", pathUser.getSubscribers().contains(user));
         }
         return "user_profile";
+    }
+
+    @GetMapping("/edit_profile")
+    public String editProfilePage(@AuthenticationPrincipal User user,
+                                  Model model) {
+        model.addAttribute("userForm", UserForm.fromUserToForm(userService.findById(user.getId())));
+        return "edit_profile";
+    }
+
+    @PostMapping("/edit_profile")
+    public String editProfile(@AuthenticationPrincipal User user,
+                              @Validated @ModelAttribute("userForm") UserForm form,
+                              BindingResult bindingResult,
+                              Model model) {
+        if (bindingResult.hasErrors()) {
+            return "edit_profile";
+        }
+        userService.updateInfo(user, form);
+        return "redirect:/user_profile/" + user.getId();
     }
 
     @GetMapping("/user_songs/{user}")

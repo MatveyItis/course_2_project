@@ -16,15 +16,14 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 import ru.itis.maletskov.dto.SongDto;
+import ru.itis.maletskov.form.SongForm;
 import ru.itis.maletskov.model.Song;
 import ru.itis.maletskov.model.User;
 import ru.itis.maletskov.service.SongService;
 import ru.itis.maletskov.service.UserService;
 import ru.itis.maletskov.util.ServiceUtils;
 
-import javax.validation.Valid;
 import java.io.IOException;
-import java.util.Map;
 import java.util.Set;
 
 @Controller
@@ -63,20 +62,31 @@ public class SongController {
     }
 
     @PreAuthorize("hasAuthority('SINGER')")
+    @GetMapping("/add_song")
+    public String addSongPage(@AuthenticationPrincipal User user,
+                              Model model) {
+        model.addAttribute("user", user);
+        model.addAttribute("songForm", new SongForm());
+        return "song_edit";
+    }
+
+
+    @PreAuthorize("hasAuthority('SINGER')")
     @PostMapping("/add_song")
     public String addSong(@RequestParam(value = "img_file", required = false) MultipartFile imgFile,
                           @RequestParam("music_file") MultipartFile musicFile,
-                          @Valid Song song,
+                          @ModelAttribute SongForm songForm,
                           BindingResult bindingResult,
+                          @AuthenticationPrincipal User user,
                           Model model) throws IOException {
         if (bindingResult.hasErrors()) {
-            Map<String, String> errorsMap = ServiceUtils.getErrors(bindingResult);
-            model.mergeAttributes(errorsMap);
-            return "feed";
+            return "song_edit";
         } else {
+            Song song = SongForm.fromFormToSong(songForm);
+            song.setAuthor(user);
             if (musicFile.isEmpty()) {
                 model.addAttribute("musicFileError", "Please select audio file");
-                return "feed";
+                return "song_edit";
             }
             serviceUtils.saveAudioFile(song, musicFile);
             if (!imgFile.isEmpty()) {
@@ -126,7 +136,7 @@ public class SongController {
     @GetMapping("/delete_song/{id}")
     public String deleteSong(@PathVariable("id") Song song,
                              @AuthenticationPrincipal User user,
-                             Model model) {
+                             Model model) throws IOException {
         songService.deleteSong(song, user);
         return "redirect:/feed";
     }

@@ -33,7 +33,7 @@
             <title>Music</title>
         </#if>
     </head>
-    <body>
+    <body <#if isModal??>class="modal-open"<#else></#if>>
 
     <#nested>
 

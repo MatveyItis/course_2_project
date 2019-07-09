@@ -6,6 +6,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import ru.itis.maletskov.form.UserForm;
 import ru.itis.maletskov.model.Role;
 import ru.itis.maletskov.model.Song;
 import ru.itis.maletskov.model.User;
@@ -18,8 +19,8 @@ import java.util.Set;
 @Service
 @RequiredArgsConstructor
 public class UserService implements UserDetailsService {
-    private UserRepository userRepository;
-    private PasswordEncoder passwordEncoder;
+    private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     public boolean addUser(User user, Boolean isSinger) {
         User userFromDb = userRepository.findByUsername(user.getUsername()).orElse(null);
@@ -60,5 +61,17 @@ public class UserService implements UserDetailsService {
 
     public User findById(Long id) {
         return userRepository.findById(id).get();
+    }
+
+    public User updateInfo(User user, UserForm form) {
+        if (!form.getNewPassword().isEmpty()) {
+            user.setPassword(passwordEncoder.encode(form.getNewPassword()));
+        }
+        user.setFirstName(form.getFirstName());
+        user.setLastName(form.getLastName());
+        user.setUsername(form.getUsername());
+        user.setEmail(form.getEmail());
+        user.setAboutMe(form.getAboutMe());
+        return userRepository.save(user);
     }
 }

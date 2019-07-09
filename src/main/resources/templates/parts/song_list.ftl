@@ -15,7 +15,6 @@
                     <span>${song.title}</span>
                     <br>
                     <i>#${song.tag}</i>
-                    <a href="/delete_song/${song.id}"><span>&times;</span></a>
                 </div>
                 <div class="card-footer text-muted container">
                     <div class="row">

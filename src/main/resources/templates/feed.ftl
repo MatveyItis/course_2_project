@@ -21,7 +21,11 @@
 
         <#if user.isSinger()>
             <div class="ut">
-                <#include "parts/song_edit.ftl" />
+                <form action="/add_song" method="get">
+                    <button type="submit" class="btn btn-outline-info">
+                        Add song
+                    </button>
+                </form>
             </div>
         </#if>
     </div>

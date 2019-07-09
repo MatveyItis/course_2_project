@@ -1,6 +1,7 @@
 package ru.itis.maletskov.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -14,6 +15,9 @@ import ru.itis.maletskov.repository.SongRepository;
 import ru.itis.maletskov.util.ServiceUtils;
 
 import java.io.IOException;
+import java.net.URI;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -24,6 +28,9 @@ public class SongService {
     private final SongRepository songRepository;
     private final AlbumRepository albumRepository;
     private final ServiceUtils serviceUtils;
+
+    @Value("${upload.song.path}")
+    private String audioUploadPath;
 
     public Page<SongDto> songList(String filter, Pageable pageable, User user) {
         if (filter != null && !filter.isEmpty()) {
@@ -37,9 +44,10 @@ public class SongService {
         return songRepository.findByUser(pageable, author, currentUser);
     }
 
-    public void deleteSong(Song song, User user) {
+    public void deleteSong(Song song, User user) throws IOException {
         if (song.getAuthor().getId().equals(user.getId())) {
             songRepository.deleteById(song.getId());
+            Files.deleteIfExists(Paths.get(URI.create("file://" + audioUploadPath + "/" + song.getAudioFileName())));
         }
     }
 

@@ -1,5 +1,6 @@
 package ru.itis.maletskov.util;
 
+import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.BindingResult;
@@ -36,7 +37,7 @@ public class ServiceUtils {
         if (file != null && !file.getOriginalFilename().isEmpty() && !file.isEmpty()) {
             new File(audioUploadPath).mkdir();
             String uuidFile = UUID.randomUUID().toString();
-            String resultFilename = uuidFile + file.getOriginalFilename();
+            String resultFilename = uuidFile + FilenameUtils.getExtension(file.getOriginalFilename());
             file.transferTo(new File(audioUploadPath + "/" + resultFilename));
             song.setAudioFileName(resultFilename);
         }
@@ -46,7 +47,7 @@ public class ServiceUtils {
         if (file != null && !file.getOriginalFilename().isEmpty() && !file.isEmpty()) {
             new File(imgUploadPath).mkdir();
             String uuidFile = UUID.randomUUID().toString();
-            String resultFilename = uuidFile + file.getOriginalFilename();
+            String resultFilename = uuidFile + FilenameUtils.getExtension(file.getOriginalFilename());
             file.transferTo(new File(imgUploadPath + "/" + resultFilename));
             Img img = new Img();
             img.setFileName(resultFilename);
