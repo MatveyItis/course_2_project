@@ -3,14 +3,17 @@ package ru.itis.maletskov.repository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 import ru.itis.maletskov.dto.SongDto;
 import ru.itis.maletskov.model.Song;
 import ru.itis.maletskov.model.User;
 
 @Repository
+@Transactional
 public interface SongRepository extends JpaRepository<Song, Long> {
     @Query("select new ru.itis.maletskov.dto.SongDto(" +
             "   s, " +
@@ -43,4 +46,9 @@ public interface SongRepository extends JpaRepository<Song, Long> {
             "where s.author = :author " +
             "group by s")
     Page<SongDto> findByUser(Pageable pageable, @Param("author") User author, @Param("user") User user);
+
+    @Modifying
+    @Transactional
+    @Query(nativeQuery = true, value = "delete from songs where id = :id")
+    void deleteSongById(Long id);
 }

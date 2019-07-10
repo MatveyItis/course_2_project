@@ -5,7 +5,6 @@ import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -14,7 +13,7 @@ import java.util.Set;
 @Table(name = "songs")
 @EqualsAndHashCode(exclude = {"author", "likes", "album"})
 @ToString(exclude = {"likes", "album"})
-public class Song implements Serializable {
+public class Song {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", unique = true, nullable = false)
@@ -41,7 +40,7 @@ public class Song implements Serializable {
     @JoinColumn(name = "album_id")
     private Album album;
 
-    @ManyToMany(cascade = CascadeType.DETACH)
+    @ManyToMany
     @JoinTable(name = "song_likes",
             joinColumns = {@JoinColumn(name = "song_id")},
             inverseJoinColumns = {@JoinColumn(name = "user_id")})

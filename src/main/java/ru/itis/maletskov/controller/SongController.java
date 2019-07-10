@@ -137,7 +137,9 @@ public class SongController {
     public String deleteSong(@PathVariable("id") Song song,
                              @AuthenticationPrincipal User user,
                              Model model) throws IOException {
-        songService.deleteSong(song, user);
+        if (song.getAuthor().getId().equals(user.getId())) {
+            songService.deleteSong(song);
+        }
         return "redirect:/feed";
     }
 

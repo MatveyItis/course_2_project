@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.format.FormatterRegistry;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
@@ -17,6 +18,7 @@ import java.util.List;
 
 @Configuration
 @RequiredArgsConstructor
+@EnableTransactionManagement
 public class WebConfig implements WebMvcConfigurer {
     private final StringToUserConverter stringToUserConverter;
     private final StringToSongConverter stringToSongConverter;
