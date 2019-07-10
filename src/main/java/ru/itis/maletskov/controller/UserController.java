@@ -51,7 +51,7 @@ public class UserController {
 
     @PostMapping("/registration")
     public String registerUser(@ModelAttribute("user") User user,
-                               @RequestParam("singer") Boolean isSinger,
+                               @RequestParam(value = "singer", required = false) Boolean isSinger,
                                @RequestParam("password2") String password2,
                                Model model,
                                BindingResult bindingResult) {
@@ -69,8 +69,12 @@ public class UserController {
             model.mergeAttributes(errorsMap);
             return "registration";
         }
+        if (isSinger == null) {
+            isSinger = false;
+        }
         if (!userService.addUser(user, isSinger)) {
-            model.addAttribute("usernameError", "User exists!");
+            model.addAttribute("usernameError", "User with that email or username already exists");
+            model.addAttribute("emailError", "User with that email or username already exists");
             return "registration";
         }
         return "redirect:/login";
@@ -88,21 +92,10 @@ public class UserController {
     public String userProfile(@PathVariable("user") User pathUser,
                               @AuthenticationPrincipal User user,
                               Model model) {
-        if (pathUser == null) {
-            model.addAttribute("isCurrentUser", true);
-            model.addAttribute("user", user);
-
-        } else {
-            if (user.getId().equals(pathUser.getId())) {
-                model.addAttribute("isCurrentUser", true);
-                model.addAttribute("user", user);
-            } else {
-                model.addAttribute("isCurrentUser", false);
-                model.addAttribute("user", pathUser);
-            }
-            model.addAttribute("userChannel", pathUser);
-            model.addAttribute("isSubscriber", pathUser.getSubscribers().contains(user));
-        }
+        model.addAttribute("isCurrentUser", pathUser == null || user.getId().equals(pathUser.getId()));
+        model.addAttribute("user", user);
+        model.addAttribute("userChannel", pathUser);
+        model.addAttribute("isSubscriber", pathUser != null && pathUser.getSubscribers().contains(user));
         return "user_profile";
     }
 
@@ -150,13 +143,22 @@ public class UserController {
                                     @PathVariable String type) {
         model.addAttribute("userChannel", user);
         model.addAttribute("type", type);
-
         if ("subscriptions".equals(type)) {
-            model.addAttribute("users", user.getSubscriptions());
+            if (!user.getSubscriptions().isEmpty()) {
+                model.addAttribute("users", user.getSubscriptions());
+            }
         } else {
-            model.addAttribute("users", user.getSubscribers());
+            if (!user.getSubscribers().isEmpty()) {
+                model.addAttribute("users", user.getSubscribers());
+            }
         }
+        model.addAttribute("title", "subscriptions".equals(type) ? "Subscriptions" : "Subscribers");
         return "subscriptions";
+    }
+
+    @GetMapping("/user/search")
+    public String userSearchPage() {
+        return "user_search";
     }
 
     @GetMapping("/user/{user}/add_song")

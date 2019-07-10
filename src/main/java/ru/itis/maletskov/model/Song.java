@@ -27,7 +27,7 @@ public class Song implements Serializable {
     @Column(name = "audio_filename")
     private String audioFileName;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "song_img", referencedColumnName = "id")
     private Img songImg;
 

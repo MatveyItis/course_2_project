@@ -36,7 +36,7 @@
                     <input type="password" class="form-control ${(passwordError??)?string('is-invalid', '')}"
                            name="password"
                            placeholder="Enter password"
-                           id="password">
+                           id="password" minlength="6">
                     <#if passwordError??>
                         <div class="invalid-feedback">
                             ${passwordError}
@@ -48,7 +48,7 @@
                     <input type="password" class="form-control ${(password2Error??)?string('is-invalid', '')}"
                            name="password2"
                            placeholder="Repeat password"
-                           id="password2">
+                           id="password2" minlength="6">
                     <#if password2Error??>
                         <div class="invalid-feedback">
                             ${password2Error}

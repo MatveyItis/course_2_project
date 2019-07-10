@@ -23,8 +23,8 @@ public class UserService implements UserDetailsService {
     private final PasswordEncoder passwordEncoder;
 
     public boolean addUser(User user, Boolean isSinger) {
-        User userFromDb = userRepository.findByUsername(user.getUsername()).orElse(null);
-        if (userFromDb != null) {
+        if (userRepository.existsUserByUsername(user.getUsername()) ||
+                userRepository.existsUserByEmail(user.getEmail())) {
             return false;
         }
         user.setPassword(passwordEncoder.encode(user.getPassword()));

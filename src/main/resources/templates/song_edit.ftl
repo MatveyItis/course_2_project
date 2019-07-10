@@ -3,7 +3,7 @@
 <#import "/spring.ftl" as spring/>
 <@c.template "Adding song">
     <@n.navbar/>
-    <div class="container col-lg-6 col-xl-6 col-md-6" align="center" style="padding-top: 120px">
+    <div class="container col-lg-5 col-xl-5 col-md-6" align="center" style="padding-top: 120px">
         <h3>Create new song</h3>
         <form method="post" enctype="multipart/form-data" action="/add_song"
               id="song_form">

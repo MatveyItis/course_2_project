@@ -19,7 +19,7 @@
                 <div class="card-footer text-muted container">
                     <div class="row">
                         <a class="col align-self-center"
-                           href="/user-songs/${song.author.id}"
+                           href="/user_songs/${song.author.id}"
                            style="text-decoration: none">${song.author.username}</a>
                         <a class="col align-self-center" align="center" role="button"
                            name="${song.id}" href="/songs/${song.id}/like"
