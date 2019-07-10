@@ -22,7 +22,7 @@ public class Album {
     @Column(name = "album_date")
     private Date date;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id", nullable = false)
     private User owner;
 
@@ -30,6 +30,6 @@ public class Album {
     @JoinColumn(name = "album_cover", referencedColumnName = "id")
     private Img img;
 
-    @ManyToMany(mappedBy = "album")
+    @ManyToMany(mappedBy = "album", cascade = CascadeType.ALL)
     private Set<Song> songs = new HashSet<>();
 }

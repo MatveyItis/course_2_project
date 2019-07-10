@@ -52,7 +52,7 @@ public class User implements UserDetails {
     )
     private Set<Song> addedSongs = new HashSet<>();
 
-    @OneToMany(mappedBy = "owner", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "owner", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Set<Album> albums;
 
     @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)

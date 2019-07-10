@@ -2,7 +2,12 @@
 <#import "parts/navbar.ftl" as n>
 <@c.template "Albums">
     <@n.navbar/>
-    <div class="container pt-2">
+    <div class="container" align="center" style="padding-top: 120px">
+        <img src="/static/img/album.svg" alt="music" width="256" height="256">
+        <br>
+        <h4>Данная страница находится в разработке</h4>
+    </div>
+    <#--    <div class="container pt-2">
         <div class="container justify-content-end d-flex">
             <button type="button" class="btn btn-outline-info" data-toggle="modal" data-target="#exampleModal">
                 Add album
@@ -89,5 +94,5 @@
                 <i>${album.owner.username}</i>
             </div>
         </#list>
-    </div>
+    </div>-->
 </@c.template>

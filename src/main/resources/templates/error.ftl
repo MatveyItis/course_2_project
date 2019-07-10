@@ -22,6 +22,6 @@
             </tr>
         </table>
         <br>
-        <img src="/static/img/error.png" alt="error">
+        <img src="/static/img/warning.svg" alt="error" width="256" height="256">
     </div>
 </@c.template>

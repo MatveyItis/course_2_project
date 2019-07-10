@@ -5,7 +5,7 @@
     <@navbar.navbar/>
 
     <div align="center" class="container justify-content-center" style="padding-top: 120px">
-        <img src="/static/img/data.png" alt="development">
+        <img src="/static/img/data.svg" alt="development" width="256" height="256">
         <br>
         <h4>Данная страница находится в разработке</h4>
     </div>

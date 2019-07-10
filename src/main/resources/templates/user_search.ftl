@@ -4,7 +4,7 @@
 <@c.template "Search">
     <@n.navbar/>
     <div class="container" align="center" style="padding-top: 120px">
-        <img src="/static/img/search.png" alt="user_search">
+        <img src="/static/img/search.svg" alt="user_search" width="256" height="256">
         <br>
         <h4>Данная страница находится в разработке</h4>
     </div>

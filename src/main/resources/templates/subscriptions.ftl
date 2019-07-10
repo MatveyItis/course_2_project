@@ -17,7 +17,7 @@
 
                 </ul>
             <#else>
-                <img src="/static/img/subscribe.png" alt="subscribe">
+                <img src="/static/img/subscribe.svg" alt="subscribe" width="256" height="256">
                 <br>
                 <h5>К сожалению, у вас нет подписок/подписчиков. </h5>
                 <h5>Перейдите к поиску ваших первых друзей по <a href="/user/search"

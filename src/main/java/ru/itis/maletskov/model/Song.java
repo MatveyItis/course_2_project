@@ -2,6 +2,7 @@ package ru.itis.maletskov.model;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -11,7 +12,8 @@ import java.util.Set;
 @Data
 @Entity
 @Table(name = "songs")
-@EqualsAndHashCode(exclude = {"author"})
+@EqualsAndHashCode(exclude = {"author", "likes", "album"})
+@ToString(exclude = {"likes", "album"})
 public class Song implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -39,7 +41,7 @@ public class Song implements Serializable {
     @JoinColumn(name = "album_id")
     private Album album;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.DETACH)
     @JoinTable(name = "song_likes",
             joinColumns = {@JoinColumn(name = "song_id")},
             inverseJoinColumns = {@JoinColumn(name = "user_id")})
